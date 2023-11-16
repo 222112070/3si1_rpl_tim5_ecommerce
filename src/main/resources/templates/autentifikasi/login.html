@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Form Login</title>
+    <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{assets/css/style_login.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{fontawesome/css/all.min.css}">
+  </head>
+  <body>
+      <form class="form-containerLogin" novalidate
+            method="post"
+            role="form"
+            th:action="@{/user_login}">
+
+      <div class="container">
+        <div th:if="${param.success}">
+          <div class="alert alert-success">
+            Account confirmation successful !!!
+          </div>
+        </div>
+  
+        <div th:if="${param.changed}">
+          <div class="alert alert-success">
+            Account password changed successfully !!!
+          </div>
+        </div>
+  
+        <div th:if="${param.notconfirmed}">
+          <div class="alert alert-warning">
+            Please confirm account first !!!
+          </div>
+        </div>  
+
+        <div class="logo-container text-center mt-1 mb-4">
+          <img src="assets/img/logo.png" alt="Logo" class="logo-animation logo">
+        </div>
+        <div class="mb-3">
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user" style="color: #d40000;"></i></span>
+            <input type="email" name="username" class="form-control" id="username" aria-describedby="emailHelp" placeholder="E-mail" required>
+          </div>
+        </div>
+        <div class="mb-3">
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock" style="color: #d40000;"></i></span>
+            <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
+            <span class="input-group-text" id="showHide"><i class="fa-solid fa-eye-slash" style="color: #000000;"></i></span>
+          </div>
+        </div>
+        <div class="mb-3 form-check form-switch">
+          <input type="checkbox" class="form-check-input" id="rememberMe" name="remember" value="true" >
+          <label class="form-check-label textform" for="rememberMe">Ingatkan Saya</label>
+        </div>
+        <div style="margin-top: -45px" class="text-end">
+          <a th:href="@{/forgot_password}" class="text-hover fw-bold">Lupa Password?</a>
+
+        </div>
+        <div class="d-grid mt-4">
+          <button type="submit" class="btn btn-outline-danger">Masuk</button>
+        </div>
+        <div class="judul">
+          <span>Belum Punya Akun? <a th:href="@{/registration}" class="text-hover fw-bold">Daftar</a></span>
+        </div>
+      </form>
+    </div>
+    <script>
+      var passwordInput = document.getElementById("password");
+      var showHideButton = document.getElementById("showHide");
+
+      showHideButton.addEventListener("click", function () {
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          showHideButton.innerHTML = '<i class="fa-solid fa-eye" style="color: #000000;"></i>';
+        } else {
+          passwordInput.type = "password";
+          showHideButton.innerHTML = '<i class="fa-solid fa-eye-slash" style="color: #000000;"></i>';
+        }
+      });
+    </script>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js}" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>

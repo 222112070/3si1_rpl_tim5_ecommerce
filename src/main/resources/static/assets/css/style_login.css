@@ -1,0 +1,152 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,600i,700,700i,800,800i');
+@import url('https://fonts.googleapis.com/css?family=Quattrocento+Sans:400,400i,700,700i');
+
+body {
+  background-color: #d3d3d3;
+  color: #666666;
+  font-size: 16px;
+  font-family: 'Quattrocento Sans', sans-serif;
+  line-height: 1.80857;
+}
+
+
+
+/*------------------------------------------------------------------
+   FORM LOGIN
+-------------------------------------------------------------------*/
+.form-containerLogin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 500px;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+  box-shadow: 3px 3px 10px 0px #000;
+  padding: 30px;
+  background-color: #FFFFFF;
+}
+
+.judul {
+  color: #2D2D2D;
+
+
+}
+.textform {
+  color: #2D2D2D;
+
+}
+
+.text-hover{
+  text-decoration: none;
+  color: black;
+}
+.text-hover:hover {
+text-decoration: none;
+  color: #D33B33;
+  font-weight: 700;
+}
+
+.form-control {
+  border-radius: 10px;
+}
+
+.input-group-text {
+  border-radius: 10px;
+
+}
+
+
+
+/* CSS untuk logo */
+.logo-container {
+    text-align: center;
+    margin-top: 5px; /* Atur jarak atas sesuai kebutuhan */
+
+}
+.logo-animation {
+    width: 100px; /* Sesuaikan ukuran logo sesuai kebutuhan */
+    height: 100px; /* Pastikan ukuran width dan height sama untuk menjaga bentuk lingkaran */
+    border: 5px solid #8B0000; /* Warna merah tua pada pinggiran */
+    border-radius: 50%; /* Membuat pinggiran berbentuk lingkaran */
+    animation: changeBorderColor 2s linear infinite; /* Animasi perubahan warna pinggiran */
+}
+
+
+@keyframes changeBorderColor {
+    0%, 100% {
+        border-color: #8B0000; /* Warna merah tua pada pinggiran */
+    }
+    50% {
+        border-color: #000; /* Warna hitam pada pinggiran */
+    }
+}
+
+
+
+/* Mengubah warna checkbox "ingatkan saya"  */
+.form-check-input:checked {
+    background-color: #D33B33; /* Warna latar belakang saat checkbox dicentang */
+    border-color: #D33B33; /* Warna border saat checkbox dicentang */
+}
+
+/* Mengubah warna tombol saat dihover */
+.btn.btn-outline-primary:hover {
+    background-color: black; /* Warna latar belakang saat tombol dihover */
+    border-color: black; /* Warna border saat tombol dihover */
+    color: white; /* Warna teks saat tombol dihover */
+}
+
+/* Mengubah warna tombol saat dalam keadaan aktif (diklik) */
+.btn.btn-outline-primary:active {
+    background-color: #D33B33; /* Warna latar belakang saat tombol aktif (diklik) */
+    border-color: #D33B33; /* Warna border saat tombol aktif (diklik) */
+    color: white; /* Warna teks saat tombol aktif (diklik) */
+}
+
+.btn {
+  background-color: black;
+  color: white;
+}
+
+
+
+/*------------------------------------------------------------------
+   FORM REGISTER
+-------------------------------------------------------------------*/
+.form-containerRegister {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50vw;
+  height: 500px;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+  box-shadow: 3px 3px 10px 0px #000;
+  padding: 30px;
+  background-color: #FFFFFF;
+}
+
+
+/*------------------------------------------------------------------
+   FORM lUPA PASSWORD
+-------------------------------------------------------------------*/
+.form-containerForgot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+  box-shadow: 3px 3px 10px 0px #000;
+  padding: 30px;
+  background-color: #FFFFFF;
+}
+
+/* Alerts */
+.alert-heading {
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  font-size: 20px;
+}

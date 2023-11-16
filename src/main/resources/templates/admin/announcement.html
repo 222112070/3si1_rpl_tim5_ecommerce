@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Announcement</title>
+
+  <!-- Favicons -->
+  <link th:href="@{/assets/img/jimbung.png}" rel="icon">
+  <link th:href="@{/assets/img/apple-touch-icon.png}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/190d988d17.js" crossorigin="anonymous"></script>
+
+  <!-- Vendor CSS Files -->
+  <link th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/assets/vendor/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
+  <link th:href="@{/assets/vendor/boxicons/css/boxicons.min.css}" rel="stylesheet">
+  <link th:href="@{/assets/vendor/quill/quill.snow.css}" rel="stylesheet">
+  <link th:href="@{/assets/vendor/quill/quill.bubble.css}" rel="stylesheet">
+  <link th:href="@{/assets/vendor/remixicon/remixicon.css}" rel="stylesheet">
+  <link th:href="@{/assets/vendor/simple-datatables/style.css}" rel="stylesheet">
+
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+        crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/3.5.1/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> -->
+
+  <!-- Template Main CSS File -->
+  <link th:href="@{/assets/css/style.css}" rel="stylesheet">
+  <style>
+    table,th,div{
+        color:black;
+        text-align: center;
+        border-collapse:separate;
+        border-spacing: 2px;
+    }
+    
+    .pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    }
+
+    .pagination li {
+        margin: 5px;
+    }
+
+    .pagination a {
+        text-decoration: none;
+        padding: 5px 10px;
+        background-color: #007BFF;
+        color: #fff;
+        border-radius: 3px;
+    }
+
+    .pagination a:hover {
+        background-color: #0056b3;
+    }
+</style>
+</head>
+<body>
+
+  <div th:replace="admin/fragments/admin-nav :: header"></div>
+  <div th:replace="admin/fragments/admin-nav :: nav"></div>
+
+  <!-- Main Content -->
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Daftar Announcement</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a th:href="@{/admin/}">Home</a></li>
+          <li class="breadcrumb-item">Announcement</li>
+        </ol>
+      </nav>
+    </div>
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <table class="table table-borderless datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col">Deskripsi</th>
+                    <th scope="col">Update</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="announcement : ${listAnnouncement}">
+                    <td th:text="${announcement.id}"></td>
+                    <td th:text="${announcement.title}"></td>
+                    <td th:text="${announcement.content}"></td>
+                    <td><a th:href="@{/admin/showAnnouncementFormForUpdate/{id}(id=${announcement.id})}" class="btn btn-primary">Update</a></td>
+                    <td><a th:href="@{/admin/deleteAnnouncement/{id}(id=${announcement.id})}" class="btn btn-danger">Delete</a></td>
+                </tr>
+                </tbody>              
+              </table>
+              <div><a th:href="@{/admin/showNewAnnouncementForm}" class="btn btn-primary btn=sm mb-3">Add New Announcement</a>
+                <a th:href="@{/admin/artikel}" class="btn btn-primary btn=sm mb-3">
+                    <i class="fas fa-bullhorn"></i> 
+                </a>
+            </div>
+            <ul class="pagination" th:if="${totalPages > 0}">
+              <li class="page-item" th:if="${currentPage > 1}">
+                  <a class="page-link"
+                     th:href="@{'/admin/announcement/page/' + ${currentPage - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Previous</a>
+              </li>
+          
+              <th:block th:each="i : ${#numbers.sequence(1, totalPages)}">
+                  <li class="page-item" th:classappend="${i} == ${currentPage} ? 'active'">
+                      <a class="page-link"
+                         th:href="@{'/admin/announcement/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+                         th:text="${i}"></a>
+                  </li>
+              </th:block>
+          
+              <li class="page-item" th:if="${currentPage < totalPages}">
+                  <a class="page-link"
+                     th:href="@{'/admin/announcement/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+              </li>
+          </ul>
+          
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- End Main Content -->
+
+  <!-- Footer -->
+  <footer id="footer" class="footer">
+    <div class="credits">
+      Designed by <a href="">Kelompok 5</a>
+    </div>
+  </footer>
+  <!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+    <i class="bi bi-arrow-up-short"></i>
+  </a>
+
+  <!-- Vendor JS Files -->
+  <script th:src="@{/assets/vendor/apexcharts/apexcharts.min.js}"></script>
+  <script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/assets/vendor/chart.js/chart.umd.js}"></script>
+  <script th:src="@{/assets/vendor/echarts/echarts.min.js}"></script>
+  <script th:src="@{/assets/vendor/quill/quill.min.js}"></script>
+  <script th:src="@{/assets/vendor/simple-datatables/simple-datatables.js}"></script>
+  <script th:src="@{/assets/vendor/tinymce/tinymce.min.js}"></script>
+  <script th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
+
+  <!-- Template Main JS File -->
+  <script th:src="@{/assets/js/main.js}"></script>
+</body>
+</html>

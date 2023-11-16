@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Product Detail</title>
+</head>
+<body>
+
+<h1>Product Details</h1>
+
+<h2 th:text="${product.name}"></h2>
+<p><strong>ID:</strong> <span th:text="${product.id}"></span></p>
+<p><strong>Description:</strong> <span th:text="${product.description}"></span></p>
+<p><strong>Price:</strong> <span th:text="${product.price}"></span></p>
+<p><strong>Stock:</strong> <span th:text="${product.stock}"></span></p>
+<p><strong>Weight:</strong> <span th:text="${product.weight}"></span></p>
+<p><strong>Status:</strong> <span th:text="${product.status}"></span></p>
+
+<h3>Images:</h3>
+<div>
+    <ul>
+        <!-- Loop through images -->
+        <li th:each="image : ${product.image}">
+            <img th:src="@{${image.url}}" alt="Product Image" width="200" />
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>

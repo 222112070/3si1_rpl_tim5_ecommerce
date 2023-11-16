@@ -1,0 +1,170 @@
+
+<div class="main-top" th:fragment="header">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="text-slid-box">
+                <div id="offer-box" class="carouselTicker">
+                    <ul class="offer-box">
+                        <li>
+                            <i class="fab fa-opencart"></i> Diskon besar besaran
+                        </li>
+                        <li>
+                            <i class="fab fa-opencart"></i> Pantau selalu website kami
+                        </li>
+                        <li>
+                            <i class="fab fa-opencart"></i> Selamat Berbelanja
+                        </li>
+                        <li>
+                            <i class="fab fa-opencart"></i> Banyak rekomendasi desain menarik
+                        </li>
+                        <li>
+                            <i class="fab fa-opencart"></i> Harga terjangkau
+                        </li>
+                        <li>
+                            <i class="fab fa-opencart"></i> Kualitas terpercaya
+                        </li>
+                        <li>
+                            <i class="fab fa-opencart"></i> Banyak barang berkualitas
+                        </li>
+                        <li>
+                            <i class="fab fa-opencart"></i> Belanja sekarang
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <!-- <div class="custom-select-box">
+                <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
+                <option>¥ JPY</option>
+                <option>$ USD</option>
+                <option>€ EUR</option>
+            </select>
+            </div> -->
+            <div class="right-phone-box">
+                <p>Kontak Kami <a href="#"> 082226103365</a></p>
+            </div>
+            <div class="our-link">
+                <ul>
+                    <li><a th:href="@{/user/my-account}">My Account</a></li>
+                    <li><a href="#">Our location</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- End Main Top -->
+
+<!-- Start Main Top -->
+<header class="main-header">
+<!-- Start Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav" style="height: 80px;">
+    <div class="container">
+        <!-- Start Header Navigation -->
+        <div class="navbar-header">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu"
+                aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand" th:href="@{/}"><img th:src="@{/assets/img/logo_1.png}" class="logo" alt=""></a>
+        </div>
+        <!-- End Header Navigation -->
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-menu">
+            <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                <li class="nav-item active"><a class="nav-link" th:href="@{/}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/user/about}">About Us</a></li>
+                <li class="dropdown megamenu-fw">
+                    <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Product</a>
+                    <ul class="dropdown-menu megamenu-content" role="menu">
+                        <li>
+            <div class="row">
+            <div class="col-menu col-md-4" th:each="category : ${categories}">
+                <h6 class="title" th:text="${category.name}"></h6>
+                <div class="content">
+                    <ul class="menu-col">
+                        <li th:each="subcategory : ${subcategories}" th:if="${subcategory.category.id == category.id}">
+                            <a th:href="@{'/user/shop/' + ${subcategory.id}}" th:text="${subcategory.name}"></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- end col-3 -->
+        </div>
+                            <!-- end row -->
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/user/cart}">Keranjang</a></li>
+                        <li><a th:href="@{/user/checkout}">Checkout</a></li>
+                    </ul>
+                </li>
+                <!-- <li class="nav-item"><a class="nav-link" href="service.html">Our Service</a></li> -->
+                <li class="nav-item"><a class="nav-link" th:href="@{/user/contact-us}">Contact Us</a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+
+        <!-- Start Atribute Navigation -->
+        <div class="attr-nav">
+            <ul>
+                <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                <li class="announce">
+                    <a th:href="@{/user/announcement}"><i class="fa fa-bullhorn text-dark"></i></a></li>
+                <li class="side-menu">
+                    <a href="#">
+                        <i class="fa fa-shopping-bag"></i>
+                        <span class="badge">3</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:if="${name == null}" th:href="@{/login}" class="text-danger">
+                        <i class="fa fa-sign-in text-danger font-weight-bold"></i>
+                    </a>
+                    <a th:unless="${name == null}" th:href="@{/logout}" class="text-danger">
+                        <i class="fa fa-sign-out text-danger font-weight-bold"></i>
+                    </a>
+                </li> 
+            </ul>
+        </div>
+        <!-- End Atribute Navigation -->
+    </div>
+    <!-- Start Side Menu -->
+    <div class="side">
+        <a href="#" class="close-side"><i class="fa fa-times"></i></a>
+        <li class="cart-box">
+            <ul class="cart-list">
+                <li>
+                    <a href="#" class="photo"><img th:src="@{/assets/img/img-pro-01.jpg}" class="cart-thumb" alt="" /></a>
+                    <h6><a href="#">Delica omtantur </a></h6>
+                    <p>1x - <span class="price">$80.00</span></p>
+                </li>
+                <li>
+                    <a href="#" class="photo"><img th:src="@{/assets/img/img-pro-02.jpg}" class="cart-thumb" alt="" /></a>
+                    <h6><a href="#">Omnes ocurreret</a></h6>
+                    <p>1x - <span class="price">$60.00</span></p>
+                </li>
+                <li>
+                    <a href="#" class="photo"><img th:src="@{/assets/img/img-pro-03.jpg}" class="cart-thumb" alt="" /></a>
+                    <h6><a href="#">Agam facilisis</a></h6>
+                    <p>1x - <span class="price">$40.00</span></p>
+                </li>
+                <li class="total">
+                    <a href="#" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
+                    <span class="float-right"><strong>Total</strong>: $180.00</span>
+                </li>
+            </ul>
+        </li>
+    </div>
+    <!-- End Side Menu -->
+</nav>
+<!-- End Navigation -->
+</header>
+<!-- End Main Top -->

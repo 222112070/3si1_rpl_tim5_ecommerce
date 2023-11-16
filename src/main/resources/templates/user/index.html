@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<!-- Basic -->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Site Metas -->
+    <title>Jimbung Industrial</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link th:href="@{/assets/img/jimbung.png}" rel="icon">
+    <link th:href="@{/assets/img/apple-touch-icon_1.png}" rel="apple-touch-icon">
+
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Site CSS -->
+    <link th:href="@{/assets/css/style_1.css}" rel="stylesheet">
+    <!-- Responsive CSS -->
+    <link th:href="@{/assets/css/responsive.css}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
+
+    <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js}"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <style>
+        .fit {
+            object-fit:fill;
+            height: 350px;
+            width: 350px;
+        }
+
+        .gallery{
+            position:relative;
+            width:300px;
+            height:200px;
+            transform-style:preserve-3d;
+            animation:rotate 35s linear infinite;
+        }
+
+        @keyframes rotate{
+            from{
+                transform:perspective(1200px) rotateY(0deg);
+            }
+
+            to{
+                transform:perspective(1200px) rotateY(360deg);
+            }
+        }
+
+        .gallery span{
+            position:absolute;
+            width:100%;
+            height:100%;
+            transform-origin:center;
+            transform-style:preserve-3d;
+            transform:rotateY(calc(var(--i) * 45deg)) translateZ(380px);
+        }
+
+        .gallery span img{
+            position:absolute;
+            width:100%;
+            height:100%;
+            object-fit:cover;
+        }
+        /* Styling for the modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            width:50%;
+            height:auto;
+        }
+
+        /* Close button style */
+        .close {
+            color: #333;
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .close:hover {
+            color: #f00;
+        }
+
+        /* Style for modal title */
+        #modalTitle {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Style for modal image */
+        #modalImage {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Style for modal description */
+        #modalDescription {
+            margin-top: 10px;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        /* Responsive design for the modal */
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 5% auto;
+                width: 90%;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- Start Main Top -->
+    <div th:replace="user/fragments/user-header :: header"></div>
+    <!-- Start Top Search -->
+    <div class="top-search">
+        <div class="container">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search" id="search">
+                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+            </div>
+        </div>
+    </div>
+    <!-- End Top Search -->
+
+    <!-- Start Slider -->
+    <div id="slides-shop" class="cover-slides">
+        <ul class="slides-container">
+            <li class="text-left">
+                <img th:src="@{/assets/img/jimbung1.png}" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Selamat Datang<br> Jimbung Industrial</strong></h1>
+                            <p class="m-b-40">System Solution yaitu dengan melalui pemahaman system pada customer secara nyata dengan diskusi baik langsung maupun via internet, edukasi dan melibatkan tim manajemen serta pekerja yang berpengalaman pada bidangnya guna meningkatkan layanan, kualitas produk dan update fashion yang mengikuti perkembangan.</p>
+                            <p><a class="btn hvr-hover" th:href="@{/user/shop}">Belanja Sekarang</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-center">
+                <img th:src="@{/assets/img/jimbung2.png}" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Selamat Datang <br> Jimbung Industrial</strong></h1>
+                            <p class="m-b-40">Sharing solution yaitu membuka diskusi baik intern manjemen maupun ekstern mitra kerja produksi, pemasaran dan konsumen guna memberikan saran maupun evaluasi kinerja</p>
+                            <p><a class="btn hvr-hover" href="@{/user/shop}">Belanja Sekarang</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-right">
+                <img th:src="@{/assets/img/jimbung3.png}" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Selamat Datang<br> Jimbung Industrial</strong></h1>
+                            <p class="m-b-40">Solution Patner yaitu menjalin kemitraan usaha yang sustainability dengan feedback saling menguntungkan </p>
+                            <p><a class="btn hvr-hover" href="@{/user/shop}">Belanja Sekarang</a></p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="slides-navigation">
+            <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            <a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+        </div>
+    </div>
+    <!-- End Slider -->
+
+    <!-- Start Categories  -->
+    <div class="categories-shop">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/wearpack.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Wearpack</a>
+                    </div>
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/rompi.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Rompi</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/jaket.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Jaket</a>
+                    </div>
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/pdh_pdl.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Kemeja PDH / PDL</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/jasalmet.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Jas Almamater</a>
+                    </div>
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/kaos_or.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Kaos Olahraga</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/jilbab.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Jilbab</a>
+                    </div>
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/topi.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Topi</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/payung.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Payung</a>
+                    </div>
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/ransel.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Tas Ransel</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/totebag.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Tote Bag</a>
+                    </div>
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/jam dinding.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Jam Dinding</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/notebook.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Notebook</a>
+                    </div>
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/ganci.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Gantungan Kunci</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/id card.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">ID Card</a>
+                    </div>
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/tumbler.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Tumbler</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/atk.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Alat Tulis</a>
+                    </div>
+                    <div class="shop-cat-box fit">
+                        <img class="img-fluid" th:src="@{/assets/img/stelan.jpg}" alt="" />
+                        <a class="btn hvr-hover" href="#">Stelan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <br>
+
+    <!-- Start Blog  -->
+    <!-- <div class="latest-blog">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-4 col-xl-4" th:each="blog : ${blogs}">
+                    <div class="blog-box">
+                        <div class="blog-img">
+                            <img class="img-fluid fit" th:src="${blog.photosImagePath}" alt="" />
+                        </div>
+                        <div class="blog-content">
+                            <div class="title-blog">
+                                <h3 th:text="${blog.name}"></h3>
+                                <p th:text="${blog.deskripsi}"></p>
+                                <a href="#" th:attr="data-target='@{#blogModal_' + ${blog.id}}'" class="open-modal">Baca Selengkapnya...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+            <div class="latest-blog">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="title-all text-center">
+                                <h1>Artikel</h1>
+                                <p th:if="${not #lists.isEmpty(blogs)}">
+                                    Berikut ini adalah tips & trick memilih bahan yang sesuai dengan kebutuhan dan keinginan Anda.
+                                </p>
+                                <p th:unless="${not #lists.isEmpty(blogs)}">
+                                    Tidak ada artikel yang tersedia.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Iterating over blog items -->
+                        <div class="col-md-6 col-lg-4 col-xl-4" th:each="blog : ${blogs}">
+                            <div class="blog-box">
+                                <div class="blog-img">
+                                    <img class="img-fluid fit" th:src="@{${blog.photosImagePath}}" alt="" />
+                                </div>
+                                <div class="blog-content">
+                                    <div class="title-blog">
+                                        <h3 th:text="${blog.name}"></h3>
+                                        <!-- <p th:text="${blog.deskripsi}"></p> -->
+                                        <a href="#" class="open-modal"
+                                           th:data-id="${blog.id}"
+                                           th:data-name="${blog.name}"
+                                           th:data-image="@{${blog.photosImagePath}}"
+                                           th:data-description="${blog.deskripsi}">Baca Selengkapnya...</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Modal HTML -->
+            <div id="blogModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <img class="img-fluid fit mx-auto" id="modalImage" src="" alt="">
+                    <h3 id="modalTitle"></h3>
+                    <p id="modalDescription"></p>
+                </div>
+            </div>
+        
+
+    <!-- End Blog  -->
+    <!-- Start Instagram Feed  -->
+    <div class="instagram-box">
+        <div class="main-instagram owl-carousel owl-theme">
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img th:src="@{/assets/img/instagram-img-01.jpg}" alt="" />
+                    <div class="hov-in">
+                        <a href="https://www.instagram.com/jimbungindustrial/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img th:src="@{/assets/img/instagram-img-02.jpg}" alt="" />
+                    <div class="hov-in">
+                        <a href="https://www.instagram.com/jimbungindustrial/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img th:src="@{/assets/img/instagram-img-03.jpg}" alt="" />
+                    <div class="hov-in">
+                        <a href="https://www.instagram.com/jimbungindustrial/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img th:src="@{/assets/img/instagram-img-04.jpg}" alt="" />
+                    <div class="hov-in">
+                        <a href="https://www.instagram.com/jimbungindustrial/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img th:src="@{assets/img/instagram-img-05.jpg}" alt="" />
+                    <div class="hov-in">
+                        <a href="https://www.instagram.com/jimbungindustrial/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img th:src="@{assets/img/instagram-img-06.jpg}" alt="" />
+                    <div class="hov-in">
+                        <a href="https://www.instagram.com/jimbungindustrial/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img th:src="@{assets/img/instagram-img-07.jpg}" alt="" />
+                    <div class="hov-in">
+                        <a href="https://www.instagram.com/jimbungindustrial/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img th:src="@{assets/img/instagram-img-08.jpg}" alt="" />
+                    <div class="hov-in">
+                        <a href="https://www.instagram.com/jimbungindustrial/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img th:src="@{assets/img/instagram-img-09.jpg}" alt="" />
+                    <div class="hov-in">
+                        <a href="https://www.instagram.com/jimbungindustrial/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="ins-inner-box">
+                    <img th:src="@{assets/img/instagram-img-05.jpg}" alt="" />
+                    <div class="hov-in">
+                        <a href="https://www.instagram.com/jimbungindustrial/"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Instagram Feed  -->
+
+
+    <!-- Start Footer  -->
+    <footer>
+        <div class="footer-main">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="footer-widget">
+                            <h4>Tentang Jimbung Industrial</h4>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                                ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            </p>
+                            <ul>
+                                <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="footer-link">
+                            <h4>Information</h4>
+                            <ul>
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Customer Service</a></li>
+                                <li><a href="#">Our Sitemap</a></li>
+                                <li><a href="#">Terms &amp; Conditions</a></li>
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Delivery Information</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-12">
+                        <div class="footer-link-contact">
+                            <h4>Contact Us</h4>
+                            <ul>
+                                <li>
+                                    <p><i class="fas fa-map-marker-alt"></i>Address: Jalan ... <br>Sragen,<br>Jawa
+                                        Tengah</p>
+                                </li>
+                                <li>
+                                    <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+1-888705770">08 .....</a>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p><i class="fas fa-envelope"></i>Email: <a
+                                            href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer  -->
+
+    <!-- Start copyright  -->
+    <div class="footer-copyright">
+        <p class="footer-company">All Rights Reserved. &copy; 2023 <a href="#">Jimbung Industrial</a> Design By :
+            <a href="https://html.design/">Politeknik Statistika STIS</a>
+        </p>
+    </div>
+    <!-- End copyright  -->
+
+    <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+
+    <!-- ALL JS FILES -->
+    <script th:src="@{/assets/js/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/assets/js/popper.min.js}"></script>
+    <script th:src="@{/assets/js/bootstrap.min.js}"></script>
+    <!-- ALL PLUGINS -->
+    <script th:src="@{/assets/js/jquery.superslides.min.js}"></script>
+    <script th:src="@{/assets/js/bootstrap-select.js}"></script>
+    <script th:src="@{/assets/js/inewsticker.js}"></script>
+    <script th:src="@{/assets/js/bootsnav.js}"></script>
+    <script th:src="@{/assets/js/images-loded.min.js}"></script>
+    <script th:src="@{/assets/js/isotope.min.js}"></script>
+    <script th:src="@{/assets/js/owl.carousel.min.js}"></script>
+    <script th:src="@{/assets/js/baguetteBox.min.js}"></script>
+    <script th:src="@{/assets/js/form-validator.min.js}"></script>
+    <script th:src="@{/assets/js/contact-form-script.js}"></script>
+    <script th:src="@{/assets/js/custom.js}"></script>
+    <!-- <script>
+        // JavaScript to handle the modal pop-up
+        var modals = document.querySelectorAll('.modal');
+        var openButtons = document.querySelectorAll('.open-modal');
+        var modalImage = document.getElementById('modalImage');
+        var modalTitle = document.getElementById('modalTitle');
+        var modalDescription = document.getElementById('modalDescription');
+    
+        openButtons.forEach(function (button, index) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent the default link behavior
+                var blog = ${blogs[index]}; // Get the corresponding blog data
+                modalImage.src = blog.photosImagePath;
+                modalTitle.textContent = blog.name;
+                modalDescription.textContent = blog.deskripsi;
+                modals[0].style.display = 'block';
+            });
+        });
+    
+        // Close the modal when the "x" button is clicked
+        var closeButtons = document.querySelectorAll('.close');
+        closeButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                modals[0].style.display = 'none';
+            });
+        });
+    </script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var modals = document.querySelectorAll('.modal');
+            var openButtons = document.querySelectorAll('.open-modal');
+            var modalImage = document.getElementById('modalImage');
+            var modalTitle = document.getElementById('modalTitle');
+            var modalDescription = document.getElementById('modalDescription');
+
+            openButtons.forEach(function (button) {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    var blogId = this.getAttribute('data-id');
+                    var blogName = this.getAttribute('data-name');
+                    var blogImage = this.getAttribute('data-image');
+                    var blogDescription = this.getAttribute('data-description');
+
+                    modalImage.src = blogImage;
+                    modalTitle.textContent = blogName;
+                    modalDescription.textContent = blogDescription;
+                    modals[0].style.display = 'block';
+                });
+            });
+
+            var closeButtons = document.querySelectorAll('.close');
+            closeButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    modals[0].style.display = 'none';
+                });
+            });
+        });
+    </script>
+    
+</body>
+
+</html>
