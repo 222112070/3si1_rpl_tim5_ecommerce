@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.kel5.ecommerce.service.impl;
 
 import com.kel5.ecommerce.entity.*;
@@ -9,6 +5,7 @@ import com.kel5.ecommerce.exception.ResourceNotFoundException;
 import com.kel5.ecommerce.repository.CartRepository;
 import com.kel5.ecommerce.repository.OrderRepository;
 import com.kel5.ecommerce.repository.ProductRepository;
+import com.kel5.ecommerce.service.OrderObserver;
 import com.kel5.ecommerce.service.OrderService;
 import com.kel5.ecommerce.service.UserService;
 import jakarta.transaction.Transactional;
@@ -29,8 +26,15 @@ public class OrderServiceImpl implements OrderService {
     final
     UserService userService;
     final CartRepository cartRepository;
+
     @Autowired
     ProductRepository productRepository;
+    private List<OrderObserver> observers = new ArrayList<>();
+
+    @Override
+    public void registerObserver(OrderObserver observer) {
+        observers.add(observer);
+    }
 
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository, UserService userService, CartRepository cartRep) {
@@ -107,7 +111,11 @@ public class OrderServiceImpl implements OrderService {
         // Save the now-empty cart to the database
         cartRepository.save(cart); // Assuming you have a cartRepository to save the cart, replace with actual cart service call if different
         // Save the Order and its OrderItems to the database
-        return orderRepository.save(order);
+
+        orderRepository.save(order);
+        notifyObservers(order);
+
+        return order;
 
         // After saving the order, you may want to clear or delete the cart
         // cartService.clearCart(cart);
@@ -136,5 +144,11 @@ public class OrderServiceImpl implements OrderService {
         order.getOrderItems().add(orderItem);
 
         orderRepository.save(order);
+    }
+
+    private void notifyObservers(Order order) {
+        for (OrderObserver observer : observers) {
+            observer.onOrderCreated(order);
+        }
     }
 }

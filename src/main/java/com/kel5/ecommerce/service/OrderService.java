@@ -6,6 +6,7 @@ package com.kel5.ecommerce.service;
 
 import com.kel5.ecommerce.entity.Cart;
 import com.kel5.ecommerce.entity.Order;
+import com.kel5.ecommerce.service.impl.EmailNotificationService;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
@@ -22,4 +23,5 @@ public interface OrderService {
     Order createOrderFromCart();
 
     void createOrderFromProduct(Long productId, Integer quantity);
+    public void registerObserver(OrderObserver observer);
 }
