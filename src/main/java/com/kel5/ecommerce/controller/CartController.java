@@ -38,22 +38,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CartController {
     @Autowired
     private CategoryRepository categoryRepository;
-
+    
     @Autowired
     private SubcategoryRepository subcategoryRepository;
+    
     @Autowired
     CartService cartService;
+    
     @Autowired
     UserService userService;
+    
     @Autowired
     OrderService orderService;
 
     @PostMapping("/products/addToCart/{productId}")
     public String addToCart(@AuthenticationPrincipal User currentUser,
                             @PathVariable("productId") Long productId,
-                            @RequestParam("quantity") Integer quantity) {
+                            @RequestParam("quantity") Integer quantity,
+                            @RequestParam("size") String size) {
         System.out.println("Added product " + productId + " with quantity " + quantity + " to cart.");
-        cartService.addProductToCart(productId, quantity, currentUser);
+        cartService.addProductToCart(productId, quantity, size,currentUser);
         return "redirect:/user/cart";
     }
 

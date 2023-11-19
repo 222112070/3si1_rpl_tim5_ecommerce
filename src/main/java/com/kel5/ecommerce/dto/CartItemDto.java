@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class CartItemDto {
     private String productUrl;
     private String productName;
+    private String size;
     private int quantity;
     private Long price; // Assuming price is given in its smallest unit (e.g., cents) to avoid float.
     private Long totalItemPrice;
