@@ -31,11 +31,13 @@ public class CartMapper {
 
     private static CartItemDto toCartItemDto(CartItem cartItem) {
         long price = (long) cartItem.getProduct().getPrice();
+        String size = (String) cartItem.getSize();
         Long totalItemPrice = price * cartItem.getQuantity();
 
         return new CartItemDto(
                 cartItem.getProduct().getImage().get(0).getUrl(),
                 cartItem.getProduct().getName(),
+                size,
                 cartItem.getQuantity(),
                 price,
                 totalItemPrice

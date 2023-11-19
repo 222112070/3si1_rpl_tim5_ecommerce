@@ -59,7 +59,7 @@ public class CartServiceImpl implements CartService {
         return cartRepository.findAll();
     }
 
-    public void addProductToCart(Long productId, Integer quantity, User currentUser) {
+    public void addProductToCart(Long productId, Integer quantity, String size, User currentUser) {
         Optional<Product> productOptional = productRepository.findById(productId);
         if (productOptional.isEmpty()) {
             throw new IllegalArgumentException("Product not found");
@@ -68,6 +68,7 @@ public class CartServiceImpl implements CartService {
         CartItem cartItem = new CartItem();
         cartItem.setProduct(product);
         cartItem.setQuantity(quantity);
+        cartItem.setSize(size);
 
         Optional<Cart> cartOptional = cartRepository.findById(userService.getUserLogged().getCarts().getId());
         if (cartOptional.isEmpty()) {

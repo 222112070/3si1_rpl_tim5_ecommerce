@@ -16,7 +16,7 @@ public interface CartService {
     Cart getCartById(Long id);
     void deleteCart(Long id);
     List<Cart> getAllCarts();
-    void addProductToCart(Long productId, Integer quantity, User currentUser);
+    void addProductToCart(Long productId, Integer quantity,String size, User currentUser);
 
     Cart getCurrentCart();
 

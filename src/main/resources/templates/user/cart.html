@@ -74,6 +74,11 @@
     <!-- End All Title Box -->
     
     <!-- Start Cart  -->
+    <div th:if="${#lists.isEmpty(cart.cartItems)}">
+                <p style="padding: 100px 0; font-weight: bold; text-align: center;">Your Cart Is Empty</p>
+    </div>
+    </div>
+    <div th:if="${not #lists.isEmpty(cart.cartItems)}">
     <div th:if="${error}" th:text="${error}"></div>
     <div class="cart-box-main">
         <div class="container">
@@ -86,6 +91,7 @@
                                     <th>Images</th>
                                     <th>Product Name</th>
                                     <th>Price</th>
+                                    <th>Size</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
                                     <th>Remove</th>
@@ -102,7 +108,10 @@
                                     <td class="price-pr">
                                         <p th:text="${item.price}"></p>
                                     </td>
-                                    <td class="quantity-box"><input type="number" size="4" th:value="${item.quantity}" min="0" step="1" class="c-input-text qty text"></td>
+                                    <td class="price-pr">
+                                        <p th:text="${item.size}"></p>
+                                    </td>
+                                    <td class="quantity-box"><p th:text="${item.quantity}"></p></td>
                                     <td class="total-pr">
                                         <p th:text="${item.totalItemPrice}"></p>
                                     </td>
@@ -116,13 +125,6 @@
                 </div>
             </div>
 
-            <div class="row my-5">
-                <div class="col-lg-6 col-sm-6">
-                    <div class="update-box">
-                        <input value="Update Cart" type="submit">
-                    </div>
-                </div>
-            </div>
 
             <div class="row my-5">
                 <div class="col-lg-8 col-sm-12"></div>
@@ -147,11 +149,13 @@
                 </div>
                 <div class="col-12 d-flex shopping-box">
                     <form method="post" th:action="@{/user/cart/checkout}">
-                        <button type="submit" class="ml-auto btn hvr-hover">Checkout</button>
+                        <button type="submit" style="display: block; margin: 0 auto; background-color: black; color: white; font-weight: bold;" class="ml-auto btn hvr-hover">Checkout</button>
+
                     </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 
