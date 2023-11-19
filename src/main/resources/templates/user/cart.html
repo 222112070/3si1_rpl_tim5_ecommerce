@@ -1,4 +1,4 @@
-<!DOCTYPE html>o
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!-- Basic -->
 
@@ -6,11 +6,12 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+
     <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Site Metas -->
-    <title>Jimbung Industrial - Ecommerce Bootstrap 4 HTML Template</title>
+    <title>Jimbung Industrial</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -28,18 +29,20 @@
     <!-- Custom CSS -->
     <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
 
 </head>
 
 <body>
-
     <div th:replace="user/fragments/user-header :: header"></div>
 
     <!-- Start Top Search -->
@@ -154,6 +157,9 @@
 
     <!-- End Cart -->
 
+    <!-- Start Instagram Feed  -->
+
+
     <!-- Start Footer  -->
     <footer>
         <div class="footer-main">
@@ -241,6 +247,33 @@
     <script th:src="@{/assets/js/form-validator.min.js}"></script>
     <script th:src="@{/assets/js/contact-form-script.js}"></script>
     <script th:src="@{/assets/js/custom.js}"></script>
+    <!-- <script>
+        // JavaScript to handle the modal pop-up
+        var modals = document.querySelectorAll('.modal');
+        var openButtons = document.querySelectorAll('.open-modal');
+        var modalImage = document.getElementById('modalImage');
+        var modalTitle = document.getElementById('modalTitle');
+        var modalDescription = document.getElementById('modalDescription');
+    
+        openButtons.forEach(function (button, index) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent the default link behavior
+                var blog = ${blogs[index]}; // Get the corresponding blog data
+                modalImage.src = blog.photosImagePath;
+                modalTitle.textContent = blog.name;
+                modalDescription.textContent = blog.deskripsi;
+                modals[0].style.display = 'block';
+            });
+        });
+    
+        // Close the modal when the "x" button is clicked
+        var closeButtons = document.querySelectorAll('.close');
+        closeButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                modals[0].style.display = 'none';
+            });
+        });
+    </script> -->
 </body>
 
 </html>
