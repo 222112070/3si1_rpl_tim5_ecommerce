@@ -7,6 +7,7 @@ package com.kel5.ecommerce.controller;
 import com.kel5.ecommerce.entity.CartItem;
 import com.kel5.ecommerce.entity.Cart;
 import com.kel5.ecommerce.entity.Category;
+import com.kel5.ecommerce.entity.Order;
 import com.kel5.ecommerce.entity.Subcategory;
 import com.kel5.ecommerce.entity.User;
 import com.kel5.ecommerce.mapper.CartMapper;
@@ -72,11 +73,17 @@ public class CartController {
         return "user/cart"; // Name of the template that displays the cart
     }
 
-    @PostMapping("/cart/checkout")
-    public String checkoutCart(Model model) {
-        orderService.createOrderFromCart(); // Assumes a method to perform checkout
-        return "user/cart"; // Name of the template that confirms successful checkout
-    }
+@PostMapping("/cart/checkout")
+    public String checkoutCart(Model model,
+                            @RequestParam("name") String name,
+                            @RequestParam("address") String address,
+                            @RequestParam("whatsapp") String whatsapp,
+                            @RequestParam("notes") String notes) {
+        Order createdOrder = orderService.createOrderFromCart(name, address, whatsapp, notes);
+        Long orderId = createdOrder.getId();
+        return "redirect:/user/order/whatsapp/" + orderId;
+}
+
     
     @GetMapping("/cart/{cartId}/delete") 
     public String deleteCartItem(@PathVariable(name = "cartId") Long cartId){

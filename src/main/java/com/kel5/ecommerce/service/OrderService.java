@@ -20,8 +20,9 @@ public interface OrderService {
 
     List<Order> getOrdersForLoggedInUser();
 
-    Order createOrderFromCart();
+    Order createOrderFromCart(String name,String address,String whatsapp, String notes);
 
     void createOrderFromProduct(Long productId, Integer quantity);
     public void registerObserver(OrderObserver observer);
+    String createOrderMessage(Long orderId);
 }

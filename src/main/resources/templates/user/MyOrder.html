@@ -62,10 +62,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2>Cart</h2>
+                    <h2>My Order</h2>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a th:href="@{/shop}">Shop</a></li>
-                        <li class="breadcrumb-item active">Cart</li>
+                        <li class="breadcrumb-item active">My Order</li>
                     </ul>
                 </div>
             </div>
@@ -73,97 +73,57 @@
     </div>
     <!-- End All Title Box -->
     
-    <!-- Start Cart  -->
-    <div th:if="${#lists.isEmpty(cart.cartItems)}">
-                <p style="padding: 100px 0; font-weight: bold; text-align: center;">Your Cart Is Empty</p>
-    </div>
-    </div>
-    <div th:if="${not #lists.isEmpty(cart.cartItems)}">
-    <div th:if="${error}" th:text="${error}"></div>
-    <div class="cart-box-main">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="table-main table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Images</th>
-                                    <th>Product Name</th>
-                                    <th>Price</th>
-                                    <th>Size</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th>Remove</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:each="item, iterStat : ${cart.cartItems}">
-                                    <td class="thumbnail-img">
-                                        <img class="img-fluid" th:src="@{${item.productUrl}}" alt="Product Image" width="200" />
-                                    </td>
-                                    <td class="name-pr">
-                                        <a th:text="${item.productName}"></a>
-                                    </td>
-                                    <td class="price-pr">
-                                        <p th:text="${item.price}"></p>
-                                    </td>
-                                    <td class="price-pr">
-                                        <p th:text="${item.size}"></p>
-                                    </td>
-                                    <td class="quantity-box"><p th:text="${item.quantity}"></p></td>
-                                    <td class="total-pr">
-                                        <p th:text="${item.totalItemPrice}"></p>
-                                    </td>
-                                    <td class="remove-pr">
-                                            <i class="fas fa-times"></i>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+    <!-- My order -->
+    <div class="container mt-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <!-- Grid row -->
+                <div class="row">
+                    <!-- Grid column -->
+                    <div class="col-md-12">
+                        <h2 class="pt-3 pb-4 text-center font-bold font-up deep-purple-text" style="font-weight: bolder; color: white;">Daftar Pesanan</h2>
+                        <!-- <div class="input-group md-form form-sm form-2 pl-0">
+                            <input class="form-control my-0 py-1 pl-3 purple-border" type="text" placeholder="Search something here..." aria-label="Search">
+                            <span class="input-group-addon waves-effect purple lighten-2" id="basic-addon1"><a><i class="fa fa-search white-text" aria-hidden="true"></i></a></span>
+                        </div> -->
                     </div>
+                    <!-- Grid column -->
                 </div>
-            </div>
+                <!-- Grid row -->
+                <!--Table-->
+                <table class="table table-striped">
+                    <!--Table head-->
+                    <thead>
+                        <tr style="font-weight: bolder; color: white;">
+                            <th>No</th>
+                            <th>Tanggal Pemesanan</th>
+                            <th>Alamat Pengiriman</th>
+                            <th>Total Biaya</th>
+                            <th>Status Order</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <!--Table head-->
+                    <!--Table body-->
+                    <tbody style="font-weight: bolder; color: white;">
+                        <tr  th:each="order, iterStat : ${orders}">
+                            <th scope="row" th:text="${iterStat.index + 1}">1</th>
+                            <td th:text="${order.orderDate}"></td>
+                            <td th:text="${order.address}"></td>
+                            <td th:text="'Rp. ' + ${order.totalAmount}"></td>
+                            <td th:text="${order.status}"></td>
+                            <td><a th:href="@{/user/order/details/{detailId}(detailId=${order.id})}" style="font-weight: bolder; color: white;">Lihat Detail</a></td>
 
-
-            <div class="row my-5">
-                <div class="col-lg-8 col-sm-12"></div>
-                <div class="col-lg-4 col-sm-12">
-                    <div class="order-box">
-                        <h3>Order summary</h3>
-                        <div class="d-flex">
-                            <h4>Sub Total</h4>
-                            <div class="ml-auto font-weight-bold" th:text="${cart.totalPrice}"></div>
-                        </div>
-                        <div class="d-flex">
-                            <h4>Shipping Cost</h4>
-                            <div class="ml-auto font-weight-bold"> Free </div>
-                        </div>
-                        <hr>
-                        <div class="d-flex gr-total">
-                            <h5>Grand Total</h5>
-                            <div class="ml-auto h5" th:text="${cart.totalPrice}"></div>
-                        </div>
-                        <hr>
-                    </div>
-                </div>
-                <div class="col-12 d-flex shopping-box">
-                    <form method="post" th:action="@{/user/cart/checkoutCart}">
-                        <button type="submit" style="display: block; margin: 0 auto; background-color: black; color: white; font-weight: bold;" class="ml-auto btn hvr-hover">Checkout</button>
-
-                    </form>
-                </div>
+                        </tr>
+                    </tbody>
+                    <!--Table body-->
+                </table>
+                <!--Table-->
             </div>
         </div>
     </div>
-    </div>
-
-
-    <!-- End Cart -->
-
-    <!-- Start Instagram Feed  -->
-
-
+    <!-- End My Order -->
+    
     <!-- Start Footer  -->
     <footer>
         <div class="footer-main">

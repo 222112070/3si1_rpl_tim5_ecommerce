@@ -23,7 +23,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String status;
-    private String description;
+    private String notes;
+    private String name;
+    private String address;
+    private String whatsapp;
     private LocalDate orderDate;
     private float totalAmount;
 

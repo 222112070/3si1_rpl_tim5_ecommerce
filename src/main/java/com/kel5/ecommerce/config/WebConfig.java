@@ -17,11 +17,18 @@ public class WebConfig implements WebMvcConfigurer{
     
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
+        int cachePeriod = 60 * 60 * 24 * 30;
+
         exposeDirectory("blog-photos", registry);
         String baseDir = System.getProperty("user.dir");
         registry.addResourceHandler("/productsImages/**")
                 .addResourceLocations("file:" + baseDir + "/productsImages/")
                 .setCachePeriod(0);
+        
+        registry.addResourceHandler("/css/**", "/images/**", "/js/**", "/static/**")
+                .addResourceLocations("classpath:/static/css/", "classpath:/static/images/", "classpath:/static/js/", "classpath:/static/")
+                .setCachePeriod(cachePeriod);
+
     }
     
     private void exposeDirectory(String dirName, ResourceHandlerRegistry registry){
