@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/user/")
 public class WhatsAppRedirectController {
 
     @Autowired
@@ -40,4 +41,3 @@ public class WhatsAppRedirectController {
         return "redirect:https://wa.me/" + phoneNumber + "?text=" + encodedMessage;
     }
 }
-

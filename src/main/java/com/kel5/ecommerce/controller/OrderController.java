@@ -27,4 +27,11 @@ public class OrderController {
         List<Order> orders = orderService.getAllOrders();
         return "order/orderList";
     }
+
+    @GetMapping("/order")
+    public String seeMyOrder(Model model) {
+        List<Order> orders = orderService.getOrdersForLoggedInUser();
+        model.addAttribute("orders",orders);
+        return "user/MyOrder";
+    }
 }

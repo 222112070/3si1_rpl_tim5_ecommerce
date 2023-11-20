@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer{
 //    }
 
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    public void addResourceHandlers(ResourceHandlerRegistry registry){
         int cachePeriod = 60 * 60 * 24 * 30;
 
         exposeDirectory("blog-photos", registry);
@@ -28,6 +28,7 @@ public class WebConfig implements WebMvcConfigurer{
         registry.addResourceHandler("/css/**", "/images/**", "/js/**", "/static/**")
                 .addResourceLocations("classpath:/static/css/", "classpath:/static/images/", "classpath:/static/js/", "classpath:/static/")
                 .setCachePeriod(cachePeriod);
+
     }
 
 

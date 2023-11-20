@@ -111,10 +111,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order createOrderFromCart() {
+    public Order createOrderFromCart(String name, String address, String whatsapp, String notes) {
         Cart cart = userService.getUserLogged().getCarts();
         // Create new Order entity and copy properties from Cart
         Order order = Order.builder()
+                .name(name)
+                .address(address)
+                .whatsapp(whatsapp)
+                .notes(notes)
                 .status("Belum Dibayar") // Example status, this could be an enum or string depending on your design
                 .orderDate(LocalDate.now())
                 .totalAmount(cart.getTotalPrice())
@@ -127,12 +131,13 @@ public class OrderServiceImpl implements OrderService {
             OrderItem orderItem = new OrderItem();
             orderItem.setProduct(cartItem.getProduct());
             orderItem.setQuantity(cartItem.getQuantity());
+            orderItem.setSize(cartItem.getSize());
             orderItem.setOrder(order);
             order.getOrderItems().add(orderItem);
 
             // If needed, also update the Product stock here
         });
-        // Clear the cart items after saving the order
+       
         cart.getCartItems().clear(); // This clears the items from the cart
         // Save the now-empty cart to the database
         cartRepository.save(cart); // Assuming you have a cartRepository to save the cart, replace with actual cart service call if different
@@ -177,4 +182,44 @@ public class OrderServiceImpl implements OrderService {
             observer.onOrderCreated(order);
         }
     }
+    
+    @Override
+    public String createOrderMessage(Long orderId) {
+        Optional<Order> orderOptional = orderRepository.findById(orderId);
+
+        if (orderOptional.isEmpty()) {
+            return "Order dengan ID: " + orderId + " tidak ditemukan.";
+        }
+
+        Order order = orderOptional.get();
+        StringBuilder message = new StringBuilder();
+        message.append("Permisi saya telah membuat pemesanan dengan id : ")
+                .append(orderId)
+                .append("\n    Email Pemesan : ")
+                .append(order.getUser().getEmail())
+                .append("\n    Nomor WhatApp Pemesan : ")
+                .append(order.getWhatsapp())
+                .append("\n    Dengan total Prakiraan Harga : Rp. ")
+                .append(order.getTotalAmount())
+                .append("\n\nKeterangan barang\n");
+
+        int count = 1;
+        for (OrderItem item : order.getOrderItems()) {
+            message.append("    ")
+                    .append(count++)
+                    .append("    . '")
+                    .append(item.getProduct().getName())
+                    .append("' ")
+                    .append("Ukuran ")
+                    .append(item.getSize())
+                    .append(", ")
+                    .append(item.getQuantity())
+                    .append(" buah\n")
+                    .append("\n");
+        }
+
+
+        return message.toString();
+    }
+
 }
