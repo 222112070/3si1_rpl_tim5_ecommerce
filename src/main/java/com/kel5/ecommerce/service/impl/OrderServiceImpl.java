@@ -8,7 +8,6 @@ import com.kel5.ecommerce.repository.ProductRepository;
 import com.kel5.ecommerce.service.OrderObserver;
 import com.kel5.ecommerce.service.OrderService;
 import com.kel5.ecommerce.service.UserService;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +54,33 @@ public class OrderServiceImpl implements OrderService {
         // Update properties of existingOrder with those from order
         // ...
         return orderRepository.save(existingOrder);
+    }
+
+    @Override
+    public String createOrderMessage(Long orderId) {
+        Optional<Order> orderOptional = orderRepository.findById(orderId);
+
+        if (orderOptional.isEmpty()) {
+            return "Order dengan ID: " + orderId + " tidak ditemukan.";
+        }
+
+        Order order = orderOptional.get();
+        StringBuilder message = new StringBuilder();
+        message.append("Permisi saya telah membuat pemesanan dengan id '")
+                .append(orderId)
+                .append("'\nKeterangan barang\n");
+
+        int count = 1;
+        for (OrderItem item : order.getOrderItems()) {
+            message.append(count++)
+                    .append(". '")
+                    .append(item.getProduct().getName())
+                    .append("' ")
+                    .append(item.getQuantity())
+                    .append(" buah\n");
+        }
+
+        return message.toString();
     }
 
     @Override
