@@ -167,31 +167,40 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = orderOptional.get();
         StringBuilder message = new StringBuilder();
-        message.append("Permisi saya telah membuat pemesanan dengan id : ")
-                .append(orderId)
-                .append("\n    Email Pemesan : ")
+        message.append("*KONFIRMASI PESANAN*\n")
+                .append("----‐-------------------------------------\n")
+                .append("*RINCIAN PEMESAN*\n")
+                .append("\nNama Pemesan : ")
+                .append(order.getUser().getName())
+                .append("\nEmail Pemesan : ")
                 .append(order.getUser().getEmail())
-                .append("\n    Nomor WhatApp Pemesan : ")
+                .append("\nNomor WhatApp : ")
                 .append(order.getWhatsapp())
-                .append("\n    Dengan total Prakiraan Harga : Rp. ")
+                .append("\nTanggal Pemesanan : ")
+                .append(order.getOrderDate())
+                .append("\nPerkiraan Harga : Rp. ")
                 .append(order.getTotalAmount())
-                .append("\n\nKeterangan barang\n");
-
+                .append("\nAlamat Pesanan :  ")
+                .append(order.getAddress())
+                .append("\n\n")
+                .append("*RINCIAN PESANAN*\n");
+        
         int count = 1;
         for (OrderItem item : order.getOrderItems()) {
-            message.append("    ")
-                    .append(count++)
-                    .append("    . '")
+            message.append("")
+                    .append("Nama Produk : ")
                     .append(item.getProduct().getName())
-                    .append("' ")
-                    .append("Ukuran ")
+                    .append("\n Ukuran : ")
                     .append(item.getSize())
-                    .append(", ")
+                    .append("\n Jumlah : ")
                     .append(item.getQuantity())
-                    .append(" buah\n")
-                    .append("\n");
+                    .append("\n\n");
         }
 
+        message.append("\nCatatan Pemesan : ")
+                .append(order.getNotes())
+                .append("\n----‐-------------------------------------\n")
+                .append("Terima kasih");
 
         return message.toString();
     }
