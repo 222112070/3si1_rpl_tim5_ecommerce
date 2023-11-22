@@ -56,32 +56,32 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.save(existingOrder);
     }
 
-    @Override
-    public String createOrderMessage(Long orderId) {
-        Optional<Order> orderOptional = orderRepository.findById(orderId);
-
-        if (orderOptional.isEmpty()) {
-            return "Order dengan ID: " + orderId + " tidak ditemukan.";
-        }
-
-        Order order = orderOptional.get();
-        StringBuilder message = new StringBuilder();
-        message.append("Permisi saya telah membuat pemesanan dengan id '")
-                .append(orderId)
-                .append("'\nKeterangan barang\n");
-
-        int count = 1;
-        for (OrderItem item : order.getOrderItems()) {
-            message.append(count++)
-                    .append(". '")
-                    .append(item.getProduct().getName())
-                    .append("' ")
-                    .append(item.getQuantity())
-                    .append(" buah\n");
-        }
-
-        return message.toString();
-    }
+//    @Override
+//    public String createOrderMessage(Long orderId) {
+//        Optional<Order> orderOptional = orderRepository.findById(orderId);
+//
+//        if (orderOptional.isEmpty()) {
+//            return "Order dengan ID: " + orderId + " tidak ditemukan.";
+//        }
+//
+//        Order order = orderOptional.get();
+//        StringBuilder message = new StringBuilder();
+//        message.append("Permisi saya telah membuat pemesanan dengan id '")
+//                .append(orderId)
+//                .append("'\nKeterangan barang\n");
+//
+//        int count = 1;
+//        for (OrderItem item : order.getOrderItems()) {
+//            message.append(count++)
+//                    .append(". '")
+//                    .append(item.getProduct().getName())
+//                    .append("' ")
+//                    .append(item.getQuantity())
+//                    .append(" buah\n");
+//        }
+//
+//        return message.toString();
+//    }
 
     @Override
     public Order getOrderById(Long id) {

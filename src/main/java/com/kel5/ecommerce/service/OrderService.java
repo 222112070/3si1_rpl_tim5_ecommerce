@@ -15,7 +15,7 @@ public interface OrderService {
     Order createOrder(Order order);
     Order updateOrder(Long id, Order order);
 
-    String createOrderMessage(Long orderId);
+//    String createOrderMessage(Long orderId);
 
     com.kel5.ecommerce.entity.Order getOrderById(Long id);
     void deleteOrder(Long id);

@@ -1,7 +1,6 @@
 package com.kel5.ecommerce.service.impl;
 
 import com.kel5.ecommerce.dto.ProductDto;
-import com.kel5.ecommerce.entity.Blog;
 import com.kel5.ecommerce.entity.Category;
 import com.kel5.ecommerce.entity.Image;
 import com.kel5.ecommerce.entity.Product;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -43,16 +43,44 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateProduct(Long id, Product product) {
+    public Product updateProduct(Long id, Product product, MultipartFile[] files) throws IOException {
         Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id " + id));
+
         existingProduct.setName(product.getName());
         existingProduct.setDescription(product.getDescription());
         existingProduct.setPrice(product.getPrice());
         existingProduct.setStock(product.getStock());
         existingProduct.setWeight(product.getWeight());
+
+        // Hanya perbarui gambar jika ada file baru yang diupload
+        if (files != null && files.length > 0) {
+            List<Image> images = new ArrayList<>();
+            String baseDir = System.getProperty("user.dir");
+            String targetDir = baseDir + "/productsImages/";
+
+            File directory = new File(targetDir);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+
+            for (MultipartFile file : files) {
+                Path path = Paths.get(targetDir + file.getOriginalFilename());
+                Files.write(path, file.getBytes());
+
+                Image image = new Image();
+                image.setUrl("/productsImages/" + file.getOriginalFilename());
+                images.add(image);
+            }
+
+            existingProduct.setImage(images); // Update product images
+        }
+
         return productRepository.save(existingProduct);
     }
+
+
+
 //        @Override
 //    public Product updateProduct(Long id, Product updatedProduct) {
 //        // Check if the product with the given ID exists
@@ -100,6 +128,8 @@ public class ProductServiceImpl implements ProductService {
         product.setSubcategory(subcategory);
         return productRepository.save(product);
     }
+
+
 
     @Override
     public List<Product> getAllProduct(String keyword) {
