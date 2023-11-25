@@ -29,18 +29,18 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-    
+
     @Autowired
     private ProductRepository productRepository;
-    
+
     @Autowired
     private CategoryService categoryService;
-    
+
     @Autowired
     private UserService userService;
     @GetMapping("/produk")
     public String viewHomePage(Model model) {
-                User user = userService.getUserLogged();
+        User user = userService.getUserLogged();
         model.addAttribute("user", user);
         return findPaginated(1, "id", "asc", model);
     }
@@ -64,9 +64,9 @@ public class ProductController {
 
     // To handle the form submission
     @PostMapping("/create-product")
-    public String createProduct(@ModelAttribute ProductDto productDto, 
-                                @RequestParam("category") Long categoryId, 
-                                @RequestParam("subcategory") Long subcategoryId, 
+    public String createProduct(@ModelAttribute ProductDto productDto,
+                                @RequestParam("category") Long categoryId,
+                                @RequestParam("subcategory") Long subcategoryId,
                                 Model model) throws Exception {
 
         Product savedProduct = productService.saveProduct(productDto, categoryId, subcategoryId);
@@ -122,9 +122,9 @@ public class ProductController {
 
     @GetMapping("produk/page/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-            @RequestParam("sortField") String sortField,
-            @RequestParam("sortDir") String sortDir,
-            Model model) {
+                                @RequestParam("sortField") String sortField,
+                                @RequestParam("sortDir") String sortDir,
+                                Model model) {
         User user = userService.getUserLogged();
         model.addAttribute("user", user);
         int pageSize = 10;
