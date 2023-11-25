@@ -75,11 +75,22 @@ public class CartServiceImpl implements CartService {
             throw new IllegalArgumentException("Cart not found");
         }
         Cart cart = cartOptional.get();
+
+        // Add the new item to the cart
         cart.getCartItems().add(cartItem);
         cartItem.setCart(cart);
 
+        // Calculate and set total price
+        float totalPrice = 0;
+        for (CartItem item : cart.getCartItems()) {
+            float itemTotal = item.getProduct().getPrice() * item.getQuantity();
+            totalPrice += itemTotal;
+        }
+        cart.setTotalPrice(totalPrice);
+
         cartRepository.save(cart);
     }
+
 
     @Override
     public Cart getCurrentCart() {

@@ -2,200 +2,200 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Add Product</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+    <title>Add Product</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
 
-  <!-- Favicons -->
-  <link th:href="@{/assets/img/jimbung.png}" rel="icon">
-  <link th:href="@{/assets/img/apple-touch-icon.png}" rel="apple-touch-icon">
+    <!-- Favicons -->
+    <link th:href="@{/assets/img/jimbung.png}" rel="icon">
+    <link th:href="@{/assets/img/apple-touch-icon.png}" rel="apple-touch-icon">
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/190d988d17.js" crossorigin="anonymous"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/190d988d17.js" crossorigin="anonymous"></script>
 
-  <!-- Vendor CSS Files -->
-  <link th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-  <link th:href="@{/assets/vendor/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
-  <link th:href="@{/assets/vendor/boxicons/css/boxicons.min.css}" rel="stylesheet">
-  <link th:href="@{/assets/vendor/quill/quill.snow.css}" rel="stylesheet">
-  <link th:href="@{/assets/vendor/quill/quill.bubble.css}" rel="stylesheet">
-  <link th:href="@{/assets/vendor/remixicon/remixicon.css}" rel="stylesheet">
-  <link th:href="@{/assets/vendor/simple-datatables/style.css}" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/vendor/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet">
+    <link th:href="@{/assets/vendor/boxicons/css/boxicons.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/vendor/quill/quill.snow.css}" rel="stylesheet">
+    <link th:href="@{/assets/vendor/quill/quill.bubble.css}" rel="stylesheet">
+    <link th:href="@{/assets/vendor/remixicon/remixicon.css}" rel="stylesheet">
+    <link th:href="@{/assets/vendor/simple-datatables/style.css}" rel="stylesheet">
 
-  <!-- Template Main CSS File -->
-  <link th:href="@{/assets/css/style.css}" rel="stylesheet">
+    <!-- Template Main CSS File -->
+    <link th:href="@{/assets/css/style.css}" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Updated: Aug 30 2023 with Bootstrap v5.3.1
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-  <!-- tambahan -->
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- =======================================================
+    * Template Name: NiceAdmin
+    * Updated: Aug 30 2023 with Bootstrap v5.3.1
+    * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+    <!-- tambahan -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 
 <body>
 
-  <div th:replace="admin/fragments/admin-nav :: header"></div>
-  <div th:replace="admin/fragments/admin-nav :: nav"></div>
+<div th:replace="admin/fragments/admin-nav :: header"></div>
+<div th:replace="admin/fragments/admin-nav :: nav"></div>
 
- <main id="main" class="main">
+<main id="main" class="main">
 
-  <div class="pagetitle">
-    <h1>Tambah Product</h1>
-    <nav>
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a th:href="@{/admin/}">Home</a></li>
-        <li class="breadcrumb-item"><a th:href="@{/admin/produk}">Product</a></li>
-        <li class="breadcrumb-item active">Tambah</li>
-      </ol>
-    </nav>
-  </div><!-- End Page Title -->
-  <section class="section">
-    <div class="row">
-      <div class="col-lg-12">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Fill the Information</h5>
+    <div class="pagetitle">
+        <h1>Tambah Product</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/admin/}">Home</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/admin/produk}">Product</a></li>
+                <li class="breadcrumb-item active">Tambah</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Fill the Information</h5>
 
-              <!-- Multi Columns Form -->
-              <form class="row g-3" th:action="@{/admin/update-product/{id}(id=${product.id})}" method="post" enctype="multipart/form-data">
-                <div class="col-md-12">
-                  <label for="productId" class="form-label">Product Name</label>
-                  <input type="text" name="id" class="form-control" id="productId" placeholder="Product Name" required th:value="${product.id}" readonly>
+                        <!-- Multi Columns Form -->
+                        <form class="row g-3" th:action="@{/admin/update-product/{id}(id=${product.id})}" method="post" enctype="multipart/form-data">
+                            <div class="col-md-12">
+                                <label for="productId" class="form-label">Product Name</label>
+                                <input type="text" name="id" class="form-control" id="productId" placeholder="Product Name" required th:value="${product.id}" readonly>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="productName" class="form-label">Product Name</label>
+                                <input type="text" name="name" class="form-control" id="productName" placeholder="Product Name" required th:value="${product.name}">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="productDesc" class="form-label">Product Description</label>
+                                <input type="text" name="description" class="form-control" id="productDesc" placeholder="Product Description" required th:value="${product.description}">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="productPrice" class="form-label">Product Price</label>
+                                <input type="number" name="price" class="form-control" id="productPrice" placeholder="Product Price" required th:value="${product.price}">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="productStock" class="form-label">Product Stock</label>
+                                <input type="number" name="stock" class="form-control" id="productStock" placeholder="Product Stock" required th:value="${product.stock}">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="productWeight" class="form-label">Product Weight</label>
+                                <input type="number" name="weight" class="form-control" id="productWeight" placeholder="Product Weight" required th:value="${product.weight}">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="category" class="form-label">Category</label>
+                                <select name="category" class="form-control" id="category" required th:value="${product.category.id}">
+                                    <option value="" selected>Select Category</option>
+                                </select>
+                                <br>
+                                <a class="btn btn-primary" th:href="@{/admin/add-category}"> Add Category </a>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="subcategory" class="form-label">Subcategory</label>
+                                <select name="subcategory" class="form-control" id="subcategory" th:value="${product.subcategory.id}" required>
+                                    <option value="" selected>Select Subcategory</option>
+                                </select>
+                                <br>
+                                <a class="btn btn-primary" th:href="@{/admin/add-subcategory}"> Add Subcategory </a>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="images" class="form-label">Product Photos (Max 3)</label>
+                                <input type="file" name="images" accept="image/png, image/jpeg" class="form-control" id="images" multiple>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck" required>
+                                    <label class="form-check-label" for="gridCheck">
+                                        Check me out
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                            </div>
+                        </form><!-- End Multi Columns Form -->
+                        <a th:href="@{/admin/produk}"> Back to Product </a>
+                    </div>
                 </div>
-                <div class="col-md-12">
-                  <label for="productName" class="form-label">Product Name</label>
-                  <input type="text" name="name" class="form-control" id="productName" placeholder="Product Name" required th:value="${product.name}">
-                </div>
-                <div class="col-md-12">
-                  <label for="productDesc" class="form-label">Product Description</label>
-                  <input type="text" name="description" class="form-control" id="productDesc" placeholder="Product Description" required th:value="${product.description}">
-                </div>
-                <div class="col-md-12">
-                  <label for="productPrice" class="form-label">Product Price</label>
-                  <input type="number" name="price" class="form-control" id="productPrice" placeholder="Product Price" required th:value="${product.price}">
-                </div>
-                <div class="col-md-12">
-                  <label for="productStock" class="form-label">Product Stock</label>
-                  <input type="number" name="stock" class="form-control" id="productStock" placeholder="Product Stock" required th:value="${product.stock}">
-                </div>
-                <div class="col-md-12">
-                  <label for="productWeight" class="form-label">Product Weight</label>
-                  <input type="number" name="weight" class="form-control" id="productWeight" placeholder="Product Weight" required th:value="${product.weight}">
-                </div>
-                <div class="col-md-6">
-                  <label for="category" class="form-label">Category</label>
-                  <select name="category" class="form-control" id="category" required th:value="${product.category.id}">
-                      <option value="" selected>Select Category</option>
-                  </select>
-                  <br>
-                  <a class="btn btn-primary" th:href="@{/admin/add-category}"> Add Category </a>
-              </div>
-              <div class="col-md-6">
-                  <label for="subcategory" class="form-label">Subcategory</label>
-                  <select name="subcategory" class="form-control" id="subcategory" th:value="${product.subcategory.id}" required>
-                      <option value="" selected>Select Subcategory</option>
-                  </select>
-                  <br>
-                  <a class="btn btn-primary" th:href="@{/admin/add-subcategory}"> Add Subcategory </a>
-              </div>
-                <div class="col-md-6">
-                  <label for="images" class="form-label">Product Photos (Max 3)</label>
-                  <input type="file" name="images" accept="image/png, image/jpeg" class="form-control" id="images" multiple>
-                </div>
-                <div class="col-12">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck" required>
-                    <label class="form-check-label" for="gridCheck">
-                      Check me out
-                    </label>
-                  </div>
-                </div>
-                <div class="text-center">
-                  <button type="submit" class="btn btn-primary">Update</button>
-                  <button type="reset" class="btn btn-secondary">Reset</button>
-                </div>
-              </form><!-- End Multi Columns Form -->
-              <a th:href="@{/admin/produk}"> Back to Product </a>
+
             </div>
-          </div>
-
         </div>
-      </div>
-  </div>
-  </section>
+        </div>
+    </section>
 
-  <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-   <div class="credits">
-     Designed by <a href="">Kelompok 5</a>
-   </div>
- </footer><!-- End Footer -->
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+        <div class="credits">
+            Designed by <a href="">Kelompok 5</a>
+        </div>
+    </footer><!-- End Footer -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Vendor JS Files -->
-  <script th:src="@{/assets/vendor/apexcharts/apexcharts.min.js}"></script>
-  <script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-  <script th:src="@{/assets/vendor/chart.js/chart.umd.js}"></script>
-  <script th:src="@{/assets/vendor/echarts/echarts.min.js}"></script>
-  <script th:src="@{/assets/vendor/quill/quill.min.js}"></script>
-  <script th:src="@{/assets/vendor/simple-datatables/simple-datatables.js}"></script>
-  <script th:src="@{/assets/vendor/tinymce/tinymce.min.js}"></script>
-  <script th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
+    <!-- Vendor JS Files -->
+    <script th:src="@{/assets/vendor/apexcharts/apexcharts.min.js}"></script>
+    <script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/assets/vendor/chart.js/chart.umd.js}"></script>
+    <script th:src="@{/assets/vendor/echarts/echarts.min.js}"></script>
+    <script th:src="@{/assets/vendor/quill/quill.min.js}"></script>
+    <script th:src="@{/assets/vendor/simple-datatables/simple-datatables.js}"></script>
+    <script th:src="@{/assets/vendor/tinymce/tinymce.min.js}"></script>
+    <script th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
 
-  <!-- Template Main JS File -->
-  <script th:src="@{/assets/js/main.js}"></script>
+    <!-- Template Main JS File -->
+    <script th:src="@{/assets/js/main.js}"></script>
 
-  <script>
-    $(document).ready(function () {
-        // Ambil data kategori saat halaman dimuat
-        $.ajax({
-            url: 'http://localhost:8080/admin/categories', // Ganti dengan URL yang sesuai
-            method: 'GET',
-            success: function (data) {
-                // Isi dropdown kategori dengan data yang diterima dari server
-                var categoryDropdown = $('#category');
-                categoryDropdown.empty();
-                categoryDropdown.append($('<option>').text('Select Category').attr('value', ''));
-                data.forEach(function (category) {
-                    categoryDropdown.append($('<option>').text(category.name).attr('value', category.id));
-                });
+    <script>
+        $(document).ready(function () {
+            // Ambil data kategori saat halaman dimuat
+            $.ajax({
+                url: 'http://localhost:8080/admin/categories', // Ganti dengan URL yang sesuai
+                method: 'GET',
+                success: function (data) {
+                    // Isi dropdown kategori dengan data yang diterima dari server
+                    var categoryDropdown = $('#category');
+                    categoryDropdown.empty();
+                    categoryDropdown.append($('<option>').text('Select Category').attr('value', ''));
+                    data.forEach(function (category) {
+                        categoryDropdown.append($('<option>').text(category.name).attr('value', category.id));
+                    });
 
-                // Tambahkan event listener untuk dropdown kategori
-                categoryDropdown.on('change', function () {
-                    var selectedCategoryId = $(this).val();
-                    var subcategoryDropdown = $('#subcategory');
-                    subcategoryDropdown.empty();
-                    subcategoryDropdown.append($('<option>').text('Select Subcategory').attr('value', ''));
+                    // Tambahkan event listener untuk dropdown kategori
+                    categoryDropdown.on('change', function () {
+                        var selectedCategoryId = $(this).val();
+                        var subcategoryDropdown = $('#subcategory');
+                        subcategoryDropdown.empty();
+                        subcategoryDropdown.append($('<option>').text('Select Subcategory').attr('value', ''));
 
-                    // Ambil data subkategori sesuai dengan kategori yang dipilih
-                    if (selectedCategoryId) {
-                        $.ajax({
-                            url: 'http://localhost:8080/admin/subcategories/' + selectedCategoryId, // Ganti dengan URL yang sesuai
-                            method: 'GET',
-                            success: function (data) {
-                                data.forEach(function (subcategory) {
-                                    subcategoryDropdown.append($('<option>').text(subcategory.name).attr('value', subcategory.id));
-                                });
-                            }
-                        });
-                    }
-                });
-            }
+                        // Ambil data subkategori sesuai dengan kategori yang dipilih
+                        if (selectedCategoryId) {
+                            $.ajax({
+                                url: 'http://localhost:8080/admin/subcategories/' + selectedCategoryId, // Ganti dengan URL yang sesuai
+                                method: 'GET',
+                                success: function (data) {
+                                    data.forEach(function (subcategory) {
+                                        subcategoryDropdown.append($('<option>').text(subcategory.name).attr('value', subcategory.id));
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
         });
-    });
-  </script>
+    </script>
 </body>
 
 </html>

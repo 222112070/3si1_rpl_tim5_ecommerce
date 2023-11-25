@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @SessionAttributes("name")
@@ -31,18 +29,18 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-    
+
     @Autowired
     private ProductRepository productRepository;
-    
+
     @Autowired
     private CategoryService categoryService;
-    
+
     @Autowired
     private UserService userService;
     @GetMapping("/produk")
     public String viewHomePage(Model model) {
-                User user = userService.getUserLogged();
+        User user = userService.getUserLogged();
         model.addAttribute("user", user);
         return findPaginated(1, "id", "asc", model);
     }
@@ -66,10 +64,11 @@ public class ProductController {
 
     // To handle the form submission
     @PostMapping("/create-product")
-    public String createProduct(@ModelAttribute ProductDto productDto, 
-                                @RequestParam("category") Long categoryId, 
+    public String createProduct(@ModelAttribute ProductDto productDto,
+                                @RequestParam("category") Long categoryId,
                                 @RequestParam("subcategory") Long subcategoryId,
                                 Model model) throws Exception {
+
         Product savedProduct = productService.saveProduct(productDto, categoryId, subcategoryId);
         model.addAttribute("message", "Product saved successfully");
         return "redirect:/admin/produk";
@@ -84,6 +83,7 @@ public class ProductController {
             model.addAttribute("product", product.get());
             return "admin/rincian_produk";
         } else {
+            // Handle product not found scenario
             model.addAttribute("error", "Product not found");
             return "product/Product";
         }
@@ -96,7 +96,7 @@ public class ProductController {
         model.addAttribute("user", user);
         Optional<Product> productOptional = productRepository.findById(id);
         if (productOptional.isPresent()) {
-            Product product = productOptional.get();
+            Product product = productOptional.get(); // Get the Product from the Optional
             model.addAttribute("product", product);
             return "admin/updateProductForm";
         } else {
@@ -105,28 +105,26 @@ public class ProductController {
         }
     }
 
+
+    // Handle the form submission for editing
     @PostMapping("/update-product/{id}")
-    public String updateProduct(@PathVariable("id") Long id,
-                                @ModelAttribute Product product,
-                                @RequestParam("images") MultipartFile[] files,
-                                Model model) {
+    public String updateProduct(@PathVariable("id") Long id, @ModelAttribute Product product, Model model) {
         try {
-            productService.updateProduct(id, product, files);
+            productService.updateProduct(id, product);
             model.addAttribute("message", "Product updated successfully");
-            return "redirect:/user/products/view/{id}";
-        } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            return "admin/Product";
+            return "redirect:/user/products/view/{id}"; // Redirect to the desired page after successful update.
+        } catch (ResourceNotFoundException e) {
+            // Handle product not found scenario
+            model.addAttribute("error", "Product not found");
+            return "admin/Product"; // Redirect to an appropriate page or view.
         }
     }
 
-
-
     @GetMapping("produk/page/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-            @RequestParam("sortField") String sortField,
-            @RequestParam("sortDir") String sortDir,
-            Model model) {
+                                @RequestParam("sortField") String sortField,
+                                @RequestParam("sortDir") String sortDir,
+                                Model model) {
         User user = userService.getUserLogged();
         model.addAttribute("user", user);
         int pageSize = 10;
@@ -145,7 +143,6 @@ public class ProductController {
         model.addAttribute("listProduct", listProduct);
         return "admin/Product";
     }
-
     @GetMapping("/delete-product/{id}")
     public String deleteProduct(@PathVariable("id") Long id, Model model) {
         try {

@@ -2,6 +2,8 @@ package com.kel5.ecommerce.dto;
 
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
