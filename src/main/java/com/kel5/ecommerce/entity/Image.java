@@ -1,6 +1,9 @@
 package com.kel5.ecommerce.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,12 +17,4 @@ public class Image {
     private Long id;
 
     private String url;
-
-    @Transient
-    public String getUrl(){
-        if(url ==null) return null;
-
-        return url;
-    }
-
 }

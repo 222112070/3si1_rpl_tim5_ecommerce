@@ -3,19 +3,15 @@ package com.kel5.ecommerce.service;
 import com.kel5.ecommerce.dto.ProductDto;
 import com.kel5.ecommerce.entity.Product;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
-import org.springframework.web.multipart.MultipartFile;
 
 public interface ProductService {
     Product saveProduct(ProductDto productDto, Long categoryId, Long subcategoryId) throws Exception;
 
     Product createProduct(Product product);
-
-    Product updateProduct(Long id, ProductDto productDto) throws Exception;
-
+    Product updateProduct(Long id, Product product);
     void deleteProduct(Long id);
 
     List<Product> getAllProduct(String keyword);
