@@ -70,9 +70,11 @@ public class ProductController {
                                 Model model) throws Exception {
 
         Product savedProduct = productService.saveProduct(productDto, categoryId, subcategoryId);
+
         model.addAttribute("message", "Product saved successfully");
         return "redirect:/admin/produk";
     }
+
 
     @GetMapping("/products/view/{id}")
     public String viewProduct(@PathVariable("id") Long id, Model model) {
@@ -108,17 +110,15 @@ public class ProductController {
 
     // Handle the form submission for editing
     @PostMapping("/update-product/{id}")
-    public String updateProduct(@PathVariable("id") Long id, @ModelAttribute Product product, Model model) {
-        try {
-            productService.updateProduct(id, product);
-            model.addAttribute("message", "Product updated successfully");
-            return "redirect:/user/products/view/{id}"; // Redirect to the desired page after successful update.
-        } catch (ResourceNotFoundException e) {
-            // Handle product not found scenario
-            model.addAttribute("error", "Product not found");
-            return "admin/Product"; // Redirect to an appropriate page or view.
-        }
+    public String updateProduct(@PathVariable("id") Long id,
+                                @ModelAttribute ProductDto productDto,
+                                Model model) throws Exception {
+        productService.updateProduct(id, productDto);
+
+        model.addAttribute("message", "Product updated successfully");
+        return "redirect:/admin/products/view/{id}";
     }
+
 
     @GetMapping("produk/page/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,

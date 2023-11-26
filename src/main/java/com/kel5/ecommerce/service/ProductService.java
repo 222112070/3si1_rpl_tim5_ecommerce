@@ -14,7 +14,7 @@ public interface ProductService {
 
     Product createProduct(Product product);
 
-    Product updateProduct(Long id, Product product);
+    Product updateProduct(Long id, ProductDto productDto) throws Exception;
 
     void deleteProduct(Long id);
 
