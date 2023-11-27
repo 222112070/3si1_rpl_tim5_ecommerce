@@ -200,7 +200,7 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> filterOrder (String keyword){
         User user = userService.getUserLogged();
         if (user != null) {
-            return this.orderRepository.findByStatusContaining(keyword);
+            return this.orderRepository.findByStatus(keyword);
         } else {
             return Collections.emptyList();
         }

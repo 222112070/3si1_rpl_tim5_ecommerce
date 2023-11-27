@@ -70,7 +70,7 @@ public class AdminController {
         model.addAttribute("user", user);
         List<Order> orders;
         if(keyword.isEmpty()){
-            orders = orderService.getOrdersForLoggedInUser();
+            orders = orderService.getAllOrders();
         } else {
             orders = orderService.filterOrder(keyword);
         }

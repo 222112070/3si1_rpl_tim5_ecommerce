@@ -67,26 +67,36 @@
           <div class="card">
             <div class="card-body">
                
-               <div class="filter" method="get" th:action="@{/admin/pesanan}">
+               <div class="filter">
                   <h5 class="card-title" style="display: inline-flex;">Daftar Pesanan |</h5>
                   <a class="icon" href="#" data-bs-toggle="dropdown">Filter</a>                 
                  
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+<!--                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
                       <h6>Filter</h6>
                     </li>
-                    <li><a class="dropdown-item" href="#" name="keyword" value="">Semua</a></li>
-                    <li><a class="dropdown-item" href="#" name="keyword" value="Belum Dibayar">Belum Dibayar</a></li>
-                    <li><a class="dropdown-item" href="#" name="keyword" value="Belum Dikonfirmasi">Belum Dikonfirmasi</a></li>
-                    <li><a class="dropdown-item" href="#" name="keyword" value="Sudah Dikonfirmasi">Sudah Dikonfirmasi</a></li>
-                    <li><a class="dropdown-item" href="#" name="keyword" value="Dalam Proses">Dalam Proses</a></li>
-                    <li><a class="dropdown-item" href="#" name="keyword" value="Sedang Dikemas">Sedang Dikemas</a></li>
-                    <li><a class="dropdown-item" href="#" name="keyword" value="Dalam Pengiriman">Dalam Pengiriman</a></li>
-                    <li><a class="dropdown-item" href="#" name="keyword" value="Selesai">Selesai</a></li>
-                  </ul>
+                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == ''}">Semua</a></li>
+                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Belum Dibayar'}">Belum Dibayar</a></li>
+                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Belum Dikonfirmasi'}">Belum Dikonfirmasi</a></li>
+                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Sudah Dikonfirmasi'}">Sudah Dikonfirmasi</a></li>
+                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Dalam Proses'}">Dalam Proses</a></li>
+                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Sedang Dikemas'}">Sedang Dikemas</a></li>
+                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Dalam Pengiriman'}">Dalam Pengiriman</a></li>
+                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Selesai'}">Selesai</a></li>
+                  </ul>-->
+                  <select id="status" class="form-select" onchange="filterOrders()">
+                    <option value="">Semua</option>
+                    <option value="Belum Dibayar">Belum Dibayar</option>
+                    <option value="Belum Dikonfirmasi">Belum Dikonfirmasi</option>
+                    <option value="Sudah Dikonfirmasi">Sudah Dikonfirmasi</option>
+                    <option value="Dalam Proses">Dalam Proses</option>
+                    <option value="Sedang Dikemas">Sedang Dikemas</option>
+                    <option value="Dalam Pengiriman">Dalam Pengiriman</option>
+                    <option value="Selesai">Selesai</option>
+                  </select>
                 </div>
 
-               <table class="table table-borderless datatable">
+               <table class="table table-borderless datatable" id="myTable">
                  <thead>
                    <tr>
                      <th scope="col">Nomor id</th>
@@ -260,6 +270,29 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
+  <script>
+  function filterOrders() {
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("status");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0]; // Assuming the status is in the first column, adjust index if needed
+      if (td) {
+        var statusValue = td.textContent || td.innerText;
+        if (filter === "ALL" || statusValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+  }
+  </script>
+
+  
   <!-- Vendor JS Files -->
   <script th:src="@{/assets/vendor/apexcharts/apexcharts.min.js}"></script>
   <script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
