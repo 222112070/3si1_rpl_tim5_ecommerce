@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Form Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="fontawesome/css/all.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <form class="form-containerRegister">
+        <h1 class="judul text-center fw-bold mb-1"><strong>DAFTAR</strong></h1>
+        <p class="text-center">
+          Sudah Punya Akun?
+          <a href="login.html" class="text-hover fw-bold">Masuk Disini</a>
+        </p>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-address-card" style="color: #d40000;"></i></span>
+              <input type=text class="form-control" id="exampleInputEmail1"  placeholder="Nama Depan" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <input type="email" class="form-control" id="exampleInputEmail1"  placeholder="Nama Belakang">
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-user" style="color: #d40000;"></i></span>
+          <input type="username" class="form-control" id="exampleInputUsername1" placeholder="Username" required>
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1"><i class="fa-brands fa-whatsapp" style="color: #d40000;"></i></i></span>
+          <input type=text class="form-control" id="exampleInputEmail1" placeholder="WhatsApp">
+        </div>
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-envelope" style="color: #d40000;"></i></span>
+          <input type="email" class="form-control" id="exampleInputEmail1" placeholder="E-mail" required>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-lock" style="color: #d40000;"></i></span>
+              <input type="password" class="form-control" id="passwordInput" placeholder="Password" required>
+              <span class="input-group-text" id="showHide1"><i class="fa-solid fa-eye-slash" style="color: #000000;"></i></span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group mb-3">
+              <input type="password" class="form-control" id="confirmPasswordInput" placeholder="Ulangi Password" required>
+              <span class="input-group-text" id="showHide2"><i class="fa-solid fa-eye-slash" style="color: #000000;"></i></span>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label judul" for="exampleCheck1">Saya Menyetujui <span class="text-danger fw-bold">Syarat & Ketentuan</span> Yang Berlaku<span class="text-danger fw-bold">*</span></label>
+        </div>
+        <div class="d-grid mt-4">
+          <button type="submit" class="btn btn-outline-danger">Daftar</button>
+        </div>
+      </form>
+    </div>
+    <script>
+      var passwordInput = document.getElementById("passwordInput");
+      var confirmPasswordInput = document.getElementById("confirmPasswordInput");
+      var showHideButton1 = document.getElementById("showHide1");
+      var showHideButton2 = document.getElementById("showHide2");
+
+      showHideButton1.addEventListener("click", function () {
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          showHideButton1.innerHTML = '<i class="fa-solid fa-eye" style="color: #000000;"></i>';
+        } else {
+          passwordInput.type = "password";
+          showHideButton1.innerHTML = '<i class="fa-solid fa-eye-slash" style="color: #000000;"></i>';
+        }
+      });
+
+      showHideButton2.addEventListener("click", function () {
+        if (confirmPasswordInput.type === "password") {
+          confirmPasswordInput.type = "text";
+          showHideButton2.innerHTML = '<i class="fa-solid fa-eye" style="color: #000000;"></i>';
+        } else {
+          confirmPasswordInput.type = "password";
+          showHideButton2.innerHTML = '<i class="fa-solid fa-eye-slash" style="color: #000000;"></i>';
+        }
+      });
+
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>
