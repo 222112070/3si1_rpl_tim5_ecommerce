@@ -1,10 +1,3 @@
-/*!
- * Bootstrap-select v1.12.13 (https://github.com/heimrichhannot/bootstrap-select)
- *
- * Copyright 2013-2017 bootstrap-select
- * Licensed under MIT (https://github.com/heimrichhannot/bootstrap-select/LICENSE)
- */
-
 (function(root, factory) {
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module unless amdModuleId is set
@@ -148,10 +141,6 @@
                 return r;
             };
         }
-
-        // set data-selected on select element if the value has been programmatically selected
-        // prior to initialization of bootstrap-select
-        // * consider removing or replacing an alternative method *
         var valHooks = {
             useDefault: false,
             _set: $.valHooks.select.set,
@@ -636,9 +625,6 @@
                     }
 
                     if (that.options.hideDisabled && (isDisabled && !isOptgroup || isOptgroupDisabled)) {
-                        // set prevHiddenIndex - the index of the first hidden option in a group of hidden options
-                        // used to determine whether or not a divider should be placed after an optgroup if there are
-                        // hidden options between the optgroup and the first visible option
                         prevHiddenIndex = $this.data('prevHiddenIndex');
                         $this.next().data('prevHiddenIndex', (prevHiddenIndex !== undefined ? prevHiddenIndex : index));
 
@@ -841,7 +827,6 @@
                 }
             },
             updatePosition: function() {
-                // this fixes https://github.com/heimrichhannot/bootstrap-select/issues/4
                 var event = this.$menu.get(0).ownerDocument.createEvent('HTMLEvents');
                 event.initEvent('resize', true, false);
                 this.$menu.get(0).ownerDocument.dispatchEvent(event);
@@ -895,7 +880,6 @@
                     actionsHeight = actions ? actions.offsetHeight : 0,
                     doneButtonHeight = doneButton ? doneButton.offsetHeight : 0,
                     dividerHeight = $(divider).outerHeight(true),
-                    // fall back to jQuery if getComputedStyle is not supported
                     menuStyle = typeof getComputedStyle === 'function' ? getComputedStyle(menu) : false,
                     $menu = menuStyle ? null : $(menu),
                     menuPadding = {
@@ -1785,12 +1769,9 @@
         };
 
         // SELECTPICKER PLUGIN DEFINITION
-        // ==============================
         function Plugin(option) {
             // get the args of the outer function..
             var args = arguments;
-            // The arguments of the function are explicitly re-defined from the argument list, because the shift causes them
-            // to get lost/corrupted in android 2.3 and IE9 #715 #775
             var _option = option;
 
             [].shift.apply(args);
