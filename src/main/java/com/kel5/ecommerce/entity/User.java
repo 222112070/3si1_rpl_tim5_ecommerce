@@ -34,7 +34,13 @@ public class User {
 
     @Column(nullable = false)
     private boolean isEnabled = false;
-
+    
+    @Column(nullable = false)
+    private String type = "Regular";
+    
+    @Column(nullable = false)
+    private float totalSpent = 0;
+    
     @Column(nullable = false)
     @CreationTimestamp
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

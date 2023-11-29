@@ -101,14 +101,20 @@ public class UserController {
     
     @GetMapping("/announcement")
     public String announcement(ModelMap model){
-        String username = getLogedinUsername();
-                List<Category> categories = categoryRepository.findAll();
-        List<Subcategory> subcategories = subcategoryRepository.findAll();
-        model.addAttribute("categories", categories);
-        model.addAttribute("subcategories", subcategories);
-        List<Announcement> announcement = announcementRepository.findAll();
-        model.addAttribute("announcement", announcement);
-        return "user/announcement";
+        User user = userService.getUserLogged();
+        System.out.println(user.getType());
+        if("Regular".equals(user.getType())){
+            return "redirect:/user/";
+        }
+        else{
+            List<Category> categories = categoryRepository.findAll();
+            List<Subcategory> subcategories = subcategoryRepository.findAll();
+            model.addAttribute("categories", categories);
+            model.addAttribute("subcategories", subcategories);
+            List<Announcement> announcement = announcementRepository.findAll();
+            model.addAttribute("announcement", announcement);
+            return "user/announcement";
+        }
     } 
     
     @GetMapping("/catalogue")

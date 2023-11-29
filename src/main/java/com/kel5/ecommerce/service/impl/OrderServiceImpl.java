@@ -5,6 +5,7 @@ import com.kel5.ecommerce.exception.ResourceNotFoundException;
 import com.kel5.ecommerce.repository.CartRepository;
 import com.kel5.ecommerce.repository.OrderRepository;
 import com.kel5.ecommerce.repository.ProductRepository;
+import com.kel5.ecommerce.repository.UserRepository;
 import com.kel5.ecommerce.service.OrderObserver;
 import com.kel5.ecommerce.service.OrderService;
 import com.kel5.ecommerce.service.UserService;
@@ -25,7 +26,8 @@ public class OrderServiceImpl implements OrderService {
     final
     UserService userService;
     final CartRepository cartRepository;
-
+    @Autowired
+    UserRepository userRepository;
     @Autowired
     ProductRepository productRepository;
     private List<OrderObserver> observers = new ArrayList<>();
@@ -134,7 +136,6 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setSize(cartItem.getSize());
             orderItem.setOrder(order);
             order.getOrderItems().add(orderItem);
-
             // If needed, also update the Product stock here
         });
        
@@ -229,6 +230,14 @@ public class OrderServiceImpl implements OrderService {
                 .append("Terima kasih");
 
         return message.toString();
+    }
+
+    @Override
+    public void setTotalSpentUser(User user,Order order) {
+        float currentTotalSpent = user.getTotalSpent();
+        float newTotalSpent = currentTotalSpent + order.getTotalAmount();
+        user.setTotalSpent(newTotalSpent);
+        userRepository.save(user);
     }
 
 }

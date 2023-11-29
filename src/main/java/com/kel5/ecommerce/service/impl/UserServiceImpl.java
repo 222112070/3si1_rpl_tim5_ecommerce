@@ -180,4 +180,9 @@ public class UserServiceImpl implements UserService {
     public Cart getUserCart() {
         return null;
     }
+
+    @Override
+    public User setTotalSpentUser(User user) {
+        return user;
+    }
 }
