@@ -29,18 +29,18 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-
+    
     @Autowired
     private ProductRepository productRepository;
-
+    
     @Autowired
     private CategoryService categoryService;
-
+    
     @Autowired
     private UserService userService;
     @GetMapping("/produk")
     public String viewHomePage(Model model) {
-        User user = userService.getUserLogged();
+                User user = userService.getUserLogged();
         model.addAttribute("user", user);
         return findPaginated(1, "id", "asc", model);
     }
@@ -64,17 +64,15 @@ public class ProductController {
 
     // To handle the form submission
     @PostMapping("/create-product")
-    public String createProduct(@ModelAttribute ProductDto productDto,
-                                @RequestParam("category") Long categoryId,
-                                @RequestParam("subcategory") Long subcategoryId,
+    public String createProduct(@ModelAttribute ProductDto productDto, 
+                                @RequestParam("category") Long categoryId, 
+                                @RequestParam("subcategory") Long subcategoryId, 
                                 Model model) throws Exception {
 
         Product savedProduct = productService.saveProduct(productDto, categoryId, subcategoryId);
-
         model.addAttribute("message", "Product saved successfully");
         return "redirect:/admin/produk";
     }
-
 
     @GetMapping("/products/view/{id}")
     public String viewProduct(@PathVariable("id") Long id, Model model) {
@@ -110,21 +108,23 @@ public class ProductController {
 
     // Handle the form submission for editing
     @PostMapping("/update-product/{id}")
-    public String updateProduct(@PathVariable("id") Long id,
-                                @ModelAttribute ProductDto productDto,
-                                Model model) throws Exception {
-        productService.updateProduct(id, productDto);
-
-        model.addAttribute("message", "Product updated successfully");
-        return "redirect:/admin/products/view/{id}";
+    public String updateProduct(@PathVariable("id") Long id, @ModelAttribute Product product, Model model) {
+        try {
+            productService.updateProduct(id, product);
+            model.addAttribute("message", "Product updated successfully");
+            return "redirect:/user/products/view/{id}"; // Redirect to the desired page after successful update.
+        } catch (ResourceNotFoundException e) {
+            // Handle product not found scenario
+            model.addAttribute("error", "Product not found");
+            return "admin/Product"; // Redirect to an appropriate page or view.
+        }
     }
-
 
     @GetMapping("produk/page/{pageNo}")
     public String findPaginated(@PathVariable(value = "pageNo") int pageNo,
-                                @RequestParam("sortField") String sortField,
-                                @RequestParam("sortDir") String sortDir,
-                                Model model) {
+            @RequestParam("sortField") String sortField,
+            @RequestParam("sortDir") String sortDir,
+            Model model) {
         User user = userService.getUserLogged();
         model.addAttribute("user", user);
         int pageSize = 10;

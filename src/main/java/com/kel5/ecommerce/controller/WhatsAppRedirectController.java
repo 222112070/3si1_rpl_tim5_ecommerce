@@ -36,7 +36,7 @@ public class WhatsAppRedirectController {
     public String redirectToWhatsAppWithOrderMessage(@PathVariable Long orderId) {
         String message = orderService.createOrderMessage(orderId);
         String encodedMessage = URLEncoder.encode(message, StandardCharsets.UTF_8);
-        String phoneNumber = "6281278984640";
+        String phoneNumber = "6289527430981";
 
         return "redirect:https://wa.me/" + phoneNumber + "?text=" + encodedMessage;
     }
