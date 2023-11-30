@@ -75,8 +75,6 @@ public class CartServiceImpl implements CartService {
             throw new IllegalArgumentException("Cart not found");
         }
         Cart cart = cartOptional.get();
-
-        // Add the new item to the cart
         cart.getCartItems().add(cartItem);
         cartItem.setCart(cart);
 
@@ -90,7 +88,6 @@ public class CartServiceImpl implements CartService {
 
         cartRepository.save(cart);
     }
-
 
     @Override
     public Cart getCurrentCart() {

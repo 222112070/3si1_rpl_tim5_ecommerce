@@ -151,7 +151,6 @@
 </head>
 
 <body>
-    <!-- Loader -->
     <div th:replace="user/fragments/loader :: loader"></div>
     <!-- Start Main Top -->
     <div th:replace="user/fragments/user-header :: header"></div>
@@ -189,7 +188,7 @@
                         <div class="col-md-12">
                             <h1 class="m-b-20"><strong>Selamat Datang <br> Jimbung Industrial</strong></h1>
                             <p class="m-b-40">Sharing solution yaitu membuka diskusi baik intern manjemen maupun ekstern mitra kerja produksi, pemasaran dan konsumen guna memberikan saran maupun evaluasi kinerja</p>
-                            <p><a class="btn hvr-hover" href="@{/user/shop}">Belanja Sekarang</a></p>
+                            <p><a class="btn hvr-hover" th:href="@{/user/shop}">Belanja Sekarang</a></p>
                         </div>
                     </div>
                 </div>
@@ -201,7 +200,7 @@
                         <div class="col-md-12">
                             <h1 class="m-b-20"><strong>Selamat Datang<br> Jimbung Industrial</strong></h1>
                             <p class="m-b-40">Solution Patner yaitu menjalin kemitraan usaha yang sustainability dengan feedback saling menguntungkan </p>
-                            <p><a class="btn hvr-hover" href="@{/user/shop}">Belanja Sekarang</a></p>
+                            <p><a class="btn hvr-hover" th:href="@{/user/shop}">Belanja Sekarang</a></p>
                         </div>
                     </div>
                 </div>
@@ -560,6 +559,33 @@
     <script th:src="@{/assets/js/form-validator.min.js}"></script>
     <script th:src="@{/assets/js/contact-form-script.js}"></script>
     <script th:src="@{/assets/js/custom.js}"></script>
+    <!-- <script>
+        // JavaScript to handle the modal pop-up
+        var modals = document.querySelectorAll('.modal');
+        var openButtons = document.querySelectorAll('.open-modal');
+        var modalImage = document.getElementById('modalImage');
+        var modalTitle = document.getElementById('modalTitle');
+        var modalDescription = document.getElementById('modalDescription');
+    
+        openButtons.forEach(function (button, index) {
+            button.addEventListener('click', function (event) {
+                event.preventDefault(); // Prevent the default link behavior
+                var blog = ${blogs[index]}; // Get the corresponding blog data
+                modalImage.src = blog.photosImagePath;
+                modalTitle.textContent = blog.name;
+                modalDescription.textContent = blog.deskripsi;
+                modals[0].style.display = 'block';
+            });
+        });
+    
+        // Close the modal when the "x" button is clicked
+        var closeButtons = document.querySelectorAll('.close');
+        closeButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                modals[0].style.display = 'none';
+            });
+        });
+    </script> -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var modals = document.querySelectorAll('.modal');
@@ -591,8 +617,8 @@
             });
         });
     </script>
+    <script th:src="@{/assets/js/loader.js}"></script> 
     
-    <script th:src="@{/assets/js/loader.js}"></script>
 </body>
 
 </html>

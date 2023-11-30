@@ -1,6 +1,7 @@
 package com.kel5.ecommerce.service.impl;
 
 import com.kel5.ecommerce.dto.ProductDto;
+import com.kel5.ecommerce.entity.Blog;
 import com.kel5.ecommerce.entity.Category;
 import com.kel5.ecommerce.entity.Image;
 import com.kel5.ecommerce.entity.Product;
@@ -31,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
-
+    
     @Autowired
     private CategoryService categoryService;
 
@@ -102,17 +103,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAllProduct(String keyword) {
-        if (keyword != null){
-            return productRepository.search(keyword);
-        } else
-            return (List<Product>)productRepository.findAll();
+       if (keyword != null){
+           return productRepository.search(keyword);
+       } else 
+           return (List<Product>)productRepository.findAll(); 
     }
 
     @Override
     public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
     }
-
+ 
     @Override
     public Page<Product> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending()

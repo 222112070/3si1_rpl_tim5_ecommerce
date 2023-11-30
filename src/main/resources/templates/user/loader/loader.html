@@ -40,9 +40,6 @@
         function updateProgress() {
             progress += 1;
             if (progress > 100) {
-                // Loading is complete, hide the preloader
-                const targetUrl = '/user/';
-                window.location.href = targetUrl;
             } else {
                 // Update the loading percentage text
                 loadingPercentageText.textContent = `Loading: ${progress}%`;

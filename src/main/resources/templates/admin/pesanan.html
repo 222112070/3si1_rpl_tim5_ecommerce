@@ -69,88 +69,107 @@
                
                <div class="filter">
                   <h5 class="card-title" style="display: inline-flex;">Daftar Pesanan |</h5>
-                  <a class="icon" href="#" data-bs-toggle="dropdown">Hari ini</a>                 
+                  <a class="icon" href="#" data-bs-toggle="dropdown">Filter</a>                 
                  
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+<!--                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                     <li class="dropdown-header text-start">
                       <h6>Filter</h6>
                     </li>
-
-                    <li><a class="dropdown-item" href="#">Hari ini</a></li>
-                    <li><a class="dropdown-item" href="#">Bulan ini</a></li>
-                    <li><a class="dropdown-item" href="#">Tahun ini</a></li>
-                  </ul>
+                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == ''}">Semua</a></li>
+                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Belum Dibayar'}">Belum Dibayar</a></li>
+                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Belum Dikonfirmasi'}">Belum Dikonfirmasi</a></li>
+                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Sudah Dikonfirmasi'}">Sudah Dikonfirmasi</a></li>
+                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Dalam Proses'}">Dalam Proses</a></li>
+                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Sedang Dikemas'}">Sedang Dikemas</a></li>
+                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Dalam Pengiriman'}">Dalam Pengiriman</a></li>
+                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Selesai'}">Selesai</a></li>
+                  </ul>-->
+                  <select id="status" class="form-select" onchange="filterOrders()">
+                    <option value="">Semua</option>
+                    <option value="Belum Dibayar">Belum Dibayar</option>
+                    <option value="Belum Dikonfirmasi">Belum Dikonfirmasi</option>
+                    <option value="Sudah Dikonfirmasi">Sudah Dikonfirmasi</option>
+                    <option value="Dalam Proses">Dalam Proses</option>
+                    <option value="Sedang Dikemas">Sedang Dikemas</option>
+                    <option value="Dalam Pengiriman">Dalam Pengiriman</option>
+                    <option value="Selesai">Selesai</option>
+                  </select>
                 </div>
 
-               <table class="table table-borderless datatable">
+               <table class="table table-borderless datatable" id="myTable">
                  <thead>
                    <tr>
                      <th scope="col">Nomor id</th>
                      <th scope="col">Nama</th>
                      <th scope="col">Tanggal Pesan</th>
-                     <th scope="col">Produk</th>
-                     <th scope="col">Jumlah</th>
-                     <th scope="col">Progress</th>
+                     <th scope="col">Total Biaya</th>
                      <th scope="col">Status</th>
-                     <th scope="col">Update</th>
+                     <th scope="col">Action</th>
                      <th scope="col">Perincian</th>
                    </tr>
                  </thead>
                  <tbody>
-                   <tr>
-                     <th scope="row">#B457</th>
-                     <td>Rudi Tabudi</td>
-                     <td>12 Mei 2023</td>
-                     <td>Kaos</td>
-                     <td>300</td>
-                     <td>100%</td>
-                     <td><span class="badge bg-success">Selesai</span></td>
+                   <tr th:each="order, iterStat : ${orders}">
+                     <th scope="row" th:text="${order.id}"></th>
+                     <td th:text="${order.name}"></td>
+                     <td th:text="${order.orderDate}"></td>
+                     <td th:text="'Rp. ' + ${order.totalAmount}"></td>
+                     <td><span  th:text="${order.status}" 
+                                th:class="${order.status == 'Belum Dibayar' ? 'badge bg-danger' : 
+                                (order.status == 'Belum Dikonfirmasi' ? 'badge bg-warning' :
+                                (order.status == 'Sudah Dikonfirmasi' ? 'badge bg-secondary' :
+                                (order.status == 'Dalam Proses' ? 'badge bg-info text-dark' :
+                                (order.status == 'Sedang Dikemas' ? 'badge bg-primary' :
+                                (order.status == 'Dalam Pengiriman' ? 'badge bg-light text-dark' : 'badge bg-success')))))}"></span></td>
                      <td>
-                      <a href="#" data-toggle="modal" data-target="#editModal"><i class="fa-solid fa-pen-to-square"></i></i></a>   
+                      <a href="#" data-toggle="modal" th:data-target="'#editModal-' + ${order.id}"><i class="fa-solid fa-pen-to-square"></i></a> 
                       <a href="#" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa-solid fa-trash"></i></a>
                      </td>
                      <td><a href="rincian_pesanan.html?id=1" class="btn btn-primary">Lihat Rincian</a></td>
-                   </tr>
-
+                    </tr>
+                    
                     <!-- Modal edit pesanan-->
-                    <div class="modal fade" id="editModal">
+                 <div th:each="order : ${orders}">
+                    <div class="modal fade" th:id="'editModal-' + ${order.id}" tabindex="-1" role="dialog">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <!-- Header modal -->
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Edit Progres dan Jenis Pesanan</h4>
-                                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+                                    <h4 class="modal-title">Edit Status Pesanan</h4>
+                                     <button type="button" class="close" data-dismiss="modal">&times;</button> 
                                 </div>
 
                                 <!-- Body modal -->
                                 <div class="modal-body">
-                                    <form>
+                                    <form th:action="@{'/admin/pesanan/edit/' + ${order.id}}" method="post">
+                                        <input type="hidden" name="orderId" th:value="${order.id}" />
                                         <div class="form-group">
-                                            <label for="progress">Progres (dalam persen):</label>
-                                            <input type="number" class="form-control" id="progress">
+                                            <label for="totalAmountFix">Total Biaya</label>
+                                            <input type="number" id="totalAmountFix" name="totalAmountFix" th:value="${order.totalAmount}" required>
                                         </div>
                                         <br>
                                         <div class="form-group">
-                                            <label for="jenisPesanan">Status :</label>
-                                            <select class="form-control" id="jenisPesanan">
-                                                <option value="Jenis 1">Dibatalkan</option>
-                                                <option value="Jenis 2">Dalam Proses</option>
-                                                <option value="Jenis 3">Selesai</option>
+                                            <label for="status">Status</label>
+                                            <select class="form-control" id="status" name="status" required th:value ="${order.status}">
+                                                <option value="">Pilih Status Pesanan</option>
+                                                <option value="Belum Dibayar" th:selected="${order.status == 'Belum Dibayar'}">Belum Dibayar</option>
+                                                <option value="Belum Dikonfirmasi" th:selected="${order.status == 'Belum Dikonfirmasi'}">Belum Dikonfirmasi</option>
+                                                <option value="Sudah Dikonfirmasi" th:selected="${order.status == 'Sudah Dikonfirmasi'}">Sudah Dikonfirmasi</option>
+                                                <option value="Dalam Proses" th:selected="${order.status == 'Dalam Proses'}">Dalam Proses</option>
+                                                <option value="Sedang Dikemas" th:selected="${order.status == 'Sedang Dikemas'}">Sedang Dikemas</option>
+                                                <option value="Dalam Pengiriman" th:selected="${order.status == 'Dalam Pengiriman'}">Dalam Pengiriman</option>
+                                                <option value="Selesai" th:selected="${order.status == 'Selesai'}">Selesai</option>
                                             </select>
                                         </div>
+                                        
+                                        <button type="submit" class="btn btn-primary mt-2">Simpan</button>
                                     </form>
-                                </div>
-
-                                <!-- Footer modal -->
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                                    <button type="button" class="btn btn-primary" onclick="simpanPerubahan()">Simpan</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <script>
+<!--                    <script>
                     function simpanPerubahan() {
                         // Lakukan sesuatu dengan nilai yang diinput
                         var progressValue = document.getElementById("progress").value;
@@ -161,7 +180,7 @@
                         // Tutup modal
                         $('#editModal').modal('hide');
                     }
-                    </script>
+                    </script>-->
 
                    
                     <!-- Modal konfirmasi hapus pesanan -->
@@ -196,54 +215,41 @@
                         $('#confirmDeleteModal').modal('hide');
                     }
                     </script>
+                 </div>
 
-
-                   <tr>
-                     <th scope="row">#B457</th>
-                     <td>Rudi Tabudi</td>
-                     <td>12 Mei 2023</td>
-                     <td>Jersey</td>
-                     <td>400</td>
-                     <td>100%</td>
-                     <td><span class="badge bg-success">Selesai</span></td>
-                     <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a>   <a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                     <td><a href="rincian_pesanan.html?id=1" class="btn btn-primary">Lihat Rincian</a></td>
-                   </tr>
-                   <tr>
-                     <th scope="row">#7812</th>
-                     <td>Sipadu Robert</td>
-                     <td>12 Mei 2023</td>
-                     <td>Batik</td>
-                     <td>764</td>
-                     <td>90%</td>
-                     <td><span class="badge bg-warning">Dalam Proses</span></td>
-                     <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a>   <a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                     <td><a href="rincian_pesanan.html?id=1" class="btn btn-primary">Lihat Rincian</a></td>
-                   </tr>
-                   <tr>
-                     <th scope="row">#2457</th>
-                     <td>Camelia Dea</td>
-                     <td>12 Mei 2023</td>
-                     <td>PDO</td>
-                     <td>14</td>
-                     <td>90%</td>
-                     <td><span class="badge bg-danger">Dibatalkan</span></td>
-                     <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a>   <a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                     <td><a href="rincian_pesanan.html?id=1" class="btn btn-primary">Lihat Rincian</a></td>
-                   </tr>
-                   <tr>
-                     <th scope="row">#6182</th>
-                     <td>Anugrah Putri</td>
-                     <td>12 Mei 2023</td>
-                     <td>PDH</td>
-                     <td>378</td>
-                     <td>90%</td>
-                     <td><span class="badge bg-danger">Dibatalkan</span></td>
-                     <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a>   <a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                     <td><a href="rincian_pesanan.html?id=1" class="btn btn-primary">Lihat Rincian</a></td>
-                   </tr>
                  </tbody>
-               </table>
+                </table>
+                
+                <!--Modal-->
+<!--                <div class="modal fade" th:id="'editModal-' + ${order.id}" tabindex="-1" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                 Header modal 
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Edit Status Pesanan</h4>
+                                     <button type="button" class="close" data-dismiss="modal">&times;</button> 
+                                </div>
+
+                                 Body modal 
+                                <div class="modal-body">
+                                    <form th:action="@{'/admin/pesanan/edit/' + ${order.id}}" method="post">
+                                        <input type="hidden" name="orderId" th:value="${order.id}" />
+                                            <label for="status">Status :</label>
+                                            <select class="form-control" id="status" name="status" required>
+                                                <option value="Belum Dibayar">Belum Dibayar</option>
+                                                <option value="Belum Dikonfirmasi">Belum Dikonfirmasi</option>
+                                                <option value="Sudah Dikonfirmasi">Sudah Dikonfirmasi</option>
+                                                <option value="Dalam Proses">Dalam Proses</option>
+                                                <option value="Sedang Dikemas">Sedang Dikemas</option>
+                                                <option value="Dalam Pengiriman">Selesai</option>
+                                                <option value="Selesai">Selesai</option>
+                                            </select>
+                                        <button type="submit" class="btn btn-primary mt-2">Simpan</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
               <!-- End Table with stripped rows -->
 
             </div>
@@ -264,6 +270,29 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
+  <script>
+  function filterOrders() {
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("status");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("myTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0]; // Assuming the status is in the first column, adjust index if needed
+      if (td) {
+        var statusValue = td.textContent || td.innerText;
+        if (filter === "ALL" || statusValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }       
+    }
+  }
+  </script>
+
+  
   <!-- Vendor JS Files -->
   <script th:src="@{/assets/vendor/apexcharts/apexcharts.min.js}"></script>
   <script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>

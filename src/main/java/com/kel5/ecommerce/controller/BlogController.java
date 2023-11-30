@@ -11,8 +11,6 @@ import com.kel5.ecommerce.service.BlogService;
 import com.kel5.ecommerce.service.UserService;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
@@ -74,20 +72,12 @@ public class BlogController {
     @PostMapping("/saveBlog")
     public RedirectView saveBlog(@ModelAttribute("blog") Blog blog,
             @RequestParam("image") MultipartFile multipartFile) throws IOException{
-
-        if (!multipartFile.isEmpty()) {
-            // Jika file baru diupload, simpan dan gunakan nama file baru
-            String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-            blog.setPhotos(fileName);
-            Blog saveBlog = blogService.saveBlog(blog);
-            String uploadDir = "blog-photos/" + saveBlog.getId();
-            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-        } else {
-            // Jika tidak ada file baru, gunakan nama file yang sudah ada
-            Blog existingBlog = blogService.getBlogById(blog.getId());
-            blog.setPhotos(existingBlog.getPhotos());
-            blogService.saveBlog(blog);
-        }
+        
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        blog.setPhotos(fileName);
+        Blog saveBlog = blogService.saveBlog(blog);
+        String uploadDir = "blog-photos/" + saveBlog.getId();
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         return new RedirectView("/admin/artikel", true);
     }
         

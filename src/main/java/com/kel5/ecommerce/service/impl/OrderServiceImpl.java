@@ -9,6 +9,7 @@ import com.kel5.ecommerce.repository.UserRepository;
 import com.kel5.ecommerce.service.OrderObserver;
 import com.kel5.ecommerce.service.OrderService;
 import com.kel5.ecommerce.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,40 +51,30 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order updateOrder(Long id, Order order) {
+    public Order updateOrder(Long id, String status, float totalAmountFix) {
         Order existingOrder = orderRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found with id " + id));
-        // Update properties of existingOrder with those from order
-        // ...
+        existingOrder.setStatus(status);
+        existingOrder.setTotalAmount(totalAmountFix);
         return orderRepository.save(existingOrder);
     }
+    
+    @Override
+    public Order updateOrderByUser(Long id, String status) {
+        User user = userService.getUserLogged();
+        if (user != null) {
+            Order existingOrder = orderRepository.findByUserAndIdAndStatus(user,id,"Dalam Pengiriman");
+            if(existingOrder != null){
+                existingOrder.setStatus(status);
+                return orderRepository.save(existingOrder);
+            } else{
+                throw new ResourceNotFoundException("Order Not Found"); 
+            }
+        } else {
+            throw new ResourceNotFoundException("User Not Found");
+        }
+    }
 
-//    @Override
-//    public String createOrderMessage(Long orderId) {
-//        Optional<Order> orderOptional = orderRepository.findById(orderId);
-//
-//        if (orderOptional.isEmpty()) {
-//            return "Order dengan ID: " + orderId + " tidak ditemukan.";
-//        }
-//
-//        Order order = orderOptional.get();
-//        StringBuilder message = new StringBuilder();
-//        message.append("Permisi saya telah membuat pemesanan dengan id '")
-//                .append(orderId)
-//                .append("'\nKeterangan barang\n");
-//
-//        int count = 1;
-//        for (OrderItem item : order.getOrderItems()) {
-//            message.append(count++)
-//                    .append(". '")
-//                    .append(item.getProduct().getName())
-//                    .append("' ")
-//                    .append(item.getQuantity())
-//                    .append(" buah\n");
-//        }
-//
-//        return message.toString();
-//    }
 
     @Override
     public Order getOrderById(Long id) {
@@ -230,14 +221,56 @@ public class OrderServiceImpl implements OrderService {
                 .append("Terima kasih");
 
         return message.toString();
+
+    }
+    
+    @Override
+    public List<Order> filterOrder (String keyword){
+        User user = userService.getUserLogged();
+        if (user != null) {
+            return this.orderRepository.findByStatus(keyword);
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     @Override
-    public void setTotalSpentUser(User user,Order order) {
-        float currentTotalSpent = user.getTotalSpent();
-        float newTotalSpent = currentTotalSpent + order.getTotalAmount();
-        user.setTotalSpent(newTotalSpent);
-        userRepository.save(user);
+    public void updateTotalSpentUser(Long id) {
+        User user = userService.getUserLogged();
+        Optional<Order> orderOptional = orderRepository.findById(id);
+        if (orderOptional.isPresent()) {
+            Order order = orderOptional.get();
+            float currentTotalSpent = user.getTotalSpent();
+            float newTotalSpent = currentTotalSpent + order.getTotalAmount();
+            user.setTotalSpent(newTotalSpent);
+            if(user.getType().equals("Regular") && newTotalSpent>=50000000){
+                user.setType("Vendor");
+            }
+            userRepository.save(user);
+        } else {
+            throw new ResourceNotFoundException("Order not found with id " + id);
+        }
+ 
+    }
+
+    @Override
+    public List<Order> getOrderDoneForLoggedInUser(String orderStatus) {
+        User user = userService.getUserLogged();
+        if (user != null) {
+            return orderRepository.findByUserAndStatus(user,orderStatus);
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public List<Order> getOrderOnProgressForLoggedInUser(String orderStatus) {
+        User user = userService.getUserLogged();
+        if (user != null) {
+            return orderRepository.findByUserAndStatusNot(user,orderStatus);
+        } else {
+            return Collections.emptyList();
+        }
     }
 
 }
