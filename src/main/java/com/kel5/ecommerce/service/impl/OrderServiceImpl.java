@@ -112,7 +112,7 @@ public class OrderServiceImpl implements OrderService {
                 .address(address)
                 .whatsapp(whatsapp)
                 .notes(notes)
-                .status("Belum Dibayar") // Example status, this could be an enum or string depending on your design
+                .status("Belum Dikonfirmasi") // Example status, this could be an enum or string depending on your design
                 .orderDate(LocalDate.now())
                 .totalAmount(cart.getTotalPrice())
                 .user(cart.getUser()) // Assuming the user is the same as the one associated with the cart
@@ -272,5 +272,4 @@ public class OrderServiceImpl implements OrderService {
             return Collections.emptyList();
         }
     }
-
 }

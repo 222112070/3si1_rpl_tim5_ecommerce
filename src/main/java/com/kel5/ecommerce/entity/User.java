@@ -36,7 +36,7 @@ public class User {
     private boolean isEnabled = false;
     
     @Column(nullable = false)
-    private String type = "Regular";
+    private String type = "Reguler";
     
     @Column(nullable = false)
     private float totalSpent = 0;

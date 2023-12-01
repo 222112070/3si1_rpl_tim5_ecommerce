@@ -185,4 +185,9 @@ public class UserServiceImpl implements UserService {
     public User setTotalSpentUser(User user) {
         return user;
     }
+
+    @Override
+    public List<User> getAllCustomer() {
+      return userRepository.findByRoles_Name("ROLE_USER");
+    }
 }

@@ -31,4 +31,6 @@ public interface UserService {
     public Cart getUserCart();
     
     User setTotalSpentUser(User user);
+    
+    List<User> getAllCustomer();
 }

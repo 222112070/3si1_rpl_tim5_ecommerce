@@ -116,7 +116,13 @@
                             <td><a th:href="@{/user/order/details/{detailId}(detailId=${order.id})}" style="font-weight: bolder; color: white;">Lihat Detail</a></td>
                             <td th:if="${order.status == 'Dalam Pengiriman'}">
                                 <a th:href="@{'/user/order/confirm/' + ${order.id}}" style="font-weight: bolder; color: lightgreen;">Konfirmasi Terima</a>
-                            </td>                            
+                            </td>
+                            <td th:if="${order.status == 'Belum Dikonfirmasi'}">
+                                <a th:href="@{'/user/order/whatsapp/' + ${order.id}}" style="font-weight: bolder; color: white;">Konfirmasi Ke Whatsapp Admin</a>
+                            </td>     
+                            <td th:if="${order.status == 'Belum Dikonfirmasi'}">
+                                <a th:href="@{'/user/order/whatsapp/' + ${order.id}}" style="font-weight: bolder; color: white;">Konfirmasi Ke Whatsapp Admin</a>
+                            </td>                        
                         </tr>
                     </tbody>
                     <!--Table body-->

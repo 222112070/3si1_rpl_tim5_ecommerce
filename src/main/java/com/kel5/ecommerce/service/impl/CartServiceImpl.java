@@ -78,7 +78,7 @@ public class CartServiceImpl implements CartService {
         cart.getCartItems().add(cartItem);
         cartItem.setCart(cart);
 
-        // Calculate and set total price
+//         Calculate and set total price
 //        float totalPrice = 0;
 //        for (CartItem item : cart.getCartItems()) {
 //            float itemTotal = item.getProduct().getPrice() * item.getQuantity();
