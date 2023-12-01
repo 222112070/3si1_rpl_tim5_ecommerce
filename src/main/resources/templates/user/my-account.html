@@ -63,7 +63,7 @@
                     <h1 class="m-b-0" style="font-weight: bolder; color: white;" th:text="${user.name}"></h1>
 
                     <p style="font-weight: bolder; color: white;" th:text="${user.email}"></p>
-                    <p style="font-weight: bolder; color: white;">Regular</p> 
+                    <p style="font-weight: bolder; color: white;" th:text="${user.type}"></p> 
                     <!-- <a href="javascript:void(0)" class="m-t-10 waves-effect waves-dark btn btn-primary btn-md btn-rounded" data-abc="true">Follow</a> -->
                     <!-- <div class="row text-center m-t-20">
                         <div class="col-lg-4 col-md-4 m-t-20">
@@ -102,56 +102,23 @@
                         <thead>
                             <tr style="font-weight: bolder; color: white;">
                                 <th>No</th>
-                                <th>Nama Pemesan</th>
                                 <th>Tanggal Pemesanan</th>
-                                <th>Detail Pemesanan</th>
+                                <th>Alamat Pengiriman</th>
                                 <th>Total Biaya</th>
+                                <th>Status Order</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <!--Table head-->
                         <!--Table body-->
                         <tbody style="font-weight: bolder; color: white;">
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>12-03-2023</td>
-                                <td>Kaos 300pcs</td>
-                                <td>Rp30.000.000</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Mark</td>
-                                <td>12-03-2023</td>
-                                <td>Kaos 300pcs</td>
-                                <td>Rp30.000.000</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Mark</td>
-                                <td>12-03-2023</td>
-                                <td>Kaos 300pcs</td>
-                                <td>Rp30.000.000</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>12-03-2023</td>
-                                <td>Kaos 300pcs</td>
-                                <td>Rp30.000.000</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Mark</td>
-                                <td>12-03-2023</td>
-                                <td>Kaos 300pcs</td>
-                                <td>Rp30.000.000</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Mark</td>
-                                <td>12-03-2023</td>
-                                <td>Kaos 300pcs</td>
-                                <td>Rp30.000.000</td>
+                            <tr  th:each="order, iterStat : ${orders}">
+                                <th scope="row" th:text="${iterStat.index + 1}">1</th>
+                                <td th:text="${order.orderDate}"></td>
+                                <td th:text="${order.address}"></td>
+                                <td th:text="'Rp. ' + ${order.totalAmount}"></td>
+                                <td th:text="${order.status}"></td>
+                                <td><a th:href="@{/user/order/details/{detailId}(detailId=${order.id})}" style="font-weight: bolder; color: white;">Lihat Detail</a></td>
                             </tr>
                         </tbody>
                         <!--Table body-->

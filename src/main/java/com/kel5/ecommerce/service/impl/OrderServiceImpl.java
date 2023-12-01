@@ -5,6 +5,7 @@ import com.kel5.ecommerce.exception.ResourceNotFoundException;
 import com.kel5.ecommerce.repository.CartRepository;
 import com.kel5.ecommerce.repository.OrderRepository;
 import com.kel5.ecommerce.repository.ProductRepository;
+import com.kel5.ecommerce.repository.UserRepository;
 import com.kel5.ecommerce.service.OrderObserver;
 import com.kel5.ecommerce.service.OrderService;
 import com.kel5.ecommerce.service.UserService;
@@ -26,7 +27,8 @@ public class OrderServiceImpl implements OrderService {
     final
     UserService userService;
     final CartRepository cartRepository;
-
+    @Autowired
+    UserRepository userRepository;
     @Autowired
     ProductRepository productRepository;
     private List<OrderObserver> observers = new ArrayList<>();
@@ -56,6 +58,23 @@ public class OrderServiceImpl implements OrderService {
         existingOrder.setTotalAmount(totalAmountFix);
         return orderRepository.save(existingOrder);
     }
+    
+    @Override
+    public Order updateOrderByUser(Long id, String status) {
+        User user = userService.getUserLogged();
+        if (user != null) {
+            Order existingOrder = orderRepository.findByUserAndIdAndStatus(user,id,"Dalam Pengiriman");
+            if(existingOrder != null){
+                existingOrder.setStatus(status);
+                return orderRepository.save(existingOrder);
+            } else{
+                throw new ResourceNotFoundException("Order Not Found"); 
+            }
+        } else {
+            throw new ResourceNotFoundException("User Not Found");
+        }
+    }
+
 
     @Override
     public Order getOrderById(Long id) {
@@ -93,7 +112,7 @@ public class OrderServiceImpl implements OrderService {
                 .address(address)
                 .whatsapp(whatsapp)
                 .notes(notes)
-                .status("Belum Dibayar") // Example status, this could be an enum or string depending on your design
+                .status("Belum Dikonfirmasi") // Example status, this could be an enum or string depending on your design
                 .orderDate(LocalDate.now())
                 .totalAmount(cart.getTotalPrice())
                 .user(cart.getUser()) // Assuming the user is the same as the one associated with the cart
@@ -108,7 +127,6 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setSize(cartItem.getSize());
             orderItem.setOrder(order);
             order.getOrderItems().add(orderItem);
-
             // If needed, also update the Product stock here
         });
        
@@ -167,33 +185,43 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = orderOptional.get();
         StringBuilder message = new StringBuilder();
-        message.append("Permisi saya telah membuat pemesanan dengan id : ")
-                .append(orderId)
-                .append("\n    Email Pemesan : ")
+        message.append("*KONFIRMASI PESANAN*\n")
+                .append("----‐-------------------------------------\n")
+                .append("*RINCIAN PEMESAN*\n")
+                .append("\nNama Pemesan : ")
+                .append(order.getUser().getName())
+                .append("\nEmail Pemesan : ")
                 .append(order.getUser().getEmail())
-                .append("\n    Nomor WhatApp Pemesan : ")
+                .append("\nNomor WhatApp : ")
                 .append(order.getWhatsapp())
-                .append("\n    Dengan total Prakiraan Harga : Rp. ")
+                .append("\nTanggal Pemesanan : ")
+                .append(order.getOrderDate())
+                .append("\nPerkiraan Harga : Rp. ")
                 .append(order.getTotalAmount())
-                .append("\n\nKeterangan barang\n");
-
+                .append("\nAlamat Pesanan :  ")
+                .append(order.getAddress())
+                .append("\n\n")
+                .append("*RINCIAN PESANAN*\n");
+        
         int count = 1;
         for (OrderItem item : order.getOrderItems()) {
-            message.append("    ")
-                    .append(count++)
-                    .append("    . '")
+            message.append("")
+                    .append("Nama Produk : ")
                     .append(item.getProduct().getName())
-                    .append("' ")
-                    .append("Ukuran ")
+                    .append("\n Ukuran : ")
                     .append(item.getSize())
-                    .append(", ")
+                    .append("\n Jumlah : ")
                     .append(item.getQuantity())
-                    .append(" buah\n")
-                    .append("\n");
+                    .append("\n\n");
         }
 
+        message.append("\nCatatan Pemesan : ")
+                .append(order.getNotes())
+                .append("\n----‐-------------------------------------\n")
+                .append("Terima kasih");
 
         return message.toString();
+
     }
     
     @Override
@@ -206,4 +234,42 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    @Override
+    public void updateTotalSpentUser(Long id) {
+        User user = userService.getUserLogged();
+        Optional<Order> orderOptional = orderRepository.findById(id);
+        if (orderOptional.isPresent()) {
+            Order order = orderOptional.get();
+            float currentTotalSpent = user.getTotalSpent();
+            float newTotalSpent = currentTotalSpent + order.getTotalAmount();
+            user.setTotalSpent(newTotalSpent);
+            if(user.getType().equals("Regular") && newTotalSpent>=50000000){
+                user.setType("Vendor");
+            }
+            userRepository.save(user);
+        } else {
+            throw new ResourceNotFoundException("Order not found with id " + id);
+        }
+ 
+    }
+
+    @Override
+    public List<Order> getOrderDoneForLoggedInUser(String orderStatus) {
+        User user = userService.getUserLogged();
+        if (user != null) {
+            return orderRepository.findByUserAndStatus(user,orderStatus);
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public List<Order> getOrderOnProgressForLoggedInUser(String orderStatus) {
+        User user = userService.getUserLogged();
+        if (user != null) {
+            return orderRepository.findByUserAndStatusNot(user,orderStatus);
+        } else {
+            return Collections.emptyList();
+        }
+    }
 }

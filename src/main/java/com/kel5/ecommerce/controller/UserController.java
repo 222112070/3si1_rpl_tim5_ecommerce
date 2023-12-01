@@ -4,6 +4,7 @@ import com.kel5.ecommerce.entity.Announcement;
 import com.kel5.ecommerce.entity.Blog;
 import com.kel5.ecommerce.entity.Category;
 import com.kel5.ecommerce.entity.Image;
+import com.kel5.ecommerce.entity.Order;
 import com.kel5.ecommerce.entity.Product;
 import com.kel5.ecommerce.entity.Subcategory;
 import com.kel5.ecommerce.entity.User;
@@ -14,6 +15,7 @@ import com.kel5.ecommerce.repository.SubcategoryRepository;
 import com.kel5.ecommerce.repository.ProductRepository;
 import com.kel5.ecommerce.service.BlogService;
 import com.kel5.ecommerce.service.ImageService;
+import com.kel5.ecommerce.service.OrderService;
 import com.kel5.ecommerce.service.ProductService;
 import com.kel5.ecommerce.service.UserService;
 import com.kel5.ecommerce.util.FileUploadUtil;
@@ -50,6 +52,9 @@ public class UserController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private OrderService orderService;
     
     @Autowired
     private ImageService imageService;
@@ -101,14 +106,20 @@ public class UserController {
     
     @GetMapping("/announcement")
     public String announcement(ModelMap model){
-        String username = getLogedinUsername();
-                List<Category> categories = categoryRepository.findAll();
-        List<Subcategory> subcategories = subcategoryRepository.findAll();
-        model.addAttribute("categories", categories);
-        model.addAttribute("subcategories", subcategories);
-        List<Announcement> announcement = announcementRepository.findAll();
-        model.addAttribute("announcement", announcement);
-        return "user/announcement";
+        User user = userService.getUserLogged();
+        System.out.println(user.getType());
+        if("Regular".equals(user.getType())){
+            return "redirect:/user/";
+        }
+        else{
+            List<Category> categories = categoryRepository.findAll();
+            List<Subcategory> subcategories = subcategoryRepository.findAll();
+            model.addAttribute("categories", categories);
+            model.addAttribute("subcategories", subcategories);
+            List<Announcement> announcement = announcementRepository.findAll();
+            model.addAttribute("announcement", announcement);
+            return "user/announcement";
+        }
     } 
     
     @GetMapping("/catalogue")
@@ -214,12 +225,15 @@ public String shopDetail(@PathVariable("productId") Long id, Model model) {
     
     @GetMapping("/my-account")
     public String myAccount(ModelMap model){
+        String statusDone = "Selesai"; 
         String username = getLogedinUsername();
         User user = userService.getUserLogged();
-        model.addAttribute("user", user);
+        List <Order> orders = orderService.getOrderDoneForLoggedInUser(statusDone);
         List<Category> categories = categoryRepository.findAll();
         List<Subcategory> subcategories = subcategoryRepository.findAll();
+        model.addAttribute("user", user);
         model.addAttribute("categories", categories);
+        model.addAttribute("orders", orders);
         model.addAttribute("subcategories", subcategories);
         return "user/my-account";
     }    

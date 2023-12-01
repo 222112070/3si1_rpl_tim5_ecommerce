@@ -57,7 +57,6 @@ public class CartController {
                             @PathVariable("productId") Long productId,
                             @RequestParam("quantity") Integer quantity,
                             @RequestParam("size") String size) {
-        System.out.println("Added product " + productId + " with quantity " + quantity + " to cart.");
         cartService.addProductToCart(productId, quantity, size,currentUser);
         return "redirect:/user/cart";
     }

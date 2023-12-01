@@ -28,6 +28,7 @@
     <link th:href="@{/assets/css/responsive.css}" rel="stylesheet">
     <!-- Custom CSS -->
     <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/assets/css/loader.css}" >
 
     <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js}"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
@@ -150,6 +151,7 @@
 </head>
 
 <body>
+    <div th:replace="user/fragments/loader :: loader"></div>
     <!-- Start Main Top -->
     <div th:replace="user/fragments/user-header :: header"></div>
     <!-- Start Top Search -->
@@ -186,7 +188,7 @@
                         <div class="col-md-12">
                             <h1 class="m-b-20"><strong>Selamat Datang <br> Jimbung Industrial</strong></h1>
                             <p class="m-b-40">Sharing solution yaitu membuka diskusi baik intern manjemen maupun ekstern mitra kerja produksi, pemasaran dan konsumen guna memberikan saran maupun evaluasi kinerja</p>
-                            <p><a class="btn hvr-hover" href="@{/user/shop}">Belanja Sekarang</a></p>
+                            <p><a class="btn hvr-hover" th:href="@{/user/shop}">Belanja Sekarang</a></p>
                         </div>
                     </div>
                 </div>
@@ -198,7 +200,7 @@
                         <div class="col-md-12">
                             <h1 class="m-b-20"><strong>Selamat Datang<br> Jimbung Industrial</strong></h1>
                             <p class="m-b-40">Solution Patner yaitu menjalin kemitraan usaha yang sustainability dengan feedback saling menguntungkan </p>
-                            <p><a class="btn hvr-hover" href="@{/user/shop}">Belanja Sekarang</a></p>
+                            <p><a class="btn hvr-hover" th:href="@{/user/shop}">Belanja Sekarang</a></p>
                         </div>
                     </div>
                 </div>
@@ -615,6 +617,7 @@
             });
         });
     </script>
+    <script th:src="@{/assets/js/loader.js}"></script> 
     
 </body>
 

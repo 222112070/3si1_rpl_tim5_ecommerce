@@ -13,7 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/user/")
@@ -30,8 +33,15 @@ public class OrderController {
 
     @GetMapping("/order")
     public String seeMyOrder(Model model) {
-        List<Order> orders = orderService.getOrdersForLoggedInUser();
+        List<Order> orders = orderService.getOrderOnProgressForLoggedInUser("Selesai");
         model.addAttribute("orders",orders);
         return "user/MyOrder";
+    }
+    
+    @GetMapping("/order/confirm/{orderId}")
+    public String editPesanan(@PathVariable("orderId") Long id) {
+        orderService.updateOrderByUser(id, "Selesai");
+        orderService.updateTotalSpentUser(id);
+        return "redirect:/user/order";
     }
 }

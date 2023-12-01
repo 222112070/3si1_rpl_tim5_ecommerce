@@ -19,7 +19,7 @@ public class WhatsAppRedirectController {
 
     @GetMapping("/contactWhatsApp")
     public String redirectToWhatsApp() {
-        String phoneNumber = "6289527430981";
+        String phoneNumber = "6285176744224";
         String message = "Hello, I'm interested in your products.";
         String encodedMessage = URLEncoder.encode(message, StandardCharsets.UTF_8);
 

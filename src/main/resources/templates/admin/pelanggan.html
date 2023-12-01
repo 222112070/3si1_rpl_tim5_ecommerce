@@ -86,27 +86,19 @@
                  <thead>
                    <tr>
                      <th scope="col">Nomor id</th>
-                     <th scope="col">adminname</th>
                      <th scope="col">Nama</th>
                      <th scope="col">Kategori</th>
-                     <th scope="col">No Telepon</th>
                      <th scope="col">Email</th>
                      <th scope="col">Pengeluaran</th>
-                     <th scope="col">Update</th>
                    </tr>
                  </thead>
                  <tbody>
-                   <tr>
-                     <th scope="row">#B457</th>
-                     <td>rudtabudi</td>
-                     <td>Rudi T</td>
-                     <td>Vendor</td>
-                     <td>081234567890</td>
-                     <td>rudi@gmail.com</td>
-                     <td>300.000.000,00</td>
-                     <td>
-                      <a href="#"><i class="fa-solid fa-pen-to-square" data-toggle="modal" data-target="#editContactModal"></i></a>  
-                      <a href="#"><i class="fa-solid fa-trash"></i></a></td>
+                   <tr th:each="customer, iterStat : ${customers}">
+                     <th scope="row" th:text="${customer.id}"></th>
+                     <td th:text="${customer.name}"></td>
+                     <td th:text="${customer.type}"></td>
+                     <td th:text="${customer.email}"></td>
+                     <td th:text="'Rp. ' + ${customer.totalSpent}"></td>
                    </tr>
 
                    <!-- Modal untuk mengedit nomor telepon dan email -->
@@ -155,107 +147,6 @@
                       $('#editContactModal').modal('hide');
                     }
                     </script>
-
-                   <tr>
-                     <th scope="row">#B457</th>
-                     <td>Firai</td>
-                     <td>Fira Ik</td>
-                     <td>Vendor</td>
-                     <td>081234567890</td>
-                     <td>rudi@gmail.com</td>
-                     <td>300.000.000,00</td>
-                     <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a>   <a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                   </tr>
-                   <tr>
-                     <th scope="row">#B457</th>
-                     <td>tarira</td>
-                     <td>Tari Kusuma</td>
-                     <td>Vendor</td>
-                     <td>081234567890</td>
-                     <td>rudi@gmail.com</td>
-                     <td>300.000.000,00</td>
-                     <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a>   <a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                   </tr>
-                   <tr>
-                     <th scope="row">#B457</th>
-                     <td>antooo</td>
-                     <td>Antonius</td>
-                     <td>Vendor</td>
-                     <td>081234567890</td>
-                     <td>rudi@gmail.com</td>
-                     <td>300.000.000,00</td>
-                     <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a>   <a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                   </tr>
-                   <tr>
-                     <th scope="row">#B457</th>
-                     <td>bambank</td>
-                     <td>Bambang Supadi</td>
-                     <td>Vendor</td>
-                     <td>081234567890</td>
-                     <td>rudi@gmail.com</td>
-                     <td>300.000.000,00</td>
-                     <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a>   <a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                   </tr>
-                   <tr>
-                     <th scope="row">#B457</th>
-                     <td>rudtabudi</td>
-                     <td>Rudi Tabudi</td>
-                     <td>Vendor</td>
-                     <td>081234567890</td>
-                     <td>rudi@gmail.com</td>
-                     <td>300.000.000,00</td>
-                     <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a>   <a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                   </tr>
-                   <tr>
-                     <th scope="row">#B457</th>
-                     <td>rudtabudi</td>
-                     <td>Rudi Tabudi</td>
-                     <td>Vendor</td>
-                     <td>081234567890</td>
-                     <td>rudi@gmail.com</td>
-                     <td>300.000.000,00</td>
-                     <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a>   <a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                   </tr>
-                   <tr>
-                     <th scope="row">#B457</th>
-                     <td>rudtabudi</td>
-                     <td>Rudi Tabudi</td>
-                     <td>Vendor</td>
-                     <td>081234567890</td>
-                     <td>rudi@gmail.com</td>
-                     <td>300.000.000,00</td>
-                     <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a>   <a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                   </tr>
-                   <tr>
-                     <th scope="row">#B457</th>
-                     <td>rudtabudi</td>
-                     <td>Rudi Tabudi</td>
-                     <td>Vendor</td>
-                     <td>081234567890</td>
-                     <td>rudi@gmail.com</td>
-                     <td>300.000.000,00</td>
-                     <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a>   <a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                   </tr>
-                   <tr>
-                     <th scope="row">#B457</th>
-                     <td>rudtabudi</td>
-                     <td>Rudi Tabudi</td>
-                     <td>Vendor</td>
-                     <td>081234567890</td>
-                     <td>rudi@gmail.com</td>
-                     <td>300.000.000,00</td>
-                     <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a>   <a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                   </tr>
-                   <tr>
-                     <th scope="row">#B457</th>
-                     <td>rudtabudi</td>
-                     <td>Rudi Tabudi</td>
-                     <td>Vendor</td>
-                     <td>081234567890</td>
-                     <td>rudi@gmail.com</td>
-                     <td>300.000.000,00</td>
-                     <td><a href="#"><i class="fa-solid fa-pen-to-square"></i></a>   <a href="#"><i class="fa-solid fa-trash"></i></a></td>
-                   </tr>
                  </tbody>
                </table>
               <!-- End Table with stripped rows -->

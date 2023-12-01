@@ -152,13 +152,12 @@
                                             <label for="status">Status</label>
                                             <select class="form-control" id="status" name="status" required th:value ="${order.status}">
                                                 <option value="">Pilih Status Pesanan</option>
-                                                <option value="Belum Dibayar" th:selected="${order.status == 'Belum Dibayar'}">Belum Dibayar</option>
                                                 <option value="Belum Dikonfirmasi" th:selected="${order.status == 'Belum Dikonfirmasi'}">Belum Dikonfirmasi</option>
+                                                <option value="Belum Dibayar" th:selected="${order.status == 'Belum Dibayar'}">Belum Dibayar</option>
                                                 <option value="Sudah Dikonfirmasi" th:selected="${order.status == 'Sudah Dikonfirmasi'}">Sudah Dikonfirmasi</option>
                                                 <option value="Dalam Proses" th:selected="${order.status == 'Dalam Proses'}">Dalam Proses</option>
                                                 <option value="Sedang Dikemas" th:selected="${order.status == 'Sedang Dikemas'}">Sedang Dikemas</option>
                                                 <option value="Dalam Pengiriman" th:selected="${order.status == 'Dalam Pengiriman'}">Dalam Pengiriman</option>
-                                                <option value="Selesai" th:selected="${order.status == 'Selesai'}">Selesai</option>
                                             </select>
                                         </div>
                                         

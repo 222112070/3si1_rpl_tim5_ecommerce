@@ -94,7 +94,9 @@ public class AdminController {
     @GetMapping("/pelanggan")
     public String Pelanggan(Model model) {
         User user = userService.getUserLogged();
+        List<User> customers = userService.getAllCustomer();
         model.addAttribute("user", user);
+        model.addAttribute("customers", customers);
         return "admin/pelanggan";
     }
     
