@@ -31,9 +31,6 @@ public class ProductController {
     private ProductService productService;
     
     @Autowired
-    private ProductRepository productRepository;
-    
-    @Autowired
     private CategoryService categoryService;
     
     @Autowired
@@ -94,7 +91,7 @@ public class ProductController {
     public String showProductFormForUpdate(@PathVariable("id") Long id, Model model) {
         User user = userService.getUserLogged();
         model.addAttribute("user", user);
-        Optional<Product> productOptional = productRepository.findById(id);
+        Optional<Product> productOptional = productService.getProductById(id);
         if (productOptional.isPresent()) {
             Product product = productOptional.get(); // Get the Product from the Optional
             model.addAttribute("product", product);

@@ -16,9 +16,9 @@ public interface BlogService {
 
     Blog saveBlog(Blog blog);
     Blog getBlogById(long id);
-    
     void deleteBlogById(long id);
     List<Blog> getAllBlog(String keyword);
+    List<Blog> getAllBlogs();
     Page<Blog> findPaginated(int pageNo, int pageSize,String sortField, String sortDir);
     
 }
