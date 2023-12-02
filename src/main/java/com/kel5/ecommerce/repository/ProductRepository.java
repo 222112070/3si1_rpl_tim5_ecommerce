@@ -15,8 +15,10 @@ import org.springframework.stereotype.Repository;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p WHERE CONCAT(p.id, ' ', p.name, ' ', p.description) LIKE %:keyword%")
     List<Product> search(@Param("keyword") String keyword);
-    
     List<Product> findByCategory(Category category);
-    
     List<Product> findBySubcategory(Subcategory subcategory);
+    List<Product> findBySubcategoryAndStockNot(Subcategory subcategory, int stock);
+    List<Product> findByCategoryAndStockNot(Category category, int stock);
+    List<Product> findByStockNot(int stock);
+    Optional<Product> findByIdAndStockNot(Long id,int stock);
 }

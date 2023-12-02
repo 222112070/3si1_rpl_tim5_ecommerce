@@ -16,6 +16,7 @@ import com.kel5.ecommerce.repository.BlogRepository;
 import com.kel5.ecommerce.repository.CategoryRepository;
 import com.kel5.ecommerce.repository.SubcategoryRepository;
 import com.kel5.ecommerce.service.CartService;
+import com.kel5.ecommerce.service.CategoryService;
 import com.kel5.ecommerce.service.OrderService;
 import com.kel5.ecommerce.service.UserService;
 import com.kel5.ecommerce.service.impl.CartServiceImpl;
@@ -37,11 +38,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/user/")
 public class CartController {
-    @Autowired
-    private CategoryRepository categoryRepository;
     
     @Autowired
-    private SubcategoryRepository subcategoryRepository;
+    private CategoryService categoryService;
     
     @Autowired
     CartService cartService;
@@ -65,8 +64,8 @@ public class CartController {
     public String viewCart(Model model) {
         Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
         model.addAttribute("cart", CartMapper.toDto(cart));
-        List<Category> categories = categoryRepository.findAll();
-        List<Subcategory> subcategories = subcategoryRepository.findAll();
+        List<Category> categories = categoryService.getAllCategories();
+        List<Subcategory> subcategories = categoryService.getAllSubcategories();
         model.addAttribute("categories", categories);
         model.addAttribute("subcategories", subcategories);
         return "user/cart"; // Name of the template that displays the cart

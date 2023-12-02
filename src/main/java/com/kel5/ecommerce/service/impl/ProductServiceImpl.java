@@ -108,6 +108,10 @@ public class ProductServiceImpl implements ProductService {
        } else 
            return (List<Product>)productRepository.findAll(); 
     }
+    @Override
+    public List<Product> getAllProducts() {
+        return (List<Product>)productRepository.findAll(); 
+    }
 
     @Override
     public Optional<Product> getProductById(Long id) {
@@ -121,5 +125,30 @@ public class ProductServiceImpl implements ProductService {
 
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return this.productRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Product> findProductAvailable(int stock) {
+        return productRepository.findByStockNot(stock);
+    }
+
+    @Override
+    public Optional<Product> getProductByIdAndStockNot(Long id, int stock) {
+        return productRepository.findByIdAndStockNot(id,stock);
+    }
+
+    @Override
+    public List<Product> findProductInSubcategoryAvailable(Subcategory subcategory, int stock) {
+        return productRepository.findBySubcategoryAndStockNot(subcategory,stock);
+    }
+
+    @Override
+    public List<Product> findProductInCategoryAvailable(Category category, int stock) {
+        return productRepository.findByCategoryAndStockNot(category,stock);
+    }
+    
+    @Override
+    public List<Product> getByCategory(Category category) {
+        return productRepository.findByCategory(category);
     }
 }
