@@ -106,7 +106,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order createOrderFromCart(String name, String address, String whatsapp, String notes) {
         Cart cart = userService.getUserLogged().getCarts();
-        // Create new Order entity and copy properties from Cart
         Order order = Order.builder()
                 .name(name)
                 .address(address)
@@ -127,21 +126,17 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setSize(cartItem.getSize());
             orderItem.setOrder(order);
             order.getOrderItems().add(orderItem);
-            // If needed, also update the Product stock here
+            //UpdateStock
+            int currentStock = cartItem.getProduct().getStock();
+            cartItem.getProduct().setStock(currentStock-cartItem.getQuantity());
         });
        
-        cart.getCartItems().clear(); // This clears the items from the cart
-        // Save the now-empty cart to the database
-        cartRepository.save(cart); // Assuming you have a cartRepository to save the cart, replace with actual cart service call if different
-        // Save the Order and its OrderItems to the database
-
+        cart.getCartItems().clear();
+        cartRepository.save(cart);
         orderRepository.save(order);
         notifyObservers(order);
 
         return order;
-
-        // After saving the order, you may want to clear or delete the cart
-        // cartService.clearCart(cart);
     }
 
     @Override
@@ -250,7 +245,6 @@ public class OrderServiceImpl implements OrderService {
         } else {
             throw new ResourceNotFoundException("Order not found with id " + id);
         }
- 
     }
 
     @Override
