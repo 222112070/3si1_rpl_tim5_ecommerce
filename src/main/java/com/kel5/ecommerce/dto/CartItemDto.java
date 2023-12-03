@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartItemDto {
+    private Long id;
     private String productUrl;
     private String productName;
     private String size;

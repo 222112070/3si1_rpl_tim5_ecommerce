@@ -4,6 +4,7 @@
  */
 package com.kel5.ecommerce.service.impl;
 
+import com.kel5.ecommerce.dto.CartUpdateInfo;
 import com.kel5.ecommerce.entity.Cart;
 import com.kel5.ecommerce.entity.CartItem;
 import com.kel5.ecommerce.entity.Product;
@@ -135,5 +136,39 @@ public class CartServiceImpl implements CartService {
         cartRepository.save(cart);
     }
 
+    @Override
+    public CartUpdateInfo incrementQuantity(Long cartItemId) {
+        return updateCartItemQuantity(cartItemId, 1);
+    }
 
+    @Override
+    public CartUpdateInfo decrementQuantity(Long cartItemId) {
+        return updateCartItemQuantity(cartItemId, -1);
+    }
+
+    private CartUpdateInfo updateCartItemQuantity(Long cartItemId, int delta) {
+        CartItem cartItem = cartItemRepository.findById(cartItemId)
+                .orElseThrow(() -> new IllegalArgumentException("CartItem not found with id: " + cartItemId));
+
+        int newQuantity = cartItem.getQuantity() + delta;
+        if (newQuantity <= 0) {
+            throw new IllegalArgumentException("Quantity cannot be less than or equal to zero");
+        }
+        cartItem.setQuantity(newQuantity);
+
+        cartItemRepository.save(cartItem);
+
+        Cart cart = cartItem.getCart();
+        recalculateCartTotal(cart);
+        return new CartUpdateInfo(cart.getTotalPrice(), newQuantity);
+    }
+
+    private void recalculateCartTotal(Cart cart) {
+        float totalPrice = 0;
+        for (CartItem item : cart.getCartItems()) {
+            totalPrice += item.getProduct().getPrice() * item.getQuantity();
+        }
+        cart.setTotalPrice(totalPrice);
+        cartRepository.save(cart);
+    }
 }
