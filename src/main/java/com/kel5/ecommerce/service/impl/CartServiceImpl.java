@@ -69,23 +69,28 @@ public class CartServiceImpl implements CartService {
             throw new IllegalArgumentException("Product not found");
         }
         Product product = productOptional.get();
-        CartItem cartItem = new CartItem();
-        cartItem.setProduct(product);
-        cartItem.setQuantity(quantity);
-        cartItem.setSize(size);
 
-        // Save CartItem first
+        Cart cart = userService.getUserLogged().getCarts();
+
+        Optional<CartItem> existingCartItemOptional = cart.getCartItems().stream()
+                .filter(item -> item.getProduct().equals(product) && item.getSize().equals(size))
+                .findFirst();
+
+        CartItem cartItem;
+        if (existingCartItemOptional.isPresent()) {
+            cartItem = existingCartItemOptional.get();
+            cartItem.setQuantity(cartItem.getQuantity() + quantity);
+        } else {
+            cartItem = new CartItem();
+            cartItem.setProduct(product);
+            cartItem.setQuantity(quantity);
+            cartItem.setSize(size);
+            cartItem.setCart(cart);
+            cart.getCartItems().add(cartItem);
+        }
+
         cartItemRepository.save(cartItem);
 
-        Optional<Cart> cartOptional = cartRepository.findById(userService.getUserLogged().getCarts().getId());
-        if (cartOptional.isEmpty()) {
-            throw new IllegalArgumentException("Cart not found");
-        }
-        Cart cart = cartOptional.get();
-        cart.getCartItems().add(cartItem);
-        cartItem.setCart(cart);
-
-        // Calculate and set total price
         float totalPrice = 0;
         for (CartItem item : cart.getCartItems()) {
             float itemTotal = item.getProduct().getPrice() * item.getQuantity();
@@ -95,6 +100,7 @@ public class CartServiceImpl implements CartService {
 
         cartRepository.save(cart);
     }
+
 
 
     @Override
