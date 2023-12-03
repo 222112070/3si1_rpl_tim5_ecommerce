@@ -38,18 +38,31 @@
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
           <div class="modal-body">
-            <!-- Forms for Add to Cart and Buy -->
-            <form th:action="@{'/products/addToCart/' + ${product.id}}" method="post">
+            <!-- Form for Add to Cart -->
+            <form th:action="@{'/user/products/addToCart/' + ${product.id}}" method="post">
               <input type="hidden" name="productId" th:value="${product.id}" />
-              <label for="quantity">Quantity:</label>
-              <input type="number" id="quantity" name="quantity" min="1" max="100">
+              <label for="size2">Size</label>
+              <select id="size2" name="size" class="form-control" required>
+                <option value="">Size</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+                <option value="3XL">3XL</option>
+                <option value="4XL">4XL</option>
+              </select>
+              <label for="quantity2">Quantity:</label>
+              <input type="number" id="quantity2" name="quantity" min="1" max="100">
               <button type="submit" class="btn btn-primary mt-2">Add to Cart</button>
             </form>
+            <!-- Form for Buy (tidak diubah) -->
             <form th:action="@{'/products/buy/' + ${product.id}}" method="post">
               <input type="hidden" name="productId" th:value="${product.id}" />
               <button type="submit" class="btn btn-success mt-2">Buy</button>
             </form>
           </div>
+
         </div>
       </div>
     </div>

@@ -9,6 +9,7 @@ import com.kel5.ecommerce.entity.CartItem;
 import com.kel5.ecommerce.entity.Product;
 import com.kel5.ecommerce.entity.User;
 import com.kel5.ecommerce.exception.ResourceNotFoundException;
+import com.kel5.ecommerce.repository.CartItemRepository;
 import com.kel5.ecommerce.repository.CartRepository;
 import com.kel5.ecommerce.repository.ProductRepository;
 import com.kel5.ecommerce.service.CartService;
@@ -27,6 +28,8 @@ public class CartServiceImpl implements CartService {
     private ProductRepository productRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CartItemRepository cartItemRepository;
 
     @Override
     public Cart createCart(Cart cart) {
@@ -59,6 +62,7 @@ public class CartServiceImpl implements CartService {
         return cartRepository.findAll();
     }
 
+    @Override
     public void addProductToCart(Long productId, Integer quantity, String size, User currentUser) {
         Optional<Product> productOptional = productRepository.findById(productId);
         if (productOptional.isEmpty()) {
@@ -70,6 +74,9 @@ public class CartServiceImpl implements CartService {
         cartItem.setQuantity(quantity);
         cartItem.setSize(size);
 
+        // Save CartItem first
+        cartItemRepository.save(cartItem);
+
         Optional<Cart> cartOptional = cartRepository.findById(userService.getUserLogged().getCarts().getId());
         if (cartOptional.isEmpty()) {
             throw new IllegalArgumentException("Cart not found");
@@ -78,16 +85,17 @@ public class CartServiceImpl implements CartService {
         cart.getCartItems().add(cartItem);
         cartItem.setCart(cart);
 
-//         Calculate and set total price
-//        float totalPrice = 0;
-//        for (CartItem item : cart.getCartItems()) {
-//            float itemTotal = item.getProduct().getPrice() * item.getQuantity();
-//            totalPrice += itemTotal;
-//        }
-//        cart.setTotalPrice(totalPrice);
+        // Calculate and set total price
+        float totalPrice = 0;
+        for (CartItem item : cart.getCartItems()) {
+            float itemTotal = item.getProduct().getPrice() * item.getQuantity();
+            totalPrice += itemTotal;
+        }
+        cart.setTotalPrice(totalPrice);
 
         cartRepository.save(cart);
     }
+
 
     @Override
     public Cart getCurrentCart() {
