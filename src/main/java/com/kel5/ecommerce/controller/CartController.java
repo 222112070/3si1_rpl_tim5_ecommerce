@@ -84,8 +84,14 @@ public class CartController {
 
     
     @GetMapping("/cart/{cartId}/delete") 
-    public String deleteCartItem(@PathVariable(name = "cartId") Long cartId){
+    public String deleteCart(@PathVariable(name = "cartId") Long cartId){
         cartService.deleteCart(cartId);
         return "redirect:/cart";
+    }
+
+    @GetMapping("/cart/delete/{cartItemId}")
+    public String deleteCartItem(@PathVariable(name = "cartItemId") Long cartItemId) {
+        cartService.removeCartItem(cartItemId);
+        return "redirect:/user/cart";
     }
 }

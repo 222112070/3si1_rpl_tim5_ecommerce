@@ -108,4 +108,26 @@ public class CartServiceImpl implements CartService {
         return false;
     }
 
+    @Override
+    public void removeCartItem(Long cartItemId) {
+        User currentUser = userService.getUserLogged();
+        Cart cart = currentUser.getCarts();
+
+        CartItem itemToRemove = cart.getCartItems().stream()
+                .filter(item -> item.getId().equals(cartItemId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Cart item not found"));
+
+        cart.getCartItems().remove(itemToRemove);
+
+        float totalPrice = 0;
+        for (CartItem item : cart.getCartItems()) {
+            totalPrice += item.getProduct().getPrice() * item.getQuantity();
+        }
+        cart.setTotalPrice(totalPrice);
+
+        cartRepository.save(cart);
+    }
+
+
 }

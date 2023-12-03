@@ -116,7 +116,9 @@
                                         <p th:text="${item.totalItemPrice}"></p>
                                     </td>
                                     <td class="remove-pr">
+                                        <a href="/user/cart/delete/${item.id}">
                                             <i class="fas fa-times"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             </tbody>

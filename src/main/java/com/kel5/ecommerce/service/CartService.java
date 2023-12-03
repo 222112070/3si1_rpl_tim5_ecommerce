@@ -21,4 +21,6 @@ public interface CartService {
     Cart getCurrentCart();
 
     boolean performCheckout();
+
+    void removeCartItem(Long cartItemId);
 }
