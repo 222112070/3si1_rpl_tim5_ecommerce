@@ -89,38 +89,44 @@
                     <div class="table-main table-responsive">
                         <table class="table">
                             <thead>
-                                <tr>
-                                    <th>Images</th>
-                                    <th>Product Name</th>
-                                    <th>Price</th>
-                                    <th>Size</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th>Remove</th>
-                                </tr>
+                            <tr>
+                                <th>Images</th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Size</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Actions</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="item, iterStat : ${cart.cartItems}">
-                                    <td class="thumbnail-img">
-                                        <img class="img-fluid" th:src="@{${item.productUrl}}" alt="Product Image" width="200" />
-                                    </td>
-                                    <td class="name-pr">
-                                        <a th:text="${item.productName}"></a>
-                                    </td>
-                                    <td class="price-pr">
-                                        <p th:text="${item.price}"></p>
-                                    </td>
-                                    <td class="price-pr">
-                                        <p th:text="${item.size}"></p>
-                                    </td>
-                                    <td class="quantity-box"><p th:text="${item.quantity}"></p></td>
-                                    <td class="total-pr">
-                                        <p th:text="${item.totalItemPrice}"></p>
-                                    </td>
-                                    <td class="remove-pr">
-                                            <i class="fas fa-times"></i>
-                                    </td>
-                                </tr>
+                            <tr th:each="item, iterStat : ${cart.cartItems}">
+                                <td class="thumbnail-img">
+                                    <img class="img-fluid" th:src="@{${item.productUrl}}" alt="Product Image" width="200" />
+                                </td>
+                                <td class="name-pr">
+                                    <a th:text="${item.productName}"></a>
+                                </td>
+                                <td class="price-pr">
+                                    <p th:text="${item.price}"></p>
+                                </td>
+                                <td class="price-pr">
+                                    <p th:text="${item.size}"></p>
+                                </td>
+                                <td class="quantity-box">
+                                    <button class="decrease-quantity" th:data-id="${item.getId()}">-</button>
+                                    <p id="itemQuantity" th:text="${item.quantity}"></p>
+                                    <button class="increase-quantity" th:data-id="${item.getId()}">+</button>
+                                </td>
+                                <td class="total-pr">
+                                    <p th:text="${item.totalItemPrice}"></p>
+                                </td>
+                                <td class="remove-pr">
+                                    <a href="#" class="remove-item" th:data-id="${item.getId()}">
+                                        <i class="fas fa-times"></i>
+                                    </a>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -144,7 +150,7 @@
                         <hr>
                         <div class="d-flex gr-total">
                             <h5>Grand Total</h5>
-                            <div class="ml-auto h5" th:text="${cart.totalPrice}"></div>
+                            <div class="ml-auto h5" id="grandTotal" th:text="${cart.totalPrice}"></div>
                         </div>
                         <hr>
                     </div>
@@ -281,6 +287,59 @@
             });
         });
     </script> -->
+    <script>
+        $(document).ready(function() {
+            function updateCartTotal(newTotal) {
+                $('#grandTotal').text(newTotal.toFixed(2));
+            }
+            function itemQuantityCart(newTotal) {
+                $('#itemQuantity').text(newTotal.toFixed(0));
+            }
+
+
+            $('.increase-quantity, .decrease-quantity').on('click', function() {
+                var button = $(this);
+                var cartItemId = button.data('id');
+                var isIncrement = button.hasClass('increase-quantity');
+                var url = '/user/cart/' + cartItemId + (isIncrement ? '/increment' : '/decrement');
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    success: function(response) {
+                        updateCartTotal(response.newTotal);
+                        itemQuantityCart(response.itemQuantity)
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+
+        $('.remove-item').on('click', function(e) {
+            e.preventDefault(); // Mencegah perilaku default dari link
+
+            var cartItemId = $(this).data('id');
+            var url = '/user/cart/delete/' + cartItemId;
+
+            $.ajax({
+                url: url,
+                type: 'GET', // Sesuaikan dengan metode yang didefinisikan di controller
+                success: function(response) {
+                    // Logika untuk memperbarui UI, seperti menghapus baris dari tabel
+                    $('button[data-id="' + cartItemId + '"]').closest('tr').remove();
+                    // Anda mungkin ingin memanggil fungsi lain untuk mengupdate total harga
+                    // updateCartTotal(response.newTotal); // Contoh jika response mengandung total harga baru
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+    </script>
+
+
 </body>
 
 </html>

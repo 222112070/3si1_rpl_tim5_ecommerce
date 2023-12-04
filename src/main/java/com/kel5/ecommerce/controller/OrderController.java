@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/user/")
@@ -44,4 +45,26 @@ public class OrderController {
         orderService.updateTotalSpentUser(id);
         return "redirect:/user/order";
     }
+
+    /* Tombol Cancel di html
+    <td>
+        <span th:text="${order.status}" th:class="..."></span>
+        <a th:if="${order.status == 'Belum Dibayar' || order.status == 'Belum Dikonfirmasi'}"
+        th:href="@{/user/order/cancel/{orderId}(orderId=${order.id})}"
+        class="btn btn-danger btn-sm">Cancel</a>
+    </td>
+     */
+
+    @GetMapping("/order/cancel/{orderId}")
+    public String cancelOrder(@PathVariable("orderId") Long orderId, RedirectAttributes redirectAttributes) {
+        boolean isCancelled = orderService.cancelOrder(orderId);
+        if (isCancelled) {
+            redirectAttributes.addFlashAttribute("successMessage", "Pesanan berhasil dibatalkan.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "Pesanan tidak dapat dibatalkan.");
+        }
+        return "redirect:/user/order-list";
+    }
+
+
 }

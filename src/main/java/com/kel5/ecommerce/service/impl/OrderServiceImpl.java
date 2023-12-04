@@ -9,7 +9,6 @@ import com.kel5.ecommerce.repository.UserRepository;
 import com.kel5.ecommerce.service.OrderObserver;
 import com.kel5.ecommerce.service.OrderService;
 import com.kel5.ecommerce.service.UserService;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -266,4 +265,23 @@ public class OrderServiceImpl implements OrderService {
             return Collections.emptyList();
         }
     }
+
+    @Override
+    public boolean cancelOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id " + orderId));
+
+        String status = order.getStatus();
+        if (status.equals("Belum Dibayar") || status.equals("Belum Dikonfirmasi")) {
+            for (OrderItem item : order.getOrderItems()) {
+                Product product = item.getProduct();
+                product.setStock(product.getStock() + item.getQuantity());
+                productRepository.save(product);
+            }
+            orderRepository.delete(order);
+            return true;
+        }
+        return false;
+    }
+
 }

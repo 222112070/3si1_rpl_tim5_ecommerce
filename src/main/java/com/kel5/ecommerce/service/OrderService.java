@@ -4,11 +4,7 @@
  */
 package com.kel5.ecommerce.service;
 
-import com.kel5.ecommerce.entity.Cart;
 import com.kel5.ecommerce.entity.Order;
-import com.kel5.ecommerce.entity.User;
-import com.kel5.ecommerce.service.impl.EmailNotificationService;
-import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -27,8 +23,10 @@ public interface OrderService {
     Order createOrderFromCart(String name,String address,String whatsapp, String notes);
 
     void createOrderFromProduct(Long productId, Integer quantity);
-    public void registerObserver(OrderObserver observer);
+    void registerObserver(OrderObserver observer);
     String createOrderMessage(Long orderId);
     void updateTotalSpentUser(Long orderId);
-    public List<Order> filterOrder (String keyword);
+    List<Order> filterOrder(String keyword);
+
+    boolean cancelOrder(Long orderId);
 }
