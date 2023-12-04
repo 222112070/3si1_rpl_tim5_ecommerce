@@ -42,7 +42,7 @@
 
 </head>
 
-<body>
+<body style="background-color: #8F1D14;">
     <div th:replace="user/fragments/user-header :: header"></div>
 
     <!-- Start Top Search -->
@@ -75,7 +75,7 @@
     
     <!-- My order -->
     <div class="container mt-4">
-        <div class="card mb-4">
+        <div class="card mb-4" style="border-color: rgb(255, 166,0);">
             <div class="card-body">
                 <!-- Grid row -->
                 <div class="row">
@@ -119,10 +119,7 @@
                             </td>
                             <td th:if="${order.status == 'Belum Dikonfirmasi'}">
                                 <a th:href="@{'/user/order/whatsapp/' + ${order.id}}" style="font-weight: bolder; color: white;">Konfirmasi Ke Whatsapp Admin</a>
-                            </td>     
-                            <td th:if="${order.status == 'Belum Dikonfirmasi'}">
-                                <a th:href="@{'/user/order/whatsapp/' + ${order.id}}" style="font-weight: bolder; color: white;">Konfirmasi Ke Whatsapp Admin</a>
-                            </td>                        
+                            </td>                       
                         </tr>
                     </tbody>
                     <!--Table body-->
@@ -141,9 +138,9 @@
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-widget">
                             <h4>Tentang Jimbung Industrial</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            <p>"Menjadi Home Industry jasa konveksi/garmen dalam skala nasional dan internasional yang mengoptimalkan kekhasan potensi sumber dalam negeri"
+
+Produk yang dihasilkan memiliki kualitas yang sesuai dengan permintaan customer maupun mitra kerja yang bersifat update, simple, fleksibel dan memudahkan penggunaan produk. Harga produk sesuai dengan kesepakatan bersama antara customer dan manajeman. Mengutamakan Ketepatan waktu dan proses pengerjaan.
                             </p>
                             <ul>
                                 <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>

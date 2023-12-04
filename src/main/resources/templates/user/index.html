@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-
     <!-- Mobile Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -35,122 +34,192 @@
         crossorigin="anonymous"></script>
 
     <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css}">
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
+
     <style>
-        .fit {
-            object-fit:fill;
-            height: 350px;
-            width: 350px;
-        }
+      .fit {
+          object-fit: fill;
+      }
 
-        .gallery{
-            position:relative;
-            width:300px;
-            height:200px;
-            transform-style:preserve-3d;
-            animation:rotate 35s linear infinite;
-        }
+      .gallery {
+          position: relative;
+          width: 100%; /* Full width */
+          height: auto; /* Auto height */
+          transform-style: preserve-3d;
+          animation: rotate 35s linear infinite;
+      }
 
-        @keyframes rotate{
-            from{
-                transform:perspective(1200px) rotateY(0deg);
-            }
+      @keyframes rotate {
+          from {
+              transform: perspective(1200px) rotateY(0deg);
+          }
 
-            to{
-                transform:perspective(1200px) rotateY(360deg);
-            }
-        }
+          to {
+              transform: perspective(1200px) rotateY(360deg);
+          }
+      }
 
-        .gallery span{
-            position:absolute;
-            width:100%;
-            height:100%;
-            transform-origin:center;
-            transform-style:preserve-3d;
-            transform:rotateY(calc(var(--i) * 45deg)) translateZ(380px);
-        }
+      .gallery span {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          transform-origin: center;
+          transform-style: preserve-3d;
+          transform: rotateY(calc(var(--i) * 45deg)) translateZ(380px);
+      }
 
-        .gallery span img{
-            position:absolute;
-            width:100%;
-            height:100%;
-            object-fit:cover;
-        }
-        /* Styling for the modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.7);
-        }
+      .gallery span img {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+      }
 
-        .modal-content {
-            background-color: #fff;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            border-radius: 5px;
-            text-align: center;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            width:50%;
-            height:auto;
-        }
+      /* Styling for the modal */
+      .modal {
+          display: none;
+          position: fixed;
+          z-index: 1;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          overflow: auto;
+          background-color: rgba(0, 0, 0, 0.7);
+      }
 
-        /* Close button style */
-        .close {
-            color: #333;
-            float: right;
-            font-size: 24px;
-            font-weight: bold;
-            cursor: pointer;
-            text-align: left;
-        }
+      .modal-content {
+          background-color: #fff;
+          margin: 10% auto;
+          padding: 20px;
+          border: 1px solid #888;
+          border-radius: 5px;
+          text-align: center;
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+          width: auto;
+          height: auto;
+      }
 
-        .close:hover {
-            color: #f00;
-        }
+      /* Close button style */
+      .close {
+          color: #333;
+          float: right;
+          font-size: 24px;
+          font-weight: bold;
+          cursor: pointer;
+          text-align: left;
+      }
 
-        /* Style for modal title */
-        #modalTitle {
-            font-size: 24px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
+      .close:hover {
+          color: #f00;
+      }
 
-        /* Style for modal image */
-        #modalImage {
-            max-width: 100%;
-            height: auto;
-        }
+      /* Style for modal title */
+      #modalTitle {
+          font-size: 24px;
+          font-weight: bold;
+          margin-top: 10px;
+      }
 
-        /* Style for modal description */
-        #modalDescription {
-            margin-top: 10px;
-            font-size: 16px;
-            line-height: 1.4;
-        }
+      /* Style for modal image */
+      #modalImage {
+          max-width: 100%;
+          height: auto;
+      }
 
-        /* Responsive design for the modal */
-        @media (max-width: 768px) {
-            .modal-content {
-                margin: 5% auto;
-                width: 90%;
-            }
-        }
-    </style>
+      /* Style for modal description */
+      #modalDescription {
+          margin-top: 10px;
+          font-size: 16px;
+          line-height: 1.4;
+      }
 
+      /* Styles for smaller screens */
+      @media (max-width: 767px) {
+          .col-lg-4 {
+              width: 100%;
+          }
+
+          .shop-cat-box img {
+              width: 100%;
+              height: auto;
+          }
+      }
+
+      /* Default styles for larger screens */
+      .shop-cat-box {
+          text-align: center;
+          margin-bottom: 20px;
+      }
+
+      .shop-cat-box img {
+          max-width: 100%;
+          height: auto;
+      }
+
+      .col-lg-4,
+      .col-md-4,
+      .col-sm-12,
+      .col-xs-12 {
+          width: 33.33%;
+      }
+      .shop-cat-box {
+          text-align: center;
+          margin-bottom: 20px;
+          height: auto ; /* Set a fixed height */
+          weight: 250px;
+          overflow: hidden;
+      }
+
+      .shop-cat-box img {
+
+          height: 300px;
+          weight: 250px;
+          max-width: none;
+          object-fit: cover; /* This property ensures that the aspect ratio of the image is maintained */
+      }
+
+
+      .gallery span img {
+          position: absolute;
+          width: auto;
+          height: auto;
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
+      }
+
+    body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif; 
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #666;
+}
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+  </style>
 </head>
 
 <body>
+    <!-- Loader -->
     <div th:replace="user/fragments/loader :: loader"></div>
     <!-- Start Main Top -->
     <div th:replace="user/fragments/user-header :: header"></div>
@@ -188,7 +257,7 @@
                         <div class="col-md-12">
                             <h1 class="m-b-20"><strong>Selamat Datang <br> Jimbung Industrial</strong></h1>
                             <p class="m-b-40">Sharing solution yaitu membuka diskusi baik intern manjemen maupun ekstern mitra kerja produksi, pemasaran dan konsumen guna memberikan saran maupun evaluasi kinerja</p>
-                            <p><a class="btn hvr-hover" th:href="@{/user/shop}">Belanja Sekarang</a></p>
+                            <p><a class="btn hvr-hover" href="@{/user/shop}">Belanja Sekarang</a></p>
                         </div>
                     </div>
                 </div>
@@ -200,7 +269,7 @@
                         <div class="col-md-12">
                             <h1 class="m-b-20"><strong>Selamat Datang<br> Jimbung Industrial</strong></h1>
                             <p class="m-b-40">Solution Patner yaitu menjalin kemitraan usaha yang sustainability dengan feedback saling menguntungkan </p>
-                            <p><a class="btn hvr-hover" th:href="@{/user/shop}">Belanja Sekarang</a></p>
+                            <p><a class="btn hvr-hover" href="@{/user/shop}">Belanja Sekarang</a></p>
                         </div>
                     </div>
                 </div>
@@ -214,7 +283,7 @@
     <!-- End Slider -->
 
     <!-- Start Categories  -->
-    <div class="categories-shop">
+    <div class="categories-shop" style="background-color: #8F1D14;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -310,36 +379,15 @@
             </div>
         </div>
     </div>
-        <br>
 
     <!-- Start Blog  -->
-    <!-- <div class="latest-blog">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-lg-4 col-xl-4" th:each="blog : ${blogs}">
-                    <div class="blog-box">
-                        <div class="blog-img">
-                            <img class="img-fluid fit" th:src="${blog.photosImagePath}" alt="" />
-                        </div>
-                        <div class="blog-content">
-                            <div class="title-blog">
-                                <h3 th:text="${blog.name}"></h3>
-                                <p th:text="${blog.deskripsi}"></p>
-                                <a href="#" th:attr="data-target='@{#blogModal_' + ${blog.id}}'" class="open-modal">Baca Selengkapnya...</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-            <div class="latest-blog">
+            <div class="latest-blog" style="background-color: #8F1D14;">
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="title-all text-center">
                                 <h1>Artikel</h1>
-                                <p th:if="${not #lists.isEmpty(blogs)}">
+                                <p th:if="${not #lists.isEmpty(blogs)}" style="color: white">
                                     Berikut ini adalah tips & trick memilih bahan yang sesuai dengan kebutuhan dan keinginan Anda.
                                 </p>
                                 <p th:unless="${not #lists.isEmpty(blogs)}">
@@ -371,17 +419,17 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Modal HTML -->
             <div id="blogModal" class="modal">
-                <div class="modal-content">
+                <div class="modal-content w-25">
                     <span class="close">&times;</span>
                     <img class="img-fluid fit mx-auto" id="modalImage" src="" alt="">
                     <h3 id="modalTitle"></h3>
                     <p id="modalDescription"></p>
                 </div>
             </div>
-        
+
 
     <!-- End Blog  -->
     <!-- Start Instagram Feed  -->
@@ -471,7 +519,6 @@
     </div>
     <!-- End Instagram Feed  -->
 
-
     <!-- Start Footer  -->
     <footer>
         <div class="footer-main">
@@ -480,9 +527,9 @@
                     <div class="col-lg-4 col-md-12 col-sm-12">
                         <div class="footer-widget">
                             <h4>Tentang Jimbung Industrial</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            <p>"Menjadi Home Industry jasa konveksi/garmen dalam skala nasional dan internasional yang mengoptimalkan kekhasan potensi sumber dalam negeri"
+
+Produk yang dihasilkan memiliki kualitas yang sesuai dengan permintaan customer maupun mitra kerja yang bersifat update, simple, fleksibel dan memudahkan penggunaan produk. Harga produk sesuai dengan kesepakatan bersama antara customer dan manajeman. Mengutamakan Ketepatan waktu dan proses pengerjaan.
                             </p>
                             <ul>
                                 <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
@@ -559,33 +606,6 @@
     <script th:src="@{/assets/js/form-validator.min.js}"></script>
     <script th:src="@{/assets/js/contact-form-script.js}"></script>
     <script th:src="@{/assets/js/custom.js}"></script>
-    <!-- <script>
-        // JavaScript to handle the modal pop-up
-        var modals = document.querySelectorAll('.modal');
-        var openButtons = document.querySelectorAll('.open-modal');
-        var modalImage = document.getElementById('modalImage');
-        var modalTitle = document.getElementById('modalTitle');
-        var modalDescription = document.getElementById('modalDescription');
-    
-        openButtons.forEach(function (button, index) {
-            button.addEventListener('click', function (event) {
-                event.preventDefault(); // Prevent the default link behavior
-                var blog = ${blogs[index]}; // Get the corresponding blog data
-                modalImage.src = blog.photosImagePath;
-                modalTitle.textContent = blog.name;
-                modalDescription.textContent = blog.deskripsi;
-                modals[0].style.display = 'block';
-            });
-        });
-    
-        // Close the modal when the "x" button is clicked
-        var closeButtons = document.querySelectorAll('.close');
-        closeButtons.forEach(function (button) {
-            button.addEventListener('click', function () {
-                modals[0].style.display = 'none';
-            });
-        });
-    </script> -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var modals = document.querySelectorAll('.modal');
@@ -617,8 +637,8 @@
             });
         });
     </script>
-    <script th:src="@{/assets/js/loader.js}"></script> 
-    
+
+    <script th:src="@{/assets/js/loader.js}"></script>
 </body>
 
 </html>

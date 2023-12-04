@@ -35,7 +35,6 @@ public class CartMapper {
         Long totalItemPrice = price * cartItem.getQuantity();
 
         return new CartItemDto(
-                cartItem.getId(),
                 cartItem.getProduct().getImage().get(0).getUrl(),
                 cartItem.getProduct().getName(),
                 size,

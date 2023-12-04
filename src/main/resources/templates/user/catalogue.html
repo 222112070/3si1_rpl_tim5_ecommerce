@@ -34,10 +34,7 @@
         crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
     
     <style>
         .fit {
@@ -213,33 +210,7 @@
     <script th:src="@{/assets/js/form-validator.min.js}"></script>
     <script th:src="@{/assets/js/contact-form-script.js}"></script>
     <script th:src="@{/assets/js/custom.js}"></script>
-    <!-- <script>
-        // JavaScript to handle the modal pop-up
-        var modals = document.querySelectorAll('.modal');
-        var openButtons = document.querySelectorAll('.open-modal');
-        var modalImage = document.getElementById('modalImage');
-        var modalTitle = document.getElementById('modalTitle');
-        var modalDescription = document.getElementById('modalDescription');
-    
-        openButtons.forEach(function (button, index) {
-            button.addEventListener('click', function (event) {
-                event.preventDefault(); // Prevent the default link behavior
-                var blog = ${blogs[index]}; // Get the corresponding blog data
-                modalImage.src = blog.photosImagePath;
-                modalTitle.textContent = blog.name;
-                modalDescription.textContent = blog.deskripsi;
-                modals[0].style.display = 'block';
-            });
-        });
-    
-        // Close the modal when the "x" button is clicked
-        var closeButtons = document.querySelectorAll('.close');
-        closeButtons.forEach(function (button) {
-            button.addEventListener('click', function () {
-                modals[0].style.display = 'none';
-            });
-        });
-    </script> -->
+
 </body>
 
 </html>

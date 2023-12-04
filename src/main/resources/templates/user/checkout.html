@@ -31,10 +31,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
 
 </head>
 
@@ -71,150 +68,89 @@
     <!-- End All Title Box -->
 
     <!-- Start Cart  -->
-    <div class="cart-box-main">
+    <div class="cart-box-main" style="background-color: #8F1D14;">
         <div class="container">
-            <!-- <div class="row new-account-login">
-                <div class="col-sm-6 col-lg-6 mb-3">
-                    <div class="title-left">
-                        <h3>Account Login</h3>
-                    </div>
-                    <h5><a data-toggle="collapse" href="#formLogin" role="button" aria-expanded="false">Click here to Login</a></h5>
-                    <form class="mt-3 collapse review-form-box" id="formLogin">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="InputEmail" class="mb-0">Email Address</label>
-                                <input type="email" class="form-control" id="InputEmail" placeholder="Enter Email"> </div>
-                            <div class="form-group col-md-6">
-                                <label for="InputPassword" class="mb-0">Password</label>
-                                <input type="password" class="form-control" id="InputPassword" placeholder="Password"> </div>
-                        </div>
-                        <button type="submit" class="btn hvr-hover">Login</button>
-                    </form>
-                </div>
-                <div class="col-sm-6 col-lg-6 mb-3">
-                    <div class="title-left">
-                        <h3>Create New Account</h3>
-                    </div>
-                    <h5><a data-toggle="collapse" href="#formRegister" role="button" aria-expanded="false">Click here to Register</a></h5>
-                    <form class="mt-3 collapse review-form-box" id="formRegister">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="InputName" class="mb-0">First Name</label>
-                                <input type="text" class="form-control" id="InputName" placeholder="First Name"> </div>
-                            <div class="form-group col-md-6">
-                                <label for="InputLastname" class="mb-0">Last Name</label>
-                                <input type="text" class="form-control" id="InputLastname" placeholder="Last Name"> </div>
-                            <div class="form-group col-md-6">
-                                <label for="InputEmail1" class="mb-0">Email Address</label>
-                                <input type="email" class="form-control" id="InputEmail1" placeholder="Enter Email"> </div>
-                            <div class="form-group col-md-6">
-                                <label for="InputPassword1" class="mb-0">Password</label>
-                                <input type="password" class="form-control" id="InputPassword1" placeholder="Password"> </div>
-                        </div>
-                        <button type="submit" class="btn hvr-hover">Register</button>
-                    </form>
-                </div>
-            </div> -->
+          
             <div class="row">
                 <div class="col-sm-6 col-lg-6 mb-3">
                     <div class="checkout-address">
                         <div class="title-left">
-                            <h3>Pengisian Form Pemesanan</h3>
+                            <h3 style="color: rgb(255, 166,0);">Pengisian Form Pemesanan</h3>
                         </div>
                         <form class="needs-validation" method="post" th:action="@{/user/cart/checkout}">
-                            <div class="mb-3">
+                            <div class="mb-3" style="color: white">
                                 <label for="name">Nama Pemesan *</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="name" id="name" placeholder="" th:value="${user.name}" required>
                                     <div class="invalid-feedback" style="width: 100%;"> Your name is required. </div>
                                 </div>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" style="color: white">
                                 <label for="email">Email *</label>
                                 <input type="email" class="form-control" th:value="${user.email}" placeholder="" readonly>
                                 <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3"style="color: white">
                                 <label for="address">Alamat Pengiriman *</label>
                                 <input type="text" class="form-control" id="address" name="address" placeholder="" required>
                                 <div class="invalid-feedback"> Please enter your shipping address. </div>
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" style="color: white">
                                 <label for="whatsapp">Nomor Whatsapp *</label>
                                 <input type="text" class="form-control" id="whatsapp" name="whatsapp" placeholder="" required> 
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" style="color: white">
                                 <label for="notes">Notes *</label>
                                 <input type="text" class="form-control" id="notes" name="notes" placeholder="Give notes to seller if you want"> 
                             </div>
                             <hr class="mb-4">
                             <hr class="mb-1"> 
-                            <button type="submit" style="display: block; margin: 0 auto; background-color: black; color: white; font-weight: bold;" class="ml-auto btn hvr-hover">Place Order</button>
+                            <button type="submit" style="display: block; margin: 0 auto; background-color: black; color: white; font-weight: bold; font-size: 16px;" class="ml-auto btn hvr-hover">Place Order</button>
                         </form>
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-6 mb-3">
                     <div class="row">
-                        <!-- <div class="col-md-12 col-lg-12">
-                            <div class="shipping-method-box">
-                                <div class="title-left">
-                                    <h3>Shipping Method</h3>
-                                </div>
-                                <div class="mb-4">
-                                    <div class="custom-control custom-radio">
-                                        <input id="shippingOption1" name="shipping-option" class="custom-control-input" checked="checked" type="radio">
-                                        <label class="custom-control-label" for="shippingOption1">Standard Delivery</label> <span class="float-right font-weight-bold">FREE</span> </div>
-                                    <div class="ml-4 mb-2 small">(3-7 business days)</div>
-                                    <div class="custom-control custom-radio">
-                                        <input id="shippingOption2" name="shipping-option" class="custom-control-input" type="radio">
-                                        <label class="custom-control-label" for="shippingOption2">Express Delivery</label> <span class="float-right font-weight-bold">$10.00</span> </div>
-                                    <div class="ml-4 mb-2 small">(2-4 business days)</div>
-                                    <div class="custom-control custom-radio">
-                                        <input id="shippingOption3" name="shipping-option" class="custom-control-input" type="radio">
-                                        <label class="custom-control-label" for="shippingOption3">Next Business day</label> <span class="float-right font-weight-bold">$20.00</span> </div>
-                                </div>
-                            </div>
-                        </div> -->
                         <div class="col-md-12 col-lg-12">
                             <div class="odr-box">
                                 <div class="title-left">
-                                    <h3>Detail Pemesanan</h3>
+                                    <h3 style="color: rgb(255, 166,0);">Detail Pemesanan</h3>
                                 </div>
                                 <div class="rounded p-2 bg-light">
                                     <div class="media mb-2 border-bottom" th:each="item, iterStat : ${cart.cartItems}">
                                         <div class="media-body"> <p th:text="${item.productName}"></p>
-                                            <div class="small text-muted">Price : Rp.<span th:text="${item.price}"></span><span class="mx-2">| Qty</span> <span th:text="${item.quantity}"></span><span class="mx-2">|</span> Subtotal : Rp.</span> <span th:text="${item.totalItemPrice}"></span></div>
+                                            <div class="small text-muted" style="font-size: 14px;">Price : Rp.<span th:text="${item.price}"></span><span class="mx-2">| Qty</span> <span th:text="${item.quantity}"></span><span class="mx-2">|</span> Subtotal : Rp.</span> <span th:text="${item.totalItemPrice}"></span></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-12 col-lg-12">
-                            <div class="order-box">
-                                <div class="title-left">
-                                    <h3>Your order</h3>
+                            <div class="mt-5 order-box">
+                                <div class="title-left">               
+                                    <h3 style="color: rgb(255, 166,0);">Your order</h3>
                                 </div>
                                 <div class="d-flex">
-                                    <div class="font-weight-bold">Product</div>
-                                    <div class="ml-auto font-weight-bold">Total</div>
+                                    <div class="font-weight-bold" style="color: white">Product</div>
+                                    <div class="ml-auto font-weight-bold" style="color: white">Total</div>
                                 </div>
                                 <hr class="my-1">
                                 <div class="d-flex">
-                                    <h4>Sub Total (Negotiatable)</h4>
-                                    <div class="ml-auto font-weight-bold" th:text="${cart.totalPrice}"></div>
+                                    <h4 style="color: white">Sub Total (Negotiatable)</h4>
+                                    <div class="ml-auto font-weight-bold" th:text="${cart.totalPrice}" style="color: white"></div>
                                 </div>
                                 <div class="d-flex">
-                                    <h4>Shipping Cost (Depends)</h4>
-                                    <div class="ml-auto font-weight-bold"> Free </div>
+                                    <h4 style="color: white">Shipping Cost (Depends)</h4>
+                                    <div class="ml-auto font-weight-bold"style="color: white"> Free </div>
                                 </div>
                                 <hr>
                                 <div class="d-flex gr-total">
-                                    <h5>Grand Total</h5>
-                                    <div class="ml-auto h5" th:text="${cart.totalPrice}"></div>
+                                    <h5 style="color: rgb(255, 166,0);">Grand Total</h5>
+                                    <div class="ml-auto h5" th:text="${cart.totalPrice}" style="color: white"></div>
                                 </div>
                                 <hr> </div>
                         </div>
-                        <div class="col-12 d-flex shopping-box"> <a th:href="@{/user/cart/checkout}" class="ml-auto btn hvr-hover">Place Order</a> </div>
+                        <div class="col-12 d-flex shopping-box"> <a th:href="@{/user/cart/checkout}" class="ml-auto btn hvr-hover" style="font-size: 16px;">Place Order</a> </div>
                     </div>
                 </div>
             </div>
