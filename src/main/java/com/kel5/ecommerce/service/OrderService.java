@@ -5,6 +5,7 @@
 package com.kel5.ecommerce.service;
 
 import com.kel5.ecommerce.entity.Order;
+import com.kel5.ecommerce.entity.User;
 
 import java.util.List;
 
@@ -15,18 +16,15 @@ public interface OrderService {
     com.kel5.ecommerce.entity.Order getOrderById(Long id);
     void deleteOrder(Long id);
     List<Order> getAllOrders();
-
     List<Order> getOrdersForLoggedInUser();
     List<Order> getOrderDoneForLoggedInUser(String orderStatus);
     List<Order> getOrderOnProgressForLoggedInUser(String orderStatus);
-    
     Order createOrderFromCart(String name,String address,String whatsapp, String notes);
-
     void createOrderFromProduct(Long productId, Integer quantity);
     void registerObserver(OrderObserver observer);
     String createOrderMessage(Long orderId);
     void updateTotalSpentUser(Long orderId);
     List<Order> filterOrder(String keyword);
-
-    boolean cancelOrder(Long orderId);
+    boolean cancelOrder(User user,Long orderId);
+    Order getOrderByIdForLoggedInUser(Long orderId);
 }

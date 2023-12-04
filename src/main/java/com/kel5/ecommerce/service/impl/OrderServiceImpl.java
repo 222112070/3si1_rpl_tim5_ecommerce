@@ -171,51 +171,48 @@ public class OrderServiceImpl implements OrderService {
     
     @Override
     public String createOrderMessage(Long orderId) {
-        Optional<Order> orderOptional = orderRepository.findById(orderId);
+        User user = userService.getUserLogged();
+        Order order = orderRepository.findByUserAndId(user, orderId);
+        if(order!=null){
+            StringBuilder message = new StringBuilder();
+            message.append("*KONFIRMASI PESANAN*\n")
+                    .append("----‐-------------------------------------\n")
+                    .append("*RINCIAN PEMESAN*\n")
+                    .append("\nNama Pemesan : ")
+                    .append(order.getUser().getName())
+                    .append("\nEmail Pemesan : ")
+                    .append(order.getUser().getEmail())
+                    .append("\nNomor WhatApp : ")
+                    .append(order.getWhatsapp())
+                    .append("\nTanggal Pemesanan : ")
+                    .append(order.getOrderDate())
+                    .append("\nPerkiraan Harga : Rp. ")
+                    .append(order.getTotalAmount())
+                    .append("\nAlamat Pesanan :  ")
+                    .append(order.getAddress())
+                    .append("\n\n")
+                    .append("*RINCIAN PESANAN*\n");
 
-        if (orderOptional.isEmpty()) {
-            return "Order dengan ID: " + orderId + " tidak ditemukan.";
+            int count = 1;
+            for (OrderItem item : order.getOrderItems()) {
+                message.append("")
+                        .append("Nama Produk : ")
+                        .append(item.getProduct().getName())
+                        .append("\n Ukuran : ")
+                        .append(item.getSize())
+                        .append("\n Jumlah : ")
+                        .append(item.getQuantity())
+                        .append("\n\n");
+            }
+
+            message.append("\nCatatan Pemesan : ")
+                    .append(order.getNotes())
+                    .append("\n----‐-------------------------------------\n")
+                    .append("Terima kasih");
+            return message.toString();
+        } else{
+            return "Order Tidak Valid!";
         }
-
-        Order order = orderOptional.get();
-        StringBuilder message = new StringBuilder();
-        message.append("*KONFIRMASI PESANAN*\n")
-                .append("----‐-------------------------------------\n")
-                .append("*RINCIAN PEMESAN*\n")
-                .append("\nNama Pemesan : ")
-                .append(order.getUser().getName())
-                .append("\nEmail Pemesan : ")
-                .append(order.getUser().getEmail())
-                .append("\nNomor WhatApp : ")
-                .append(order.getWhatsapp())
-                .append("\nTanggal Pemesanan : ")
-                .append(order.getOrderDate())
-                .append("\nPerkiraan Harga : Rp. ")
-                .append(order.getTotalAmount())
-                .append("\nAlamat Pesanan :  ")
-                .append(order.getAddress())
-                .append("\n\n")
-                .append("*RINCIAN PESANAN*\n");
-        
-        int count = 1;
-        for (OrderItem item : order.getOrderItems()) {
-            message.append("")
-                    .append("Nama Produk : ")
-                    .append(item.getProduct().getName())
-                    .append("\n Ukuran : ")
-                    .append(item.getSize())
-                    .append("\n Jumlah : ")
-                    .append(item.getQuantity())
-                    .append("\n\n");
-        }
-
-        message.append("\nCatatan Pemesan : ")
-                .append(order.getNotes())
-                .append("\n----‐-------------------------------------\n")
-                .append("Terima kasih");
-
-        return message.toString();
-
     }
     
     @Override
@@ -267,21 +264,28 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public boolean cancelOrder(Long orderId) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id " + orderId));
-
-        String status = order.getStatus();
-        if (status.equals("Belum Dibayar") || status.equals("Belum Dikonfirmasi")) {
-            for (OrderItem item : order.getOrderItems()) {
-                Product product = item.getProduct();
-                product.setStock(product.getStock() + item.getQuantity());
-                productRepository.save(product);
+    public boolean cancelOrder(User user, Long orderId) {
+        Order order = orderRepository.findByUserAndId(user, orderId);
+        if (order != null) {
+            String status = order.getStatus();
+            if (status.equals("Belum Dibayar") || status.equals("Belum Dikonfirmasi")) {
+                for (OrderItem item : order.getOrderItems()) {
+                    Product product = item.getProduct();
+                    product.setStock(product.getStock() + item.getQuantity());
+                    productRepository.save(product);
+                }
+                orderRepository.delete(order);
+                return true;
             }
-            orderRepository.delete(order);
-            return true;
+            return false;
+        } else {
+            return false;
         }
-        return false;
     }
 
+    @Override
+    public Order getOrderByIdForLoggedInUser(Long orderId) {
+        User user = userService.getUserLogged();
+        return orderRepository.findByUserAndId(user, orderId);
+    }   
 }
