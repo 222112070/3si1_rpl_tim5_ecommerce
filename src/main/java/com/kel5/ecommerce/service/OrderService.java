@@ -27,4 +27,6 @@ public interface OrderService {
     String createOrderMessage(Long orderId);
     void updateTotalSpentUser(Long orderId);
     List<Order> filterOrder(String keyword);
+
+    boolean cancelOrder(Long orderId);
 }
