@@ -267,21 +267,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public boolean cancelOrder(Long orderId) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id " + orderId));
-
-        String status = order.getStatus();
-        if (status.equals("Belum Dibayar") || status.equals("Belum Dikonfirmasi")) {
-            for (OrderItem item : order.getOrderItems()) {
-                Product product = item.getProduct();
-                product.setStock(product.getStock() + item.getQuantity());
-                productRepository.save(product);
+    public boolean cancelOrder(User user, Long orderId) {
+        Order order = orderRepository.findByUserAndId(user, orderId);
+        if (order != null) {
+            String status = order.getStatus();
+            if (status.equals("Belum Dibayar") || status.equals("Belum Dikonfirmasi")) {
+                for (OrderItem item : order.getOrderItems()) {
+                    Product product = item.getProduct();
+                    product.setStock(product.getStock() + item.getQuantity());
+                    productRepository.save(product);
+                }
+                orderRepository.delete(order);
+                return true;
             }
-            orderRepository.delete(order);
-            return true;
+            return false;
+        } else {
+            return false;
         }
-        return false;
     }
 
 }

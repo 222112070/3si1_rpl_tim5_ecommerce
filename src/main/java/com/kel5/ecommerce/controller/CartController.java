@@ -78,9 +78,8 @@ public class CartController {
         Order createdOrder = orderService.createOrderFromCart(name, address, whatsapp, notes);
         Long orderId = createdOrder.getId();
         return "redirect:/user/order/whatsapp/" + orderId;
-}
+    }
 
-    
     @GetMapping("/cart/{cartId}/delete") 
     public String deleteCart(@PathVariable(name = "cartId") Long cartId){
         cartService.deleteCart(cartId);

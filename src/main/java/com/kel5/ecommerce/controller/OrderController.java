@@ -5,9 +5,14 @@
 package com.kel5.ecommerce.controller;
 
 import com.kel5.ecommerce.dto.UserDto;
+import com.kel5.ecommerce.entity.Category;
 import com.kel5.ecommerce.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.kel5.ecommerce.entity.Order;
+import com.kel5.ecommerce.entity.Subcategory;
+import com.kel5.ecommerce.entity.User;
+import com.kel5.ecommerce.service.CategoryService;
+import com.kel5.ecommerce.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +31,12 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
+    @Autowired
+    CategoryService categoryService;
+    
+    @Autowired
+    UserService userService;
+        
     @GetMapping("/order-list")
     public String registrationForm(Model model) {
         List<Order> orders = orderService.getAllOrders();
@@ -34,6 +45,10 @@ public class OrderController {
 
     @GetMapping("/order")
     public String seeMyOrder(Model model) {
+        List<Category> categories = categoryService.getAllCategories();
+        List<Subcategory> subcategories = categoryService.getAllSubcategories();
+        model.addAttribute("categories", categories);
+        model.addAttribute("subcategories", subcategories);
         List<Order> orders = orderService.getOrderOnProgressForLoggedInUser("Selesai");
         model.addAttribute("orders",orders);
         return "user/MyOrder";
@@ -57,13 +72,14 @@ public class OrderController {
 
     @GetMapping("/order/cancel/{orderId}")
     public String cancelOrder(@PathVariable("orderId") Long orderId, RedirectAttributes redirectAttributes) {
-        boolean isCancelled = orderService.cancelOrder(orderId);
+        User user = userService.getUserLogged();
+        boolean isCancelled = orderService.cancelOrder(user,orderId);
         if (isCancelled) {
             redirectAttributes.addFlashAttribute("successMessage", "Pesanan berhasil dibatalkan.");
         } else {
             redirectAttributes.addFlashAttribute("errorMessage", "Pesanan tidak dapat dibatalkan.");
         }
-        return "redirect:/user/order-list";
+        return "redirect:/user/order";
     }
 
 

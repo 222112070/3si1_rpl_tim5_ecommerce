@@ -114,16 +114,16 @@
                                     <p th:text="${item.size}"></p>
                                 </td>
                                 <td class="quantity-box">
-                                    <button class="decrease-quantity" th:data-id="${item.getId()}">-</button>
-                                    <p id="itemQuantity" th:text="${item.quantity}"></p>
-                                    <button class="increase-quantity" th:data-id="${item.getId()}">+</button>
-                                </td>
+                                    <button class="decrease-quantity" th:data-id="${item.getId()}" style="padding: 5px 10px; background-color: #e74c3c; color: #fff; border: none; cursor: pointer;">-</button>
+                                    <p id="itemQuantity" th:text="${item.quantity}" style="margin: 0 10px; font-weight: bold; font-size: 16px;"></p>
+                                    <button class="increase-quantity" th:data-id="${item.getId()}" style="padding: 5px 10px; background-color: #077a37; color: #fff; border: none; cursor: pointer;">+</button>
+                                </td>                                
                                 <td class="total-pr">
                                     <p th:text="${item.totalItemPrice}"></p>
                                 </td>
                                 <td class="remove-pr">
                                     <a href="#" class="remove-item" th:data-id="${item.getId()}">
-                                        <i class="fas fa-times"></i>
+                                        <a th:href="@{/user/cart/delete/{cartItemId}(cartItemId=${item.getId()})}"><i class="fas fa-times"></i></a>
                                     </a>
                                 </td>
                             </tr>

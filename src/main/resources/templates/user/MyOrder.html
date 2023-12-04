@@ -109,20 +109,24 @@
                     <!--Table head-->
                     <!--Table body-->
                     <tbody style="font-weight: bolder; color: white;">
-                        <tr  th:each="order, iterStat : ${orders}">
+                        <tr th:each="order, iterStat : ${orders}">
                             <th scope="row" th:text="${iterStat.index + 1}">1</th>
                             <td th:text="${order.orderDate}"></td>
                             <td th:text="${order.address}"></td>
                             <td th:text="'Rp. ' + ${order.totalAmount}"></td>
                             <td th:text="${order.status}"></td>
                             <td><a th:href="@{/user/order/details/{detailId}(detailId=${order.id})}" style="font-weight: bolder; color: white;">Lihat Detail</a></td>
-                            <td th:if="${order.status == 'Dalam Pengiriman'}">
-                                <a th:href="@{'/user/order/confirm/' + ${order.id}}" style="font-weight: bolder; color: lightgreen;">Konfirmasi Terima</a>
+                            <td>
+                                <span th:if="${order.status == 'Belum Dikonfirmasi'}">
+                                    <a th:href="@{'/user/order/whatsapp/' + ${order.id}}" style="font-weight: bolder; color: white;">Konfirmasi Ke Whatsapp Admin</a>
+                                    <br>
+                                    <a th:href="@{/user/order/cancel/{orderId}(orderId=${order.id})}" style="font-weight: bolder; color: white;">Delete Order</a>
+                                </span>
+                                <span th:if="${order.status == 'Dalam Pengiriman'}">
+                                    <a th:href="@{'/user/order/confirm/' + ${order.id}}" style="font-weight: bolder; color: lightgreen;">Konfirmasi Terima</a>
+                                </span>
+                                <span th:unless="${order.status == 'Dalam Pengiriman' or order.status == 'Belum Dikonfirmasi'}">-</span>
                             </td>
-                            <td th:if="${order.status == 'Belum Dikonfirmasi'}">
-                                <a th:href="@{'/user/order/whatsapp/' + ${order.id}}" style="font-weight: bolder; color: white;">Konfirmasi Ke Whatsapp Admin</a>
-                            </td> 
-                            <td th:unless="${order.status == 'Dalam Pengiriman' or order.status == 'Belum Dikonfirmasi'}">-</td>
                         </tr>
                     </tbody>
                     <!--Table body-->

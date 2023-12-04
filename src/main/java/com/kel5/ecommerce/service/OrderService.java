@@ -5,6 +5,7 @@
 package com.kel5.ecommerce.service;
 
 import com.kel5.ecommerce.entity.Order;
+import com.kel5.ecommerce.entity.User;
 
 import java.util.List;
 
@@ -28,5 +29,5 @@ public interface OrderService {
     void updateTotalSpentUser(Long orderId);
     List<Order> filterOrder(String keyword);
 
-    boolean cancelOrder(Long orderId);
+    boolean cancelOrder(User user,Long orderId);
 }
