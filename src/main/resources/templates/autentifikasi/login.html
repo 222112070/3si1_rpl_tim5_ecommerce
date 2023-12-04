@@ -32,6 +32,11 @@
             Please confirm account first !!!
           </div>
         </div>  
+        <div th:if="${param.error}">
+          <div class="alert alert-warning">
+            Wrong username or password!!!
+          </div>
+        </div>  
 
         <div class="logo-container text-center mt-1 mb-4">
           <img src="assets/img/logo.png" alt="Logo" class="logo-animation logo">

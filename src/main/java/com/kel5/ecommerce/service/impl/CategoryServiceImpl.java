@@ -29,10 +29,10 @@ public class CategoryServiceImpl implements CategoryService{
     public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
+    @Override
     public List<Subcategory> getAllSubcategories(){
         return subcategoryRepository.findAll();
     }
-
     @Override
     public List<Subcategory> getSubcategoriesByCategoryId(Long categoryId) {
         return subcategoryRepository.findByCategoryId(categoryId);

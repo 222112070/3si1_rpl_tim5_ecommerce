@@ -40,6 +40,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.view.RedirectView;
@@ -68,7 +70,6 @@ public class UserController {
         
     @Autowired
     private BlogService blogService;
-
 
     private String getLogedinUsername() {
         Authentication authentication =
@@ -176,6 +177,12 @@ public class UserController {
     @GetMapping("/contact-us")
     public String contactUs(ModelMap model){
         String username = getLogedinUsername();
+        User user = userService.getUserLogged();
+        if (user != null) {
+            model.addAttribute("user", user);
+        } else {
+            model.addAttribute("user", new User());
+        }
         List<Category> categories = categoryService.getAllCategories();
         List<Subcategory> subcategories = categoryService.getAllSubcategories();
         model.addAttribute("categories", categories);
@@ -217,4 +224,5 @@ public class UserController {
         model.addAttribute("subcategories", subcategories);
         return "user/wishlist";
     }
+    
 }
