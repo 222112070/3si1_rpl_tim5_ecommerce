@@ -15,9 +15,8 @@ import java.util.List;
  */
 public interface CategoryService {
     public List<Category> getAllCategories();
-
+    public List<Subcategory> getAllSubcategories();
     public List<Subcategory> getSubcategoriesByCategoryId(Long categoryId) ;
-    
     public Category getCategoryById(Long categoryId);
     public Subcategory getSubcategoryById(Long subcategoryId);
     Category saveCategory(Category category);

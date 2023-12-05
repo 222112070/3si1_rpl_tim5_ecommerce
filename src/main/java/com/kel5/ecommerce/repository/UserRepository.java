@@ -5,7 +5,9 @@
 package com.kel5.ecommerce.repository;
 
 import com.kel5.ecommerce.entity.User;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 
@@ -18,4 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
     User findByEmailIgnoreCase(String emailId);
 
     Boolean existsByEmail(String email);
+    
+    List<User> findByRoles_Name(String roleName);
+
 }

@@ -3,6 +3,7 @@ package com.kel5.ecommerce.service;
 
 import com.kel5.ecommerce.dto.UserDto;
 import com.kel5.ecommerce.entity.Cart;
+import com.kel5.ecommerce.entity.Order;
 import com.kel5.ecommerce.entity.User;
 
 import java.util.List;
@@ -28,4 +29,8 @@ public interface UserService {
     void confirmEmail(String confirmationToken);
     
     public Cart getUserCart();
+    
+    User setTotalSpentUser(User user);
+    
+    List<User> getAllCustomer();
 }

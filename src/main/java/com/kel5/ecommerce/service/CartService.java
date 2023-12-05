@@ -4,9 +4,9 @@
  */
 package com.kel5.ecommerce.service;
 
+import com.kel5.ecommerce.dto.CartUpdateInfo;
 import com.kel5.ecommerce.entity.Cart;
 import com.kel5.ecommerce.entity.User;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -21,4 +21,10 @@ public interface CartService {
     Cart getCurrentCart();
 
     boolean performCheckout();
+
+    void removeCartItem(Long cartItemId);
+
+    CartUpdateInfo incrementQuantity(Long cartItemId);
+
+    CartUpdateInfo decrementQuantity(Long cartItemId);
 }

@@ -12,6 +12,7 @@ import com.kel5.ecommerce.mapper.CartMapper;
 import com.kel5.ecommerce.repository.CategoryRepository;
 import com.kel5.ecommerce.repository.SubcategoryRepository;
 import com.kel5.ecommerce.service.CartService;
+import com.kel5.ecommerce.service.CategoryService;
 import com.kel5.ecommerce.service.OrderService;
 import com.kel5.ecommerce.service.UserService;
 import java.util.List;
@@ -38,17 +39,13 @@ public class CheckoutController {
     private UserService userService;
         
     @Autowired
-    private CategoryRepository categoryRepository;
-            
-    @Autowired
-    private SubcategoryRepository subcategoryRepository;
-    
+    private CategoryService categoryService;
     @PostMapping("/cart/checkoutCart")
     public String checkoutCart(Model model){
         Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
         model.addAttribute("cart", CartMapper.toDto(cart));
-        List<Category> categories = categoryRepository.findAll();
-        List<Subcategory> subcategories = subcategoryRepository.findAll();
+        List<Category> categories = categoryService.getAllCategories();
+        List<Subcategory> subcategories = categoryService.getAllSubcategories();
         model.addAttribute("categories", categories);
         model.addAttribute("subcategories", subcategories);
         User user = userService.getUserLogged();

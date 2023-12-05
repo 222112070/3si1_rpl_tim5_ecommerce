@@ -4,12 +4,20 @@
  */
 package com.kel5.ecommerce.controller;
 
+import com.kel5.ecommerce.dto.ProductDto;
+import com.kel5.ecommerce.entity.*;
+import com.kel5.ecommerce.mapper.ProductMapper;
 import com.kel5.ecommerce.entity.Blog;
 import com.kel5.ecommerce.entity.Category;
 import com.kel5.ecommerce.entity.Subcategory;
 import com.kel5.ecommerce.entity.User;
 import com.kel5.ecommerce.service.CategoryService;
 import com.kel5.ecommerce.service.UserService;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *

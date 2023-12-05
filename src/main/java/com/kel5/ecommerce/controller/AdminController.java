@@ -32,32 +32,22 @@ public class AdminController {
     private UserService userService;
     
     @Autowired
+    private ProductService productService;
+    
+    @Autowired
     private OrderService orderService;
-    
-    @Autowired
-    private ProductRepository productRepository;
-    
-    @Autowired
-    private UserRepository userRepository;
-    
     
     private String getLogedinUsername() {
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
         return authentication.getName();
     }
-//
-//    @GetMapping("/")
-//    public String registrationForm(ModelMap model) {
-//        String username = getLogedinUsername();
-//        return "admin";
-//    }
 
     @GetMapping("/")
     public String DashboardAdmin(Model model) {
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productService.getAllProducts();
         model.addAttribute("products", products);
-        List<User> users = userRepository.findAll();
+        List<User> users = userService.getAllCustomer();
         model.addAttribute("users", users);
         User user = userService.getUserLogged();
         model.addAttribute("user", user);
@@ -94,7 +84,9 @@ public class AdminController {
     @GetMapping("/pelanggan")
     public String Pelanggan(Model model) {
         User user = userService.getUserLogged();
+        List<User> customers = userService.getAllCustomer();
         model.addAttribute("user", user);
+        model.addAttribute("customers", customers);
         return "admin/pelanggan";
     }
     

@@ -22,11 +22,12 @@
     <!-- Bootstrap CSS -->
     <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet">
     <!-- Site CSS -->
-    <link href="/assets/css/style_1.css" rel="stylesheet">
+    <link th:href="@{/assets/css/style_1.css}" rel="stylesheet">
     <!-- Responsive CSS -->
     <link th:href="@{/assets/css/responsive.css}" rel="stylesheet">
     <!-- Custom CSS -->
     <link th:href="@{/assets/css/custom.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/assets/css/loader.css}" >
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
@@ -39,7 +40,7 @@
 </head>
 
 <body>
-
+    <div th:replace="user/fragments/loader :: loader"></div>
     <!-- Start Main Top -->
     <div th:replace="user/fragments/user-header :: header"></div>
 
@@ -95,38 +96,38 @@
                 <div class="col-lg-8 col-sm-12">
                     <div class="contact-form-right">
                         <h2>KIRIM PESAN UNTUK KAMI</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed odio justo, ultrices ac nisl sed, lobortis porta elit. Fusce in metus ac ex venenatis ultricies at cursus mauris.</p>
-                        <form id="contactForm">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Nama" required data-error="Please enter your name">
-                                        <div class="help-block with-errors"></div>
-                                    </div>
+                        <p>Isikan subject dengan topik aduan atau saran, dan message untuk detail yang ingin anda sampaikan</p>
+                        <form id="contactForm" th:action="@{/user/kirim-pesan}" method="POST">
+                        </form>
+                        <form id="contactForm" th:action="@{/user/kirim-pesan}" method="POST">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nama" required data-error="Please enter your name" th:value="${user.name}" readonly>
+                                    <div class="help-block with-errors"></div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" placeholder="Email" id="email" class="form-control" name="name" required data-error="Please enter your email">
-                                        <div class="help-block with-errors"></div>
-                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" placeholder="Email" id="email" class="form-control" name="email" required data-error="Please enter your email" th:value="${user.email}" readonly>
+                                    <div class="help-block with-errors"></div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="subject" name="name" placeholder="Subject" required data-error="Please enter your Subject">
-                                        <div class="help-block with-errors"></div>
-                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="subject" name="subject" placeholder="subject" required data-error="Please enter your Subject">
+                                    <div class="help-block with-errors"></div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <textarea class="form-control" id="message" placeholder="Pesan" rows="4" data-error="Write your message" required></textarea>
-                                        <div class="help-block with-errors"></div>
-                                    </div>
-                                    <div class="submit-button text-center">
-                                        <button class="btn hvr-hover" id="submit" type="submit">Kirim Pesan</button>
-                                        <div id="msgSubmit" class="h3 text-center hidden"></div>
-                                        <div class="clearfix"></div>
-                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <textarea class="form-control" id="message" placeholder="Pesan" rows="4" name="message" data-error="Write your message" required></textarea>
+                                    <div class="help-block with-errors"></div>
                                 </div>
+                            </div>
+                            <div class="submit-button text-center">
+                                <button class="btn hvr-hover" id="submit" type="submit">Kirim Pesan</button>
+                                <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                <div class="clearfix"></div>
                             </div>
                         </form>
                     </div>
@@ -311,6 +312,7 @@
     <script th:src="@{/assets/js/form-validator.min.js}"></script>
     <script th:src="@{/assets/js/contact-form-script.js}"></script>
     <script th:src="@{/assets/js/custom.js}"></script>
+    <script th:src="@{/assets/js/loader.js}"></script>
 </body>
 
 </html>
