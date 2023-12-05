@@ -13,7 +13,10 @@ import java.util.List;
 
 public interface OrderService {
     Order createOrder(Order order);
-    Order updateOrder(Long id, String status, float totalAmountFix);
+    Order updateOrder(Long id, Order order);
+
+//    String createOrderMessage(Long orderId);
+
     com.kel5.ecommerce.entity.Order getOrderById(Long id);
     void deleteOrder(Long id);
     List<Order> getAllOrders();
@@ -25,5 +28,4 @@ public interface OrderService {
     void createOrderFromProduct(Long productId, Integer quantity);
     public void registerObserver(OrderObserver observer);
     String createOrderMessage(Long orderId);
-    public List<Order> filterOrder (String keyword);
 }

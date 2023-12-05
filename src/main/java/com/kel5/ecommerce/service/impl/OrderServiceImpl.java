@@ -8,7 +8,6 @@ import com.kel5.ecommerce.repository.ProductRepository;
 import com.kel5.ecommerce.service.OrderObserver;
 import com.kel5.ecommerce.service.OrderService;
 import com.kel5.ecommerce.service.UserService;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,13 +48,40 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order updateOrder(Long id, String status, float totalAmountFix) {
+    public Order updateOrder(Long id, Order order) {
         Order existingOrder = orderRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found with id " + id));
-        existingOrder.setStatus(status);
-        existingOrder.setTotalAmount(totalAmountFix);
+        // Update properties of existingOrder with those from order
+        // ...
         return orderRepository.save(existingOrder);
     }
+
+//    @Override
+//    public String createOrderMessage(Long orderId) {
+//        Optional<Order> orderOptional = orderRepository.findById(orderId);
+//
+//        if (orderOptional.isEmpty()) {
+//            return "Order dengan ID: " + orderId + " tidak ditemukan.";
+//        }
+//
+//        Order order = orderOptional.get();
+//        StringBuilder message = new StringBuilder();
+//        message.append("Permisi saya telah membuat pemesanan dengan id '")
+//                .append(orderId)
+//                .append("'\nKeterangan barang\n");
+//
+//        int count = 1;
+//        for (OrderItem item : order.getOrderItems()) {
+//            message.append(count++)
+//                    .append(". '")
+//                    .append(item.getProduct().getName())
+//                    .append("' ")
+//                    .append(item.getQuantity())
+//                    .append(" buah\n");
+//        }
+//
+//        return message.toString();
+//    }
 
     @Override
     public Order getOrderById(Long id) {
@@ -167,43 +193,42 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = orderOptional.get();
         StringBuilder message = new StringBuilder();
-        message.append("Permisi saya telah membuat pemesanan dengan id : ")
-                .append(orderId)
-                .append("\n    Email Pemesan : ")
+        message.append("*KONFIRMASI PESANAN*\n")
+                .append("----‐-------------------------------------\n")
+                .append("*RINCIAN PEMESAN*\n")
+                .append("\nNama Pemesan : ")
+                .append(order.getUser().getName())
+                .append("\nEmail Pemesan : ")
                 .append(order.getUser().getEmail())
-                .append("\n    Nomor WhatApp Pemesan : ")
+                .append("\nNomor WhatApp : ")
                 .append(order.getWhatsapp())
-                .append("\n    Dengan total Prakiraan Harga : Rp. ")
+                .append("\nTanggal Pemesanan : ")
+                .append(order.getOrderDate())
+                .append("\nPerkiraan Harga : Rp. ")
                 .append(order.getTotalAmount())
-                .append("\n\nKeterangan barang\n");
-
+                .append("\nAlamat Pesanan :  ")
+                .append(order.getAddress())
+                .append("\n\n")
+                .append("*RINCIAN PESANAN*\n");
+        
         int count = 1;
         for (OrderItem item : order.getOrderItems()) {
-            message.append("    ")
-                    .append(count++)
-                    .append("    . '")
+            message.append("")
+                    .append("Nama Produk : ")
                     .append(item.getProduct().getName())
-                    .append("' ")
-                    .append("Ukuran ")
+                    .append("\n Ukuran : ")
                     .append(item.getSize())
-                    .append(", ")
+                    .append("\n Jumlah : ")
                     .append(item.getQuantity())
-                    .append(" buah\n")
-                    .append("\n");
+                    .append("\n\n");
         }
 
+        message.append("\nCatatan Pemesan : ")
+                .append(order.getNotes())
+                .append("\n----‐-------------------------------------\n")
+                .append("Terima kasih");
 
         return message.toString();
-    }
-    
-    @Override
-    public List<Order> filterOrder (String keyword){
-        User user = userService.getUserLogged();
-        if (user != null) {
-            return this.orderRepository.findByStatusContaining(keyword);
-        } else {
-            return Collections.emptyList();
-        }
     }
 
 }

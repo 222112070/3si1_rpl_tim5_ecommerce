@@ -1,9 +1,7 @@
 package com.kel5.ecommerce.controller;
 
-import com.kel5.ecommerce.entity.Order;
 import com.kel5.ecommerce.entity.Product;
 import com.kel5.ecommerce.entity.User;
-import com.kel5.ecommerce.exception.ResourceNotFoundException;
 import com.kel5.ecommerce.repository.CategoryRepository;
 import com.kel5.ecommerce.repository.ProductRepository;
 import com.kel5.ecommerce.repository.UserRepository;
@@ -16,11 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,14 +26,10 @@ public class AdminController {
     private UserService userService;
     
     @Autowired
-    private OrderService orderService;
-    
-    @Autowired
     private ProductRepository productRepository;
     
     @Autowired
     private UserRepository userRepository;
-    
     
     private String getLogedinUsername() {
         Authentication authentication =
@@ -65,30 +55,10 @@ public class AdminController {
     }
 
     @GetMapping("/pesanan")
-    public String Pesanan(Model model, @RequestParam(defaultValue="") String keyword) {
+    public String Pesanan(Model model) {
         User user = userService.getUserLogged();
         model.addAttribute("user", user);
-        List<Order> orders;
-        if(keyword.isEmpty()){
-            orders = orderService.getOrdersForLoggedInUser();
-        } else {
-            orders = orderService.filterOrder(keyword);
-        }
-        model.addAttribute("orders",orders);
-        if(orders.isEmpty()){
-            model.addAttribute("notFound", true);
-        }
         return "admin/pesanan";
-    }
-    
-    @PostMapping("/pesanan/edit/{orderId}")
-    public String editPesanan(@PathVariable("orderId") Long id,
-                              @RequestParam("status") String status,
-                              @RequestParam("totalAmountFix") float totalAmountFix) {
-        
-        System.out.println("Update order " + id + " with status " + status + "and total amount" + totalAmountFix + ".");
-        orderService.updateOrder(id, status, totalAmountFix);
-        return "redirect:/admin/pesanan";
     }
 
     @GetMapping("/pelanggan")
@@ -102,14 +72,14 @@ public class AdminController {
     public String DetailPesanan(Model model) {
         User user = userService.getUserLogged();
         model.addAttribute("user", user);
-        return "admin/rincian_pesanan";
+        return "admin/rician_pesanan";
     }
     
     @GetMapping("/produk/detail")
     public String DetailProduk(Model model) {
         User user = userService.getUserLogged();
         model.addAttribute("user", user);
-        return "admin/rincian_produk";
+        return "admin/rician_produk";
     }
     
     @GetMapping("/profil")

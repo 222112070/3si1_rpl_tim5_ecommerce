@@ -73,7 +73,7 @@ public class CartController {
         return "user/cart"; // Name of the template that displays the cart
     }
 
-    @PostMapping("/cart/checkout")
+@PostMapping("/cart/checkout")
     public String checkoutCart(Model model,
                             @RequestParam("name") String name,
                             @RequestParam("address") String address,
