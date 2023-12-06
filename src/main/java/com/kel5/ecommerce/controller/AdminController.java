@@ -64,6 +64,11 @@ public class AdminController {
         } else {
             orders = orderService.filterOrder(keyword);
         }
+        for (Order order : orders) {
+            double orderAmount = order.getTotalAmount(); 
+            String formattedAmount = orderService.formatToRupiah(orderAmount);
+            order.setAmountFormatted(formattedAmount);
+        }
         model.addAttribute("orders",orders);
         if(orders.isEmpty()){
             model.addAttribute("notFound", true);
@@ -85,6 +90,11 @@ public class AdminController {
     public String Pelanggan(Model model) {
         User user = userService.getUserLogged();
         List<User> customers = userService.getAllCustomer();
+        for (User customer : customers) {
+            double totalSpent = customer.getTotalSpent(); 
+            String formattedAmount = orderService.formatToRupiah(totalSpent);
+            customer.setAmountFormatted(formattedAmount);
+        }
         model.addAttribute("user", user);
         model.addAttribute("customers", customers);
         return "admin/pelanggan";

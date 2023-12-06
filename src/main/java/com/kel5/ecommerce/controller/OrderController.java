@@ -5,17 +5,23 @@
 package com.kel5.ecommerce.controller;
 
 import com.kel5.ecommerce.dto.UserDto;
+import com.kel5.ecommerce.entity.Cart;
 import com.kel5.ecommerce.entity.Category;
 import com.kel5.ecommerce.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.kel5.ecommerce.entity.Order;
 import com.kel5.ecommerce.entity.Subcategory;
 import com.kel5.ecommerce.entity.User;
+import com.kel5.ecommerce.mapper.CartMapper;
+import com.kel5.ecommerce.service.CartService;
 import com.kel5.ecommerce.service.CategoryService;
 import com.kel5.ecommerce.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Locale;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +41,9 @@ public class OrderController {
     CategoryService categoryService;
     
     @Autowired
+    private CartService cartService;
+    
+    @Autowired
     UserService userService;
         
     @GetMapping("/order-list")
@@ -47,28 +56,27 @@ public class OrderController {
     public String seeMyOrder(Model model) {
         List<Category> categories = categoryService.getAllCategories();
         List<Subcategory> subcategories = categoryService.getAllSubcategories();
+        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        model.addAttribute("cart", CartMapper.toDto(cart));
         model.addAttribute("categories", categories);
         model.addAttribute("subcategories", subcategories);
         List<Order> orders = orderService.getOrderOnProgressForLoggedInUser("Selesai");
+        for (Order order : orders) {
+            double orderAmount = order.getTotalAmount(); 
+            String formattedAmount = orderService.formatToRupiah(orderAmount);
+            order.setAmountFormatted(formattedAmount);
+        }
         model.addAttribute("orders",orders);
         return "user/MyOrder";
     }
     
     @GetMapping("/order/confirm/{orderId}")
     public String editPesanan(@PathVariable("orderId") Long id) {
+        
         orderService.updateOrderByUser(id, "Selesai");
         orderService.updateTotalSpentUser(id);
         return "redirect:/user/order";
     }
-
-    /* Tombol Cancel di html
-    <td>
-        <span th:text="${order.status}" th:class="..."></span>
-        <a th:if="${order.status == 'Belum Dibayar' || order.status == 'Belum Dikonfirmasi'}"
-        th:href="@{/user/order/cancel/{orderId}(orderId=${order.id})}"
-        class="btn btn-danger btn-sm">Cancel</a>
-    </td>
-     */
 
     @GetMapping("/order/cancel/{orderId}")
     public String cancelOrder(@PathVariable("orderId") Long orderId, RedirectAttributes redirectAttributes) {

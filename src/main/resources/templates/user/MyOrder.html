@@ -116,7 +116,7 @@
                                 <th scope="row" th:text="${iterStat.index + 1}">1</th>
                                 <td th:text="${order.orderDate}"></td>
                                 <td th:text="${order.address}"></td>
-                                <td th:text="'Rp. ' + ${order.totalAmount}"></td>
+                                <td th:text="${order.amountFormatted}"></td>
                                 <td th:text="${order.status}"></td>
                                 <td><a th:href="@{/user/order/details/{detailId}(detailId=${order.id})}" style="font-weight: bolder; color: white;">Lihat Detail</a></td>
                                 <td>

@@ -98,7 +98,7 @@
                      <td th:text="${customer.name}"></td>
                      <td th:text="${customer.type}"></td>
                      <td th:text="${customer.email}"></td>
-                     <td th:text="'Rp. ' + ${customer.totalSpent}"></td>
+                     <td th:text="${customer.amountFormatted}"></td>
                    </tr>
 
                    <!-- Modal untuk mengedit nomor telepon dan email -->

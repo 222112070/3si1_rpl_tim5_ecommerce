@@ -41,4 +41,6 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "subcategory_id")
     private Subcategory subcategory;
+    
+    private transient String amountFormatted;
 }
