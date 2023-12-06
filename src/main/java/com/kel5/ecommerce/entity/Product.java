@@ -41,4 +41,8 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "subcategory_id")
     private Subcategory subcategory;
+    
+    public void setImages(List<Image> images) {
+        this.image=images;
+    }
 }
