@@ -100,10 +100,15 @@ public class AdminController {
         return "admin/pelanggan";
     }
     
-    @GetMapping("/pesanan/detail")
-    public String DetailPesanan(Model model) {
+    @GetMapping("/pesanan/detail/{orderId}")
+    public String DetailPesanan(Model model,@PathVariable Long orderId) {
         User user = userService.getUserLogged();
         model.addAttribute("user", user);
+        Order order=orderService.getOrderById(orderId);
+        double orderAmount = order.getTotalAmount(); 
+        String formattedAmount = orderService.formatToRupiah(orderAmount);
+        order.setAmountFormatted(formattedAmount);
+        model.addAttribute("order", order);
         return "admin/rincian_pesanan";
     }
     

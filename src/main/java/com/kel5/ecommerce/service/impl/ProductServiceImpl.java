@@ -24,11 +24,8 @@ import java.nio.file.Paths;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
 import java.util.Objects;
-=======
 import java.util.Locale;
->>>>>>> 1f65a8eee92f77718f18e8fe7e7fa0189483e4a9
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -123,9 +123,8 @@
                                 (order.status == 'Dalam Pengiriman' ? 'badge bg-light text-dark' : 'badge bg-success')))))}"></span></td>
                      <td>
                       <a href="#" data-toggle="modal" th:data-target="'#editModal-' + ${order.id}"><i class="fa-solid fa-pen-to-square"></i></a> 
-                      <a href="#" data-toggle="modal" data-target="#confirmDeleteModal"><i class="fa-solid fa-trash"></i></a>
                      </td>
-                     <td><a href="rincian_pesanan.html?id=1" class="btn btn-primary">Lihat Rincian</a></td>
+                     <td><a th:href="@{/admin/pesanan/detail/{detailId}(detailId=${order.id})}" class="btn btn-primary">Lihat Rincian</a></td>
                     </tr>
                     
                     <!-- Modal edit pesanan-->

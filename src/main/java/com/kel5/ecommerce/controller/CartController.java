@@ -79,7 +79,7 @@ public class CartController {
         model.addAttribute("cart", CartMapper.toDto(cart));
         Order createdOrder = orderService.createOrderFromCart(name, address, whatsapp, notes);
         Long orderId = createdOrder.getId();
-        return "redirect:/user/order/whatsapp/" + orderId;
+        return "redirect:/user/order/confirmation/" + orderId;
     }
 
     @GetMapping("/cart/{cartId}/delete") 
