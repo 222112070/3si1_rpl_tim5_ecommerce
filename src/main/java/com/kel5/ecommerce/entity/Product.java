@@ -42,7 +42,11 @@ public class Product {
     @JoinColumn(name = "subcategory_id")
     private Subcategory subcategory;
     
+<<<<<<< HEAD
     public void setImages(List<Image> images) {
         this.image=images;
     }
+=======
+    private transient String amountFormatted;
+>>>>>>> 1f65a8eee92f77718f18e8fe7e7fa0189483e4a9
 }

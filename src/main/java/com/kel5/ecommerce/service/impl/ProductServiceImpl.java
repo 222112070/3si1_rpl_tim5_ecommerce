@@ -21,9 +21,14 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
 import java.util.Objects;
+=======
+import java.util.Locale;
+>>>>>>> 1f65a8eee92f77718f18e8fe7e7fa0189483e4a9
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -165,5 +170,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getByCategory(Category category) {
         return productRepository.findByCategory(category);
+    }
+    
+    @Override
+    public String formatToRupiah(double amount) {
+        NumberFormat rupiahFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        return rupiahFormat.format(amount);
     }
 }

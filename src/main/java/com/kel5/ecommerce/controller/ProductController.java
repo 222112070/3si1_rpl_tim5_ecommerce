@@ -77,7 +77,9 @@ public class ProductController {
         model.addAttribute("user", user);
         Optional<Product> product = productService.getProductById(id);
         if (product.isPresent()) {
-            model.addAttribute("product", product.get());
+            Product currentProduct = product.get();
+            currentProduct.setAmountFormatted(productService.formatToRupiah(currentProduct.getPrice()));
+            model.addAttribute("product", currentProduct);
             return "admin/rincian_produk";
         } else {
             // Handle product not found scenario
@@ -132,7 +134,11 @@ public class ProductController {
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reserveSortDir", sortDir.equals("asc") ? "desc" : "asc");
-
+        for (Product product : listProduct) {
+            double productAmount = product.getPrice();
+            String formattedAmount = productService.formatToRupiah(productAmount);
+            product.setAmountFormatted(formattedAmount);
+        }
         model.addAttribute("listProduct", listProduct);
         return "admin/Product";
     }

@@ -27,4 +27,5 @@ public interface OrderService {
     List<Order> filterOrder(String keyword);
     boolean cancelOrder(User user,Long orderId);
     Order getOrderByIdForLoggedInUser(Long orderId);
+    String formatToRupiah(double amount);
 }

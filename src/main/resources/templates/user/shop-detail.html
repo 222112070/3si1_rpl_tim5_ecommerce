@@ -98,7 +98,7 @@
                 <div class="col-xl-7 col-lg-7 col-md-6">
                     <div class="single-product-details">
                         <h2 th:text="${product.name}">Product Name</h2>
-                        <h5>Rp.<span th:text="${product.price}"></span></h5>
+                        <h5><span th:text="${product.amountFormatted}"></span></h5>
                         <p class="available-stock">
                             <span> More than <span th:text="${product.stock}"></span> available</span>
                         </p>
@@ -180,7 +180,7 @@
                                     <a th:href="@{'/user/shop-detail/' + ${relatedProduct.id}}">
                                         <!-- Tampilkan nama dan harga produk terkait -->
                                         <h4 th:text="${relatedProduct.name}"></h4>
-                                        <h5 th:text="${'Rp.' + relatedProduct.price}"></h5>
+                                        <h5 th:text="${relatedProduct.amountFormatted}"></h5>
                                     </a>
                                     </div>
                                 </div>

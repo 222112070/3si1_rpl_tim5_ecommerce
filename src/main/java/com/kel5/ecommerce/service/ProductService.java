@@ -25,4 +25,5 @@ public interface ProductService {
     List<Product> findProductInSubcategoryAvailable(Subcategory subcategory, int stock);
     List<Product> findProductInCategoryAvailable(Category category, int stock);
     List<Product> getByCategory(Category category);
+    String formatToRupiah(double amount);
 }

@@ -33,4 +33,6 @@ public interface UserService {
     User setTotalSpentUser(User user);
     
     List<User> getAllCustomer();
+    
+    String formatToRupiah(double amount);
 }

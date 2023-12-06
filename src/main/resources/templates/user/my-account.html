@@ -66,6 +66,7 @@
 
                     <p style="font-weight: bolder; color: white;" th:text="${user.email}"></p>
                     <p style="font-weight: bolder; color: white;" th:text="${user.type}"></p> 
+                    <p style="font-weight: bolder; color: white;" th:text="${user.amountFormatted}"></p> 
                     <!-- <a href="javascript:void(0)" class="m-t-10 waves-effect waves-dark btn btn-primary btn-md btn-rounded" data-abc="true">Follow</a> -->
                     <!-- <div class="row text-center m-t-20">
                         <div class="col-lg-4 col-md-4 m-t-20">
@@ -89,7 +90,8 @@
                     <div class="row">
                         <!-- Grid column -->
                         <div class="col-md-12">
-                            <h2 class="pt-3 pb-4 text-center font-bold font-up deep-purple-text" style="font-weight: bolder; color: white;">RIWAYAT PEMBELIAN</h2>
+                            <h2 class="pt-3 pb-4 text-center font-bold font-up deep-purple-text" style="font-weight: bolder; color: white;" th:if="${not #lists.isEmpty(orders)}" >Riwayat Transaksi</h2>
+                            <h2 class="pt-3 pb-4 text-center font-bold font-up deep-purple-text" style="font-weight: bolder; color: white;" th:if="${#lists.isEmpty(orders)}" >Kamu Belum Pernah Menyelesaikan Pesanan di Sini!</h2>
                             <!-- <div class="input-group md-form form-sm form-2 pl-0">
                                 <input class="form-control my-0 py-1 pl-3 purple-border" type="text" placeholder="Search something here..." aria-label="Search">
                                 <span class="input-group-addon waves-effect purple lighten-2" id="basic-addon1"><a><i class="fa fa-search white-text" aria-hidden="true"></i></a></span>
@@ -99,6 +101,7 @@
                     </div>
                     <!-- Grid row -->
                     <!--Table-->
+                    <div th:if="${not #lists.isEmpty(orders)}">
                     <table class="table table-striped">
                         <!--Table head-->
                         <thead>
@@ -118,13 +121,14 @@
                                 <th scope="row" th:text="${iterStat.index + 1}">1</th>
                                 <td th:text="${order.orderDate}"></td>
                                 <td th:text="${order.address}"></td>
-                                <td th:text="'Rp. ' + ${order.totalAmount}"></td>
+                                <td th:text="${order.amountFormatted}"></td>
                                 <td th:text="${order.status}"></td>
                                 <td><a th:href="@{/user/order/details/{detailId}(detailId=${order.id})}" style="font-weight: bolder; color: white;">Lihat Detail</a></td>
                             </tr>
                         </tbody>
                         <!--Table body-->
                     </table>
+                    </div>
                     <!--Table-->
                 </div>
             </div>

@@ -302,8 +302,6 @@
                                                     <div class="mask-icon">
                                                         <ul>
                                                             <li><a th:href="@{'/user/shop-detail/' + ${product.id}}" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
-                                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                         </ul>
                                                         <a href="#" class="cart" data-toggle="modal" th:data-target="'#modal-' + ${product.id}">Add to Cart</a>
                                                     </div>
@@ -349,7 +347,7 @@
                                                 <div class="why-text">
                                                     <h4 th:text="${product.name}"></h4>
                                                     <small>Start From </small>
-                                                    <h5 th:text="'Rp. ' + ${product.price}"></h5>
+                                                    <h5 th:text="${product.amountFormatted}"></h5>
                                                 </div>
                                             </div>
                                         </div>
