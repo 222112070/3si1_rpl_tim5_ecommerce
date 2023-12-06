@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Add Product</title>
+  <title>Update Product</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -51,12 +51,12 @@
  <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>Tambah Product</h1>
+    <h1>Update Product</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a th:href="@{/admin/}">Home</a></li>
         <li class="breadcrumb-item"><a th:href="@{/admin/produk}">Product</a></li>
-        <li class="breadcrumb-item active">Tambah</li>
+        <li class="breadcrumb-item active">Update</li>
       </ol>
     </nav>
   </div><!-- End Page Title -->
@@ -95,7 +95,7 @@
                 </div>
                 <div class="col-md-6">
                   <label for="category" class="form-label">Category</label>
-                  <select name="category" class="form-control" id="category" required th:value="${product.category.id}">
+                  <select name="category" class="form-control" id="category" th:value="${product.category.id}" required>
                       <option value="" selected>Select Category</option>
                   </select>
                   <br>
@@ -132,9 +132,9 @@
 
         </div>
       </div>
-  </div>
   </section>
-
+ </main>
+  
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
    <div class="credits">

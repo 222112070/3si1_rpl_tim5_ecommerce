@@ -37,7 +37,7 @@ public class ProductController {
     private UserService userService;
     @GetMapping("/produk")
     public String viewHomePage(Model model) {
-                User user = userService.getUserLogged();
+        User user = userService.getUserLogged();
         model.addAttribute("user", user);
         return findPaginated(1, "id", "asc", model);
     }
@@ -107,16 +107,12 @@ public class ProductController {
 
     // Handle the form submission for editing
     @PostMapping("/update-product/{id}")
-    public String updateProduct(@PathVariable("id") Long id, @ModelAttribute Product product, Model model) {
-        try {
-            productService.updateProduct(id, product);
-            model.addAttribute("message", "Product updated successfully");
-            return "redirect:/user/products/view/{id}"; // Redirect to the desired page after successful update.
-        } catch (ResourceNotFoundException e) {
-            // Handle product not found scenario
-            model.addAttribute("error", "Product not found");
-            return "admin/Product"; // Redirect to an appropriate page or view.
-        }
+     public String updateProduct(@PathVariable("id") Long id,
+                                @ModelAttribute ProductDto productDto,
+                                Model model) throws Exception {
+        productService.updateProduct(id, productDto);
+        model.addAttribute("message", "Product updated successfully");
+        return "redirect:/admin/products/view/{id}";
     }
 
     @GetMapping("produk/page/{pageNo}")

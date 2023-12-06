@@ -11,8 +11,10 @@ import com.kel5.ecommerce.mapper.ProductMapper;
 import com.kel5.ecommerce.repository.ProductRepository;
 import com.kel5.ecommerce.service.CategoryService;
 import com.kel5.ecommerce.service.ProductService;
+import com.kel5.ecommerce.util.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -22,7 +24,11 @@ import java.nio.file.Paths;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
+import java.util.Objects;
+=======
 import java.util.Locale;
+>>>>>>> 1f65a8eee92f77718f18e8fe7e7fa0189483e4a9
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,14 +51,31 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateProduct(Long id, Product product) {
+    public Product updateProduct(Long id, ProductDto productDto) throws Exception {
         Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id " + id));
-        existingProduct.setName(product.getName());
-        existingProduct.setDescription(product.getDescription());
-        existingProduct.setPrice(product.getPrice());
-        existingProduct.setStock(product.getStock());
-        existingProduct.setWeight(product.getWeight());
+        
+        // Update details
+        existingProduct.setName(productDto.getName());
+        existingProduct.setDescription(productDto.getDescription());
+        existingProduct.setPrice(productDto.getPrice());
+        existingProduct.setStock(productDto.getStock());
+        existingProduct.setWeight(productDto.getWeight());
+        boolean hasNewImages = productDto.getImages() != null && productDto.getImages().stream().anyMatch(file -> !file.isEmpty());
+        if (hasNewImages) {
+            String uploadDir = "productImages/" + existingProduct.getId();
+            // Hapus gambar yang ada
+            existingProduct.getImage().clear();
+            for (MultipartFile file : productDto.getImages()) {
+                if (!file.isEmpty()) {
+                    String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+                    FileUploadUtil.saveFile(uploadDir, fileName, file);
+                    Image image = new Image();
+                    image.setUrl("/productImages/" + existingProduct.getId() + "/" + fileName);
+                    existingProduct.getImage().add(image);
+                }
+            }
+        }
         return productRepository.save(existingProduct);
     }
 //        @Override
@@ -76,33 +99,26 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product saveProduct(ProductDto productDto, Long categoryId, Long subcategoryId) throws Exception {
         Product product = ProductMapper.toEntity(productDto);
-        List<Image> images = new ArrayList<>();
-
-        String baseDir = System.getProperty("user.dir");
-        String targetDir = baseDir + "/productsImages/";
-
-        // Create the directory if it doesn't exist
-        File directory = new File(targetDir);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-
-        for (MultipartFile file : productDto.getImages()) {
-            Path path = Paths.get(targetDir + file.getOriginalFilename());
-            Files.write(path, file.getBytes());
-
-            Image image = new Image();
-            image.setUrl("/productsImages/" + file.getOriginalFilename());
-            images.add(image);
-        }
-
-        product.setImage(images);
+        // Menyimpan produk sebelum menambahkan gambar
         Category category = categoryService.getCategoryById(categoryId);
         Subcategory subcategory = categoryService.getSubcategoryById(subcategoryId);
 
         product.setCategory(category);
         product.setSubcategory(subcategory);
-        return productRepository.save(product);
+        product = productRepository.save(product);
+        // Proses penyimpanan gambar
+        if (!productDto.getImages().isEmpty()) {
+            for (MultipartFile file : productDto.getImages()) {
+                String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+                String uploadDir = "productImages/" + product.getId();
+                FileUploadUtil.saveFile(uploadDir, fileName, file);
+                Image image = new Image();
+                image.setUrl("/productImages/" + product.getId() + "/" + fileName);
+                product.getImage().add(image);
+            }
+            productRepository.save(product); // Simpan produk setelah menambahkan gambar
+        }
+        return product;
     }
 
     @Override
@@ -110,7 +126,7 @@ public class ProductServiceImpl implements ProductService {
        if (keyword != null){
            return productRepository.search(keyword);
        } else 
-           return (List<Product>)productRepository.findAll(); 
+           return productRepository.findAll(); 
     }
     @Override
     public List<Product> getAllProducts() {

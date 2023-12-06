@@ -67,15 +67,22 @@ public class SpringSecurityConfig{
                         .successHandler(customAuthenticationSuccessHandler())
                         .permitAll()
                 )
-                .rememberMe().tokenValiditySeconds(24*60*60)
+//                .rememberMe().tokenValiditySeconds(24*60*60)
+//                .and()
+//                .logout((logout) -> logout.permitAll())
+                .rememberMe()
+                .rememberMeParameter("remember-me")
+                .rememberMeCookieName("remember-me-cookie")
+                .tokenValiditySeconds(24*60*60)
                 .and()
-                .logout((logout) -> logout.permitAll())
+                .logout((logout) -> logout
+                        .deleteCookies("remember-me-cookie")
+                        .permitAll())
                 .exceptionHandling().accessDeniedPage("/access-denied");
         return http.build();
     }
     
     
-
     @Bean
     public CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler() {
         return new CustomAuthenticationSuccessHandler();
