@@ -70,9 +70,26 @@ public class OrderController {
         return "user/MyOrder";
     }
     
+    @GetMapping("/order/detail/{orderId}")
+    public String seeDetail(Model model,@PathVariable Long orderId) {
+        List<Category> categories = categoryService.getAllCategories();
+        List<Subcategory> subcategories = categoryService.getAllSubcategories();
+        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        model.addAttribute("cart", CartMapper.toDto(cart));
+        model.addAttribute("categories", categories);
+        model.addAttribute("subcategories", subcategories);
+        Order order = orderService.getOrderByIdForLoggedInUser(orderId);
+        if (order != null) {
+            model.addAttribute("order", order);
+            return "user/MyOrderDetail";
+        } else {
+            return "redirect:/user/order";
+        }
+        
+    }
+    
     @GetMapping("/order/confirm/{orderId}")
     public String editPesanan(@PathVariable("orderId") Long id) {
-        
         orderService.updateOrderByUser(id, "Selesai");
         orderService.updateTotalSpentUser(id);
         return "redirect:/user/order";
@@ -89,6 +106,23 @@ public class OrderController {
         }
         return "redirect:/user/order";
     }
-
-
+    
+    @GetMapping("/order/confirmation/{orderId}")
+    public String confirm(Model model,@PathVariable Long orderId) {
+        List<Category> categories = categoryService.getAllCategories();
+        List<Subcategory> subcategories = categoryService.getAllSubcategories();
+        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        model.addAttribute("cart", CartMapper.toDto(cart));
+        model.addAttribute("categories", categories);
+        model.addAttribute("subcategories", subcategories);
+        Order order = orderService.getOrderByIdForLoggedInUser(orderId);
+        if (order != null) {
+            model.addAttribute("order", order);
+            return "user/OrderConfirmationBridge";
+        } else {
+            return "redirect:/user/order";
+        }
+        
+    }
+   
 }

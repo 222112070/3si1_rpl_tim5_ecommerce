@@ -72,38 +72,34 @@
                <table class="table table-border">
                  <thead>
                    <tr>
-                     <th scope="col">KETERANGAN</th>
-                     <th scope="col">RINCIAN</th>
+                     <th scope="col">Keterangan</th>
+                     <th scope="col">Rincian</th>
                    </tr>
                  </thead>
                  <tbody>
                    <tr>
-                     <th scope="row"><b>Id Pesanan</b></th>
-                     <td>#B198</td>
+                     <th scope="row"><b>Id</b></th>
+                     <td th:text="${order.id}"></td>
                    </tr>
                    <tr>
                      <th scope="row"><b>Tanggal Pemesanan</b></th>
-                     <td>12 Mei 2023</td>
+                     <td th:text="${order.orderDate}"></td>
                    </tr>
                    <tr>
                      <th scope="row"><b>Nama Pemesan</b></th>
-                     <td>Rudi Tabudi</td>
+                     <td th:text="${order.user.name}"></td>
                    </tr>
                    <tr>
                      <th scope="row"><b>Email</b></th>
-                     <td>rudi@gmail.com</td>
+                     <td th:text="${order.user.email}"></td>
                    </tr>
                    <tr>
                      <th scope="row"><b>Alamat Pengiriman</b></th>
-                     <td> Sidomulyo RT 4/RW 9, Krikilan, Masaran, Sragen, Jawa Tengah, Indonesia </td>
+                     <td th:text="${order.address}"></td>
                    </tr>
                    <tr>
                      <th scope="row"><b>Nomor Telepon</b></th>
-                     <td>081234567890</td>
-                   </tr>
-                   <tr>
-                     <th scope="row"><b>Metode Pengiriman</b></th>
-                     <td>Ambil di tempat</td>
+                     <td th:text="${order.whatsapp}"></td>
                    </tr>
                    <tr>
                      <th scope="row"><b>Rincian Produk</b></th>
@@ -111,29 +107,35 @@
                         <table class="table table-border">
                            <thead>
                               <tr>
-                                <th scope="col">PRODUK</th>
-                                <th scope="col">RINCIAN</th>
+                                <th scope="col">No</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Jumlah</th>
+                                <th scope="col">Size</th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td scope="row">Kaos XL</td>
-                                <td>
-                                 Bahan : cotton 24s
-                                </td>
-                              </tr>
-                              <tr>
-                                <td scope="row">Tanggal Pemesanan</td>
-                                <td>12 Mei 2023</td>
-                              </tr>
+                              <tr th:each="orderItem, iterStat : ${order.orderItems}">
+                                <th scope="row" th:text="${iterStat.index + 1}"></th>
+                                <td th:text="${orderItem.product.name}"></td>
+                                <td th:text="${orderItem.size}"></td>
+                                <td th:text="${orderItem.quantity}"></td>
+                             </tr>
                             </tbody>
                         </table>
                      </td>
                    </tr>
                    <tr>
                      <th scope="row"><b>Total Harga</b></th>
-                     <td>Rp 3.420.000,00</td>
+                     <td th:text="${order.amountFormatted}"></td>
                    </tr>
+                   <tr>
+                    <th scope="row"><b>Catatan</b></th>
+                    <td th:text="${order.notes}"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row"><b>Total Harga</b></th>
+                    <td th:text="${order.status}"></td>
+                  </tr>
                  </tbody>
                </table>
               <!-- End Table with stripped rows -->
@@ -143,7 +145,6 @@
 
         </div>
       </div>
-      <a href="" class="btn btn-primary">Edit Pesanan</a>
     </section>
 
   </main><!-- End #main -->
