@@ -113,7 +113,7 @@
                      <th scope="row" th:text="${order.id}"></th>
                      <td th:text="${order.name}"></td>
                      <td th:text="${order.orderDate}"></td>
-                     <td th:text="'Rp. ' + ${order.totalAmount}"></td>
+                     <td th:text="${order.amountFormatted}"></td>
                      <td><span  th:text="${order.status}" 
                                 th:class="${order.status == 'Belum Dibayar' ? 'badge bg-danger' : 
                                 (order.status == 'Belum Dikonfirmasi' ? 'badge bg-warning' :

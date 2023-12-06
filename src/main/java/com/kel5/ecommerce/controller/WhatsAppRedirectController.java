@@ -39,7 +39,7 @@ public class WhatsAppRedirectController {
             if(order!=null){
                 String message = orderService.createOrderMessage(orderId);
                 String encodedMessage = URLEncoder.encode(message, StandardCharsets.UTF_8);
-                String phoneNumber = "6289527430981";
+                String phoneNumber = "6285176744224";
 
                 return "redirect:https://wa.me/" + phoneNumber + "?text=" + encodedMessage;
             }

@@ -75,6 +75,8 @@ public class CartController {
                             @RequestParam("address") String address,
                             @RequestParam("whatsapp") String whatsapp,
                             @RequestParam("notes") String notes) {
+        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        model.addAttribute("cart", CartMapper.toDto(cart));
         Order createdOrder = orderService.createOrderFromCart(name, address, whatsapp, notes);
         Long orderId = createdOrder.getId();
         return "redirect:/user/order/whatsapp/" + orderId;

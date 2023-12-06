@@ -9,6 +9,7 @@ import com.kel5.ecommerce.repository.UserRepository;
 import com.kel5.ecommerce.service.OrderObserver;
 import com.kel5.ecommerce.service.OrderService;
 import com.kel5.ecommerce.service.UserService;
+import java.text.NumberFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -234,7 +236,7 @@ public class OrderServiceImpl implements OrderService {
             float currentTotalSpent = user.getTotalSpent();
             float newTotalSpent = currentTotalSpent + order.getTotalAmount();
             user.setTotalSpent(newTotalSpent);
-            if(user.getType().equals("Regular") && newTotalSpent>=50000000){
+            if(user.getType().equals("Reguler") && newTotalSpent>=50000000){
                 user.setType("Vendor");
             }
             userRepository.save(user);
@@ -288,4 +290,10 @@ public class OrderServiceImpl implements OrderService {
         User user = userService.getUserLogged();
         return orderRepository.findByUserAndId(user, orderId);
     }   
+
+    @Override
+    public String formatToRupiah(double amount) {
+        NumberFormat rupiahFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        return rupiahFormat.format(amount);
+    }
 }

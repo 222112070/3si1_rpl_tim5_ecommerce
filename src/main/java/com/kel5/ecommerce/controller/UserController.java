@@ -2,18 +2,21 @@ package com.kel5.ecommerce.controller;
 
 import com.kel5.ecommerce.entity.Announcement;
 import com.kel5.ecommerce.entity.Blog;
+import com.kel5.ecommerce.entity.Cart;
 import com.kel5.ecommerce.entity.Category;
 import com.kel5.ecommerce.entity.Image;
 import com.kel5.ecommerce.entity.Order;
 import com.kel5.ecommerce.entity.Product;
 import com.kel5.ecommerce.entity.Subcategory;
 import com.kel5.ecommerce.entity.User;
+import com.kel5.ecommerce.mapper.CartMapper;
 import com.kel5.ecommerce.repository.AnnouncementRepository;
 import com.kel5.ecommerce.repository.BlogRepository;
 import com.kel5.ecommerce.repository.CategoryRepository;
 import com.kel5.ecommerce.repository.SubcategoryRepository;
 import com.kel5.ecommerce.repository.ProductRepository;
 import com.kel5.ecommerce.service.BlogService;
+import com.kel5.ecommerce.service.CartService;
 import com.kel5.ecommerce.service.CategoryService;
 import com.kel5.ecommerce.service.ImageService;
 import com.kel5.ecommerce.service.OrderService;
@@ -60,6 +63,9 @@ public class UserController {
     private OrderService orderService;
     
     @Autowired
+    private CartService cartService;
+    
+    @Autowired
     private ImageService imageService;
     
     @Autowired
@@ -83,6 +89,8 @@ public class UserController {
         List<Category> categories = categoryService.getAllCategories();
         List<Subcategory> subcategories = categoryService.getAllSubcategories();
         List<Blog> blogs = blogService.getAllBlogs();
+        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        model.addAttribute("cart", CartMapper.toDto(cart));
         model.addAttribute("categories", categories);
         model.addAttribute("subcategories", subcategories);
         model.addAttribute("blogs", blogs);
@@ -95,8 +103,15 @@ public class UserController {
         List<Product> products = productService.findProductAvailable(0);
         List<Category> categories = categoryService.getAllCategories();
         List<Subcategory> subcategories = categoryService.getAllSubcategories();
+        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        model.addAttribute("cart", CartMapper.toDto(cart));
         model.addAttribute("categories", categories);
         model.addAttribute("subcategories", subcategories);
+        for (Product product : products) {
+            double productAmount = product.getPrice(); 
+            String formattedAmount = productService.formatToRupiah(productAmount);
+            product.setAmountFormatted(formattedAmount);
+        }
         model.addAttribute("products", products);
         return "user/shop";
     }    
@@ -111,6 +126,8 @@ public class UserController {
         else{
         List<Category> categories = categoryService.getAllCategories();
         List<Subcategory> subcategories = categoryService.getAllSubcategories();
+        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        model.addAttribute("cart", CartMapper.toDto(cart));
             model.addAttribute("categories", categories);
             model.addAttribute("subcategories", subcategories);
             List<Announcement> announcement = announcementRepository.findAll();
@@ -123,34 +140,49 @@ public class UserController {
     public String viewSubcategory(@PathVariable Long subcategoryId, Model model) {
         String username = getLogedinUsername();
         Subcategory subcategory = categoryService.getSubcategoryById(subcategoryId);
-        List<Product> products = productService.findProductInSubcategoryAvailable(subcategory,0);
+        List<Product> products = productService.findProductInSubcategoryAvailable(subcategory, 0);
         List<Category> categories = categoryService.getAllCategories();
         List<Subcategory> subcategories = categoryService.getAllSubcategories();
-            model.addAttribute( "categories", categories);
-            model.addAttribute("subcategories", subcategories);
-            model.addAttribute("products", products);
-            return "/user/shop";
+        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        model.addAttribute("cart", CartMapper.toDto(cart));
+        model.addAttribute("categories", categories);
+        model.addAttribute("subcategories", subcategories);
+        for (Product product : products) {
+            double productAmount = product.getPrice();
+            String formattedAmount = productService.formatToRupiah(productAmount);
+            product.setAmountFormatted(formattedAmount);
+        }
+        model.addAttribute("products", products);
+        return "/user/shop";
     }
     
     @GetMapping("/shop-detail/{productId}")
     public String shopDetail(@PathVariable("productId") Long id, Model model) {
-    String username = getLogedinUsername();
-    Optional<Product> product = productService.getProductByIdAndStockNot(id,0);
-    List<Category> categories = categoryService.getAllCategories();
-    List<Subcategory> subcategories = categoryService.getAllSubcategories();
-    model.addAttribute("categories", categories);
-    model.addAttribute("subcategories", subcategories);
-    if (product.isPresent()) {
-        Product currentProduct = product.get();
-        model.addAttribute("product", currentProduct);
-        List<Product> relatedProducts = productService.findProductInCategoryAvailable(currentProduct.getCategory(),0);
-        relatedProducts.removeIf(productFilter -> currentProduct.getName().equals(productFilter.getName()));
-        model.addAttribute("related", relatedProducts);
-        return "user/shop-detail";
-    } else {
-        model.addAttribute("error", "Product not found");
-        return "user/catalogue";
-    }
+        String username = getLogedinUsername();
+        Optional<Product> product = productService.getProductByIdAndStockNot(id, 0);
+        List<Category> categories = categoryService.getAllCategories();
+        List<Subcategory> subcategories = categoryService.getAllSubcategories();
+        model.addAttribute("categories", categories);
+        model.addAttribute("subcategories", subcategories);
+        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        model.addAttribute("cart", CartMapper.toDto(cart));
+        if (product.isPresent()) {
+            Product currentProduct = product.get();
+            currentProduct.setAmountFormatted(productService.formatToRupiah(currentProduct.getPrice()));
+            model.addAttribute("product", currentProduct);
+            List<Product> relatedProducts = productService.findProductInCategoryAvailable(currentProduct.getCategory(), 0);
+            relatedProducts.removeIf(productFilter -> currentProduct.getName().equals(productFilter.getName()));
+            for (Product relatedProduct : relatedProducts) {
+                double productAmount = relatedProduct.getPrice();
+                String formattedAmount = productService.formatToRupiah(productAmount);
+                relatedProduct.setAmountFormatted(formattedAmount);
+            }
+            model.addAttribute("related", relatedProducts);
+            return "user/shop-detail";
+        } else {
+            model.addAttribute("error", "Product not found");
+            return "user/catalogue";
+        }
 }
     
     
@@ -159,6 +191,8 @@ public class UserController {
         String username = getLogedinUsername();
         List<Category> categories = categoryService.getAllCategories();
         List<Subcategory> subcategories = categoryService.getAllSubcategories();
+        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        model.addAttribute("cart", CartMapper.toDto(cart));
         model.addAttribute("categories", categories);
         model.addAttribute("subcategories", subcategories);
         return "user/about";
@@ -169,6 +203,8 @@ public class UserController {
         String username = getLogedinUsername();
         List<Category> categories = categoryService.getAllCategories();
         List<Subcategory> subcategories = categoryService.getAllSubcategories();
+        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        model.addAttribute("cart", CartMapper.toDto(cart));
         model.addAttribute("categories", categories);
         model.addAttribute("subcategories", subcategories);
         return "user/checkout";
@@ -185,6 +221,8 @@ public class UserController {
         }
         List<Category> categories = categoryService.getAllCategories();
         List<Subcategory> subcategories = categoryService.getAllSubcategories();
+        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        model.addAttribute("cart", CartMapper.toDto(cart));
         model.addAttribute("categories", categories);
         model.addAttribute("subcategories", subcategories);
         return "user/contact-us";
@@ -197,11 +235,20 @@ public class UserController {
         User user = userService.getUserLogged();
         List <Order> orders = orderService.getOrderDoneForLoggedInUser(statusDone);
         List<Category> categories = categoryService.getAllCategories();
-        List<Subcategory> subcategories = categoryService.getAllSubcategories();
+        List<Subcategory> subcategories = categoryService.getAllSubcategories();        
+        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        user.setAmountFormatted(userService.formatToRupiah(user.getTotalSpent()));
+        model.addAttribute("cart", CartMapper.toDto(cart));
         model.addAttribute("user", user);
         model.addAttribute("categories", categories);
+        for (Order order : orders) {
+            double orderAmount = order.getTotalAmount(); 
+            String formattedAmount = orderService.formatToRupiah(orderAmount);
+            order.setAmountFormatted(formattedAmount);
+        }
         model.addAttribute("orders", orders);
         model.addAttribute("subcategories", subcategories);
+        
         return "user/my-account";
     }    
     
@@ -210,6 +257,8 @@ public class UserController {
         String username = getLogedinUsername();
         List<Category> categories = categoryService.getAllCategories();
         List<Subcategory> subcategories = categoryService.getAllSubcategories();
+        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        model.addAttribute("cart", CartMapper.toDto(cart));
         model.addAttribute("categories", categories);
         model.addAttribute("subcategories", subcategories);
         return "user/service";
@@ -220,6 +269,8 @@ public class UserController {
         String username = getLogedinUsername();
         List<Category> categories = categoryService.getAllCategories();
         List<Subcategory> subcategories = categoryService.getAllSubcategories();
+        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        model.addAttribute("cart", CartMapper.toDto(cart));
         model.addAttribute("categories", categories);
         model.addAttribute("subcategories", subcategories);
         return "user/wishlist";

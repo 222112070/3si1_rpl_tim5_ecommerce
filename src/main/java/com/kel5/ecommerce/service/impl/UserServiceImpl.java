@@ -24,6 +24,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.kel5.ecommerce.mapper.UserMapper.mapToUserDto;
+import java.text.NumberFormat;
+import java.util.Locale;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -189,5 +191,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllCustomer() {
       return userRepository.findByRoles_Name("ROLE_USER");
+    }
+    
+    @Override
+    public String formatToRupiah(double amount) {
+        NumberFormat rupiahFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        return rupiahFormat.format(amount);
     }
 }

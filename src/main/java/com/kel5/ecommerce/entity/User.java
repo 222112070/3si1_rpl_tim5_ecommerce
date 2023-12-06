@@ -41,6 +41,8 @@ public class User {
     @Column(nullable = false)
     private float totalSpent = 0;
     
+    private transient String amountFormatted;
+    
     @Column(nullable = false)
     @CreationTimestamp
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
