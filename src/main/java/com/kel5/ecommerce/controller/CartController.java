@@ -71,14 +71,15 @@ public class CartController {
 
     @PostMapping("/cart/checkout")
     public String checkoutCart(Model model,
-                            @RequestParam("name") String name,
-                            @RequestParam("address") String address,
-                            @RequestParam("whatsapp") String whatsapp,
-                            @RequestParam("notes") String notes) {
+                               @RequestParam("name") String name,
+                               @RequestParam("address") String address,
+                               @RequestParam("whatsapp") String whatsapp,
+                               @RequestParam("notes") String notes) {
         Order createdOrder = orderService.createOrderFromCart(name, address, whatsapp, notes);
         Long orderId = createdOrder.getId();
-        return "redirect:/user/order/whatsapp/" + orderId;
-}
+
+        return "redirect:/whatsapp/redirect/" + orderId;
+    }
 
     
     @GetMapping("/cart/{cartId}/delete") 
