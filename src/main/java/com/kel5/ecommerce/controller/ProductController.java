@@ -93,8 +93,12 @@ public class ProductController {
         model.addAttribute("user", user);
         Optional<Product> productOptional = productService.getProductById(id);
         if (productOptional.isPresent()) {
-            Product product = productOptional.get(); // Get the Product from the Optional
+            Product product = productOptional.get();
             model.addAttribute("product", product);
+            model.addAttribute("selectedCategoryId", product.getCategory().getId());
+            model.addAttribute("selectedSubcategoryId", product.getSubcategory().getId());
+            model.addAttribute("categories", categoryService.getAllCategories());
+            model.addAttribute("subcategories", categoryService.getAllSubcategories());
             return "admin/updateProductForm";
         } else {
             model.addAttribute("error", "Product not found");
