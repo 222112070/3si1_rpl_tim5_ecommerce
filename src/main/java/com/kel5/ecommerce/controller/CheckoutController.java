@@ -52,9 +52,4 @@ public class CheckoutController {
         model.addAttribute("user", user);
         return "user/checkout"; // Name of the template that confirms successful checkout
     }
-    
-  
-  
-  
-  
 }
