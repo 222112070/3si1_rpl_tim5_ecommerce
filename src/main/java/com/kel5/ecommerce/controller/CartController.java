@@ -55,6 +55,15 @@ public class CartController {
                             @RequestParam("quantity") Integer quantity,
                             @RequestParam("size") String size) {
         cartService.addProductToCart(productId, quantity, size,currentUser);
+        return "redirect:/user/shop";
+    }
+
+    @PostMapping("/products/buyToCart/{productId}")
+    public String buyToCart(@AuthenticationPrincipal User currentUser,
+                            @PathVariable("productId") Long productId,
+                            @RequestParam("quantity") Integer quantity,
+                            @RequestParam("size") String size) {
+        cartService.addProductToCart(productId, quantity, size,currentUser);
         return "redirect:/user/cart";
     }
 
@@ -78,7 +87,7 @@ public class CartController {
         Order createdOrder = orderService.createOrderFromCart(name, address, whatsapp, notes);
         Long orderId = createdOrder.getId();
 
-        return "redirect:/whatsapp/redirect/" + orderId;
+        return "redirect:/user/order/whatsapp/" + orderId;
     }
 
     
