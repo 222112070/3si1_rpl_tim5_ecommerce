@@ -55,6 +55,15 @@ public class CartController {
                             @RequestParam("quantity") Integer quantity,
                             @RequestParam("size") String size) {
         cartService.addProductToCart(productId, quantity, size,currentUser);
+        return "redirect:/user/shop";
+    }
+
+    @PostMapping("/products/buyToCart/{productId}")
+    public String buyToCart(@AuthenticationPrincipal User currentUser,
+                            @PathVariable("productId") Long productId,
+                            @RequestParam("quantity") Integer quantity,
+                            @RequestParam("size") String size) {
+        cartService.addProductToCart(productId, quantity, size,currentUser);
         return "redirect:/user/cart";
     }
 
@@ -71,17 +80,19 @@ public class CartController {
 
     @PostMapping("/cart/checkout")
     public String checkoutCart(Model model,
-                            @RequestParam("name") String name,
-                            @RequestParam("address") String address,
-                            @RequestParam("whatsapp") String whatsapp,
-                            @RequestParam("notes") String notes) {
+                               @RequestParam("name") String name,
+                               @RequestParam("address") String address,
+                               @RequestParam("whatsapp") String whatsapp,
+                               @RequestParam("notes") String notes) {
         Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
         model.addAttribute("cart", CartMapper.toDto(cart));
         Order createdOrder = orderService.createOrderFromCart(name, address, whatsapp, notes);
         Long orderId = createdOrder.getId();
-        return "redirect:/user/order/confirmation/" + orderId;
+
+        return "redirect:/user/order/whatsapp/" + orderId;
     }
 
+    
     @GetMapping("/cart/{cartId}/delete") 
     public String deleteCart(@PathVariable(name = "cartId") Long cartId){
         cartService.deleteCart(cartId);
