@@ -95,17 +95,28 @@
                 </div>
                 <div class="col-md-6">
                   <label for="category" class="form-label">Category</label>
-                  <select name="category" class="form-control" id="category" th:value="${product.category.id}" required>
-                      <option value="" selected>Select Category</option>
-                  </select>
-                  <br>
+                    <select name="category" class="form-control" id="category" required>
+                        <option th:each="category : ${categories}"
+                                th:value="${category.id}"
+                                th:text="${category.name}"
+                                th:selected="${selectedCategoryId != null and category.id.equals(selectedCategoryId)}">
+                        </option>
+                    </select>
+
+                    <br>
                   <a class="btn btn-primary" th:href="@{/admin/add-category}"> Add Category </a>
               </div>
               <div class="col-md-6">
                   <label for="subcategory" class="form-label">Subcategory</label>
-                  <select name="subcategory" class="form-control" id="subcategory" th:value="${product.subcategory.id}" required>
-                      <option value="" selected>Select Subcategory</option>
+                  <select name="subcategory" class="form-control" id="subcategory" required>
+                      <option value="" th:unless="${selectedSubcategoryId}">Select Subcategory</option>
+                      <option th:each="subcategory : ${subcategories}"
+                              th:value="${subcategory.id}"
+                              th:text="${subcategory.name}"
+                              th:selected="${subcategory.id.equals(selectedSubcategoryId)}">
+                      </option>
                   </select>
+
                   <br>
                   <a class="btn btn-primary" th:href="@{/admin/add-subcategory}"> Add Subcategory </a>
               </div>
@@ -158,43 +169,44 @@
   <script th:src="@{/assets/js/main.js}"></script>
 
   <script>
-    $(document).ready(function () {
-        // Ambil data kategori saat halaman dimuat
-        $.ajax({
-            url: 'http://localhost:8080/admin/categories', // Ganti dengan URL yang sesuai
-            method: 'GET',
-            success: function (data) {
-                // Isi dropdown kategori dengan data yang diterima dari server
-                var categoryDropdown = $('#category');
-                categoryDropdown.empty();
-                categoryDropdown.append($('<option>').text('Select Category').attr('value', ''));
-                data.forEach(function (category) {
-                    categoryDropdown.append($('<option>').text(category.name).attr('value', category.id));
-                });
+      $(document).ready(function () {
+          var categoryDropdown = $('#category');
+          var subcategoryDropdown = $('#subcategory');
+          var selectedCategoryId = categoryDropdown.val(); // Assuming the product's category is pre-selected
+          var selectedSubcategoryId = subcategoryDropdown.val(); // Assuming the product's subcategory is pre-populated
 
-                // Tambahkan event listener untuk dropdown kategori
-                categoryDropdown.on('change', function () {
-                    var selectedCategoryId = $(this).val();
-                    var subcategoryDropdown = $('#subcategory');
-                    subcategoryDropdown.empty();
-                    subcategoryDropdown.append($('<option>').text('Select Subcategory').attr('value', ''));
+          // Function to load subcategories
+          function loadSubcategories(categoryId, selectedSubcategoryId) {
+              if (categoryId) {
+                  $.ajax({
+                      url: 'http://localhost:8080/admin/subcategories/' + categoryId,
+                      method: 'GET',
+                      success: function (subcategories) {
+                          subcategoryDropdown.empty();
+                          subcategoryDropdown.append($('<option>').text('Select Subcategory').attr('value', ''));
+                          subcategories.forEach(function (subcategory) {
+                              var option = $('<option>').text(subcategory.name).attr('value', subcategory.id);
+                              if (selectedSubcategoryId && subcategory.id == selectedSubcategoryId) {
+                                  option.attr('selected', 'selected');
+                              }
+                              subcategoryDropdown.append(option);
+                          });
+                      }
+                  });
+              }
+          }
 
-                    // Ambil data subkategori sesuai dengan kategori yang dipilih
-                    if (selectedCategoryId) {
-                        $.ajax({
-                            url: 'http://localhost:8080/admin/subcategories/' + selectedCategoryId, // Ganti dengan URL yang sesuai
-                            method: 'GET',
-                            success: function (data) {
-                                data.forEach(function (subcategory) {
-                                    subcategoryDropdown.append($('<option>').text(subcategory.name).attr('value', subcategory.id));
-                                });
-                            }
-                        });
-                    }
-                });
-            }
-        });
-    });
+          // Initial load of subcategories based on the product's category
+          loadSubcategories(selectedCategoryId, selectedSubcategoryId);
+
+          // Event listener for category change
+          categoryDropdown.on('change', function () {
+              var newCategoryId = $(this).val();
+              loadSubcategories(newCategoryId, null); // No subcategory pre-selected when category changes
+          });
+      });
+
+
   </script>
 </body>
 
