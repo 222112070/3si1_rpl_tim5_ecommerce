@@ -68,34 +68,7 @@
             <div class="card-body">
                
                <div class="filter">
-                  <h5 class="card-title" style="display: inline-flex;">Daftar Pesanan |</h5>
-                  <a class="icon" href="#" data-bs-toggle="dropdown">Filter</a>                 
-                 
-<!--                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == ''}">Semua</a></li>
-                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Belum Dibayar'}">Belum Dibayar</a></li>
-                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Belum Dikonfirmasi'}">Belum Dikonfirmasi</a></li>
-                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Sudah Dikonfirmasi'}">Sudah Dikonfirmasi</a></li>
-                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Dalam Proses'}">Dalam Proses</a></li>
-                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Sedang Dikemas'}">Sedang Dikemas</a></li>
-                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Dalam Pengiriman'}">Dalam Pengiriman</a></li>
-                    <li><a class="dropdown-item" name="keyword" th:selected="${keyword == 'Selesai'}">Selesai</a></li>
-                  </ul>-->
-                  <select id="status" class="form-select" onchange="filterOrders()">
-                    <option value="">Semua</option>
-                    <option value="Belum Dibayar">Belum Dibayar</option>
-                    <option value="Belum Dikonfirmasi">Belum Dikonfirmasi</option>
-                    <option value="Sudah Dikonfirmasi">Sudah Dikonfirmasi</option>
-                    <option value="Dalam Proses">Dalam Proses</option>
-                    <option value="Sedang Dikemas">Sedang Dikemas</option>
-                    <option value="Dalam Pengiriman">Dalam Pengiriman</option>
-                    <option value="Selesai">Selesai</option>
-                  </select>
-                </div>
-
+                  <h5 class="card-title" style="display: inline-flex;">Daftar Pesanan</h5>              
                <table class="table table-borderless datatable" id="myTable">
                  <thead>
                    <tr>
@@ -179,40 +152,6 @@
                         $('#editModal').modal('hide');
                     }
                     </script>-->
-
-                   
-                    <!-- Modal konfirmasi hapus pesanan -->
-                    <div class="modal fade" id="confirmDeleteModal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <!-- Header modal -->
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Konfirmasi Hapus Pesanan</h4>
-                                    <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-                                </div>
-
-                                <!-- Body modal -->
-                                <div class="modal-body">
-                                    <p>Apakah anda yakin ingin menghapus pesanan ini?</p>
-                                </div>
-
-                                <!-- Footer modal -->
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                    <button type="button" class="btn btn-danger" onclick="hapusPesanan()">Hapus</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <script>
-                    function hapusPesanan() {
-                        // Lakukan tindakan penghapusan pesanan di sini
-
-                        // Tutup modal
-                        $('#confirmDeleteModal').modal('hide');
-                    }
-                    </script>
                  </div>
 
                  </tbody>
@@ -268,7 +207,7 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <script>
+  <!-- <script>
   function filterOrders() {
     var input, filter, table, tr, td, i;
     input = document.getElementById("status");
@@ -288,7 +227,7 @@
       }       
     }
   }
-  </script>
+  </script> -->
 
   
   <!-- Vendor JS Files -->

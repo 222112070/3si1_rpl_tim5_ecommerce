@@ -11,6 +11,7 @@
 	<groupId>com.kel5</groupId>
 	<artifactId>ecommerce</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+        <packaging>war</packaging>
 	<name>ecommerce</name>
 	<description>EcommerceJimbung Industrial</description>
 	<properties>
