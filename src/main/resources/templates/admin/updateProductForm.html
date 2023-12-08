@@ -95,12 +95,6 @@
                 </div>
                 <div class="col-md-6">
                   <label for="category" class="form-label">Category</label>
-<<<<<<< Updated upstream
-                  <select name="category" class="form-control" id="category" required th:value="${product.category.id}">
-                      <option value="" selected>Select Category</option>
-                  </select>
-                  <br>
-=======
                     <select name="category" class="form-control" id="category" required>
                         <option th:each="category : ${categories}"
                                 th:value="${category.id}"
@@ -110,7 +104,6 @@
                     </select>
 
                     <br>
->>>>>>> Stashed changes
                   <a class="btn btn-primary" th:href="@{/admin/add-category}"> Add Category </a>
               </div>
               <div class="col-md-6">
