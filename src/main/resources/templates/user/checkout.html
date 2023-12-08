@@ -122,7 +122,7 @@
                         <div class="title-left">
                             <h3>Pengisian Form Pemesanan</h3>
                         </div>
-                        <form class="needs-validation" method="post" th:action="@{/user/cart/checkout}">
+                        <form class="needs-validation" method="post" th:action="@{/user/cart/checkout}" onsubmit="disableSubmitButton()">
                             <div class="mb-3">
                                 <label for="name">Nama Pemesan *</label>
                                 <div class="input-group">
@@ -150,7 +150,7 @@
                             </div>
                             <hr class="mb-4">
                             <hr class="mb-1"> 
-                            <button type="submit" style="display: block; margin: 0 auto; background-color: black; color: white; font-weight: bold;" class="ml-auto btn hvr-hover">Place Order</button>
+                            <button type="submit" id="submitButton" style="display: block; margin: 0 auto; background-color: black; color: white; font-weight: bold;" class="btn hvr-hover">Place Order</button>
                         </form>
                     </div>
                 </div>
@@ -400,6 +400,13 @@
     <script th:src="@{/assets/js/contact-form-script.js}"></script>
     <script th:src="@{/assets/js/custom.js}"></script>
     <script th:src="@{/assets/js/loader.js}"></script>
+    <script>
+        function disableSubmitButton() {
+            var submitButton = document.getElementById('submitButton');
+            submitButton.disabled = true;
+            submitButton.innerText = 'Processing...';
+        }
+    </script>
 </body>
 
 </html>
