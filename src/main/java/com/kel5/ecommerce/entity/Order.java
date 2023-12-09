@@ -28,7 +28,7 @@ public class Order {
     private String address;
     private String whatsapp;
     private LocalDate orderDate;
-    private long totalAmount;
+    private float totalAmount;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
