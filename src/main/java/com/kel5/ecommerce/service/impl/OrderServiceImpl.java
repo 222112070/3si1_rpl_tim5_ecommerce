@@ -322,4 +322,27 @@ public class OrderServiceImpl implements OrderService {
         NumberFormat rupiahFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
         return rupiahFormat.format(amount);
     }
+    
+    @Override
+    public String calculateIncome() {
+       List<Order> orders = orderRepository.findByStatus("Selesai");
+        double totalAmount = 0.0;
+        for (Order order : orders) {
+            totalAmount += order.getTotalAmount();
+        }
+        NumberFormat rupiahFormat = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        return rupiahFormat.format(totalAmount);
+    }
+    
+    @Override
+    public Integer countOrderUndone() {
+       List<Order> orders = orderRepository.findByStatusNot("Selesai");
+       return orders.size();
+    }
+    
+    @Override
+    public Integer countOrderDone() {
+       List<Order> orders = orderRepository.findByStatus("Selesai");
+       return orders.size();
+    }
 }

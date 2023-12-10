@@ -1,6 +1,7 @@
 package com.kel5.ecommerce.service.impl;
 
 import com.kel5.ecommerce.entity.Order;
+import com.kel5.ecommerce.entity.OrderItem;
 import com.kel5.ecommerce.service.OrderObserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -18,12 +19,47 @@ public class EmailNotificationService implements OrderObserver {
     @Override
     public void onOrderCreated(Order order) {
         // Mengirim email ke pembeli
-        sendEmail(order.getUser().getEmail(), "Order Confirmation",
-                "Your order with id " + order.getId() + " has been successfully created.");
+        StringBuilder message = new StringBuilder();
+        message.append("*PESANAN BARU*\n")
+                .append("----‐-------------------------------------\n")
+                .append("*RINCIAN PEMESAN*\n")
+                .append("\nNama Pemesan : ")
+                .append(order.getUser().getName())
+                .append("\nEmail Pemesan : ")
+                .append(order.getUser().getEmail())
+                .append("\nNomor WhatApp : ")
+                .append(order.getWhatsapp())
+                .append("\nTanggal Pemesanan : ")
+                .append(order.getOrderDate())
+                .append("\nPerkiraan Harga : Rp. ")
+                .append(order.getTotalAmount())
+                .append("\nAlamat Pesanan :  ")
+                .append(order.getAddress())
+                .append("\n\n")
+                .append("*RINCIAN PESANAN*\n");
 
+        int count = 1;
+        for (OrderItem item : order.getOrderItems()) {
+            message.append("")
+                    .append("Nama Produk : ")
+                    .append(item.getProduct().getName())
+                    .append("\n Ukuran : ")
+                    .append(item.getSize())
+                    .append("\n Jumlah : ")
+                    .append(item.getQuantity())
+                    .append("\n\n");
+        }
+
+        message.append("\nCatatan Pemesan : ")
+                .append(order.getNotes())
+                .append("\n----‐-------------------------------------\n")
+                .append("Terima kasih");
+        
+        sendEmail(order.getUser().getEmail(), "Order Confirmation",
+                message.toString());
         // Mengirim email ke penjual
         sendEmail(SELLER_EMAIL, "New Order Received",
-                "A new order with id " + order.getId() + " has been placed.");
+               message.toString());
     }
 
     private void sendEmail(String to, String subject, String text) {

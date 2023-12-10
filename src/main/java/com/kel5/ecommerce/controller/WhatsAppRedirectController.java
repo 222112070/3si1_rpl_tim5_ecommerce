@@ -50,7 +50,7 @@ public class WhatsAppRedirectController {
         if (order != null) {
             String message = orderService.createOrderMessage(orderId);
             String encodedMessage = URLEncoder.encode(message, StandardCharsets.UTF_8);
-            String phoneNumber = "6281278984640";
+            String phoneNumber = "6285176744224";
         List<Category> categories = categoryService.getAllCategories();
         List<Subcategory> subcategories = categoryService.getAllSubcategories();
         Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart

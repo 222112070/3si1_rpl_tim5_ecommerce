@@ -52,12 +52,13 @@ public class ProductServiceImpl implements ProductService {
         Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id " + id));
         
-        // Update details
         existingProduct.setName(productDto.getName());
         existingProduct.setDescription(productDto.getDescription());
         existingProduct.setPrice(productDto.getPrice());
         existingProduct.setStock(productDto.getStock());
         existingProduct.setWeight(productDto.getWeight());
+        existingProduct.setCategory(productDto.getCategory());
+        existingProduct.setSubcategory(productDto.getSubcategory());
         boolean hasNewImages = productDto.getImages() != null && productDto.getImages().stream().anyMatch(file -> !file.isEmpty());
         if (hasNewImages) {
             String uploadDir = "productImages/" + existingProduct.getId();

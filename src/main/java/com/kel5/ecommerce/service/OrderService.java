@@ -28,4 +28,7 @@ public interface OrderService {
     boolean cancelOrder(User user,Long orderId);
     Order getOrderByIdForLoggedInUser(Long orderId);
     String formatToRupiah(double amount);
+    String calculateIncome();
+    Integer countOrderUndone();
+    Integer countOrderDone();
 }

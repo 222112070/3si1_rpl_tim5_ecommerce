@@ -120,7 +120,7 @@ public class UserController {
     public String announcement(ModelMap model){
         User user = userService.getUserLogged();
         System.out.println(user.getType());
-        if("Regular".equals(user.getType())){
+        if("Reguler".equals(user.getType())){
             return "redirect:/user/";
         }
         else{

@@ -1,5 +1,9 @@
 package com.kel5.ecommerce.dto;
 
+import com.kel5.ecommerce.entity.Category;
+import com.kel5.ecommerce.entity.Subcategory;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
@@ -18,5 +22,7 @@ public class ProductDto {
     private int stock;
     private float weight;
     private String status;
+    private Category category;
+    private Subcategory subcategory;
     private List<MultipartFile> images;
 }

@@ -34,5 +34,9 @@ public interface UserService {
     
     List<User> getAllCustomer();
     
+    Integer getAllVendor();
+    
+    Integer getAllReguler();
+    
     String formatToRupiah(double amount);
 }

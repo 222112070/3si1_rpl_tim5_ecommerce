@@ -70,19 +70,35 @@
               <div class="card info-card sales-card">
 
                 <div class="card-body">
-                  <h5 class="card-title">Pesanan</h5>
+                  <h5 class="card-title">Pesanan Belum Selesai</h5>
 
                   <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="background-color: #E7F8FF;">
-                      <i class="bi bi-cart"></i>
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="background-color: #e5d4d1;">
+                      <i class="bi bi-x-circle-fill" style="color: #e63a17f3;"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>0</h6>
+                      <h6 th:text="${totalOrderUndone}"></h6>
 
                     </div>
                   </div>
                 </div>
+              </div>
+            </div><!-- End Sales Card -->
+            <div class="col-xxl-4 col-md-4">
+              <div class="card info-card sales-card">
 
+                <div class="card-body">
+                  <h5 class="card-title">Pesanan Selesai</h5>
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="background-color: #E7F8FF;">
+                      <i class="bi bi-check-circle-fill"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6 th:text="${totalOrderDone}"></h6>
+
+                    </div>
+                  </div>
+                </div>
               </div>
             </div><!-- End Sales Card -->
 
@@ -98,7 +114,7 @@
                       <i class="fa-solid fa-rupiah-sign"></i>
                     </div>
                     <div class="ps-3">
-                    <h6>0</h6>
+                    <h6 th:text="${totalIncome}"></h6>
                       <!-- <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">meningkat</span> -->
 
                     </div>
@@ -107,26 +123,6 @@
 
               </div>
             </div><!-- End Revenue Card -->
-
-            <!-- Pelanggan Card -->
-            <div class="col-xxl-4 col-md-4">
-              <div class="card info-card sales-card">
-                <div class="card-body">
-                  <h5 class="card-title">Pelanggan Regular</h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="background-color: #FFF6C9;">
-                      <i class="bi bi-people" style="color: #DDB906;"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6 th:text="${users.size()}"></h6>
-
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div><!-- End Pelanggan Card -->
 
             <!-- Produk Card -->
             <div class="col-xxl-4 col-md-4">
@@ -148,24 +144,25 @@
             </div>
             <!-- End Produk Card -->
 
-            <!-- Akun Vendor Card -->
+            <!-- Pelanggan Card -->
             <div class="col-xxl-4 col-md-4">
-              <div class="card info-card revenue-card">
+              <div class="card info-card sales-card">
                 <div class="card-body">
-                  <h5 class="card-title">Jumlah Cabang</h5>
-            
+                  <h5 class="card-title">Pelanggan Regular</h5>
+
                   <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="background-color: #F4ECFF;"> 
-                      <i class="bx bxs-buildings" style="color: #A188C1;"></i>
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center" style="background-color: #FFF6C9;">
+                      <i class="bi bi-people" style="color: #DDB906;"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>2</h6>
+                      <h6 th:text="${totalRegulerCust}"></h6>
+
                     </div>
                   </div>
                 </div>
+
               </div>
-            </div>
-            <!-- Akun Vendor Card -->
+            </div><!-- End Pelanggan Card -->
 
             <!-- Cabang Card -->
             <div class="col-xxl-4 col-md-4">
@@ -178,7 +175,7 @@
                       <i class="bi bi-people" style="color: #EE6161;"></i>
                     </div>
                     <div class="ps-3">
-                      <h6>0</h6>
+                      <h6 th:text="${totalVendorCust}"></h6>
                     </div>
                   </div>
                 </div>
