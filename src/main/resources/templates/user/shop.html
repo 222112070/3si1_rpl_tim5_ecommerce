@@ -158,22 +158,20 @@
             <div class="row">
                 <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
                     <div class="product-categori">
-                        <div class="search-product">
-                            <form action="#">
-                                <input class="form-control" placeholder="Search here..." type="text">
-                                <button type="submit"> <i class="fa fa-search"></i> </button>
-                            </form>
-                        </div>
                         <div class="filter-sidebar-left">
                             <div class="title-left">
                                 <h3>Kategori</h3>
                             </div>
                             <div class="list-group list-group-collapse list-group-sm list-group-tree"
                                 id="list-group-men" data-children=".sub-men">
+                                <!-- <a class="list-group-item list-group-item-action" th:href="@{/user/shop/}"
+                                    data-toggle="collapse" aria-expanded="true"
+                                    th:text="Semua Produk"> <small class="text-muted">
+                                </a> -->
                                 <div class="list-group-collapse sub-men" th:each="category : ${categories}">
                                     <a class="list-group-item list-group-item-action" href="#sub-men1"
                                         data-toggle="collapse" aria-expanded="true" aria-controls="sub-men1"
-                                        th:text="${category.name}">Pakaian <small class="text-muted"></small>
+                                        th:text="${category.name}"> <small class="text-muted"></small>
                                     </a>
                                     <div class="collapse show" id="sub-men1" data-parent="#list-group-men">
                                         <div class="list-group">
@@ -182,126 +180,21 @@
                                                 th:if="${subcategory.category.id == category.id}"
                                                 th:href="@{'/user/shop/' + ${subcategory.id}}"
                                                 th:text="${subcategory.name}"> <small
-                                                    class="text-muted">(50)</small></a>
+                                                    class="text-muted"></small></a>
                                         </div>
                                     </div>
-                                </div>
+                                </div>                                
                             </div>
                         </div>
                         <div class="filter-price-left">
-                            <!-- <div class="title-left">
-                                <h3>Price</h3>
-                            </div> -->
                             <div class="price-box-slider">
                                 <div id="slider-range"></div>
-                                <!-- <p>
-                                    <input type="text" id="amount" readonly style="border:0; color:#fbb714; font-weight:bold;">
-                                    <button class="btn hvr-hover" type="submit">Filter</button>
-                                </p> -->
                             </div>
                         </div>
-                        <!-- <div class="filter-brand-left">
-                            <div class="title-left">
-                                <h3>Bahan</h3>
-                            </div>
-                            <div class="brand-box">
-                                <ul>
-                                    <li>
-                                        <div class="radio radio-danger">
-                                            <input name="survey" id="Radios1" value="Yes" type="radio">
-                                            <label for="Radios1"> Bahan1 </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="radio radio-danger">
-                                            <input name="survey" id="Radios2" value="No" type="radio">
-                                            <label for="Radios2"> Bahan2 </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="radio radio-danger">
-                                            <input name="survey" id="Radios3" value="declater" type="radio">
-                                            <label for="Radios3"> Bahan3 </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="radio radio-danger">
-                                            <input name="survey" id="Radios4" value="declater" type="radio">
-                                            <label for="Radios4"> Bahan4 </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="radio radio-danger">
-                                            <input name="survey" id="Radios5" value="declater" type="radio">
-                                            <label for="Radios5"> Bahan5 </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="radio radio-danger">
-                                            <input name="survey" id="Radios6" value="declater" type="radio">
-                                            <label for="Radios6"> Bahan6 </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="radio radio-danger">
-                                            <input name="survey" id="Radios7" value="declater" type="radio">
-                                            <label for="Radios7"> Bahan7 </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="radio radio-danger">
-                                            <input name="survey" id="Radios8" value="declater" type="radio">
-                                            <label for="Radios8"> Bahan8 </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="radio radio-danger">
-                                            <input name="survey" id="Radios9" value="declater" type="radio">
-                                            <label for="Radios9"> Bahan9 </label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="radio radio-danger">
-                                            <input name="survey" id="Radios10" value="declater" type="radio">
-                                            <label for="Radios10"> Bahan10 </label>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div> -->
-
                     </div>
                 </div>
                 <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12 shop-content-right">
                     <div class="right-product-box">
-                        <div class="product-item-filter row">
-                            <div class="col-12 col-sm-8 text-center text-sm-left">
-                                <div class="toolbar-sorter-right">
-                                    <span>Sort by </span>
-                                    <select id="basic" class="selectpicker show-tick form-control"
-                                        data-placeholder="$ USD">
-                                        <option data-display="Select">Nothing</option>
-                                        <option value="1">Popularity</option>
-                                        <option value="2">High Price → High Price</option>
-                                        <option value="3">Low Price → High Price</option>
-                                        <option value="4">Best Selling</option>
-                                    </select>
-                                </div>
-                                <p>Showing all results</p>
-                            </div>
-                            <div class="col-12 col-sm-4 text-center text-sm-right">
-                                <ul class="nav nav-tabs ml-auto">
-                                    <li>
-                                        <a class="nav-link active" href="#grid-view" data-toggle="tab"> <i
-                                                class="fa fa-th"></i> </a>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link" href="#list-view" data-toggle="tab"> <i
-                                                class="fa fa-list-ul"></i> </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
 
                         <div class="row product-categorie-box">
                             <div class="tab-content">
@@ -341,7 +234,8 @@
                                                                     <!-- Form for Add to Cart -->
                                                                     <form th:action="@{'/user/products/addToCart/' + ${product.id}}" method="post">
                                                                         <input type="hidden" name="productId" th:value="${product.id}" />
-                                                                        <label for="size">Size</label>
+                                                                        <div  class="form-group size-st">
+                                                                        <label class="size-label">Size</label>
                                                                         <select id="sizeSelect-${product.id}" name="size" class="selectpicker show-tick form-control" required>
                                                                             <option value="">Size</option>
                                                                             <option value="S">S</option>
@@ -352,26 +246,23 @@
                                                                             <option value="3XL">3XL</option>
                                                                             <option value="4XL">4XL</option>
                                                                         </select>
-                                                                        <br>
-                                                                        <div style="display: flex; align-items: center;">
-                                                                            <label for="quantity1">Quantity:</label>
-                                                                            <input type="number" id="quantity1" name="quantity" min="1" th:max="${product.stock}" required>
-    
                                                                         </div>
-
+                                                                        <br>
+                                                                        <div class="form-group quantity-box">
+                                                                            <label  class="control-label" for="buyNowQuantity-${product.id}">Quantity:</label>
+                                                                            <input class="form-control" type="number" id="buyNowQuantity-${product.id}" name="quantity" min="1" th:max="${product.stock}" required>
+                                                                        </div>
                                                                         <button type="submit" class="btn btn-primary mt-2" style="background-color: #8F1D14;">Add to Cart</button>
                                                                     </form>
-
                                                                     <!-- Form for Buy Now -->
-                                                                    <form th:action="@{'/user/products/buyToCart/' + ${product.id}}" method="post">
+                                                                    <!-- <form th:action="@{'/user/products/buyToCart/' + ${product.id}}" method="post">
                                                                         <input type="hidden" name="productId" th:value="${product.id}" />
-                                                                        <input type="hidden" name="quantity" id="buyNowQuantity-${product.id}" value="1"/> <!-- Default value or dynamically set -->
+                                                                        <input type="hidden" name="quantity" id="buyNowQuantity-${product.id}" value="1"/> 
                                                                         <input type="hidden" name="size" id="buyNowSize-${product.id}" />
                                                                         <div style="display: flex; align-items: center;">
                                                                             <button type="submit" class="btn btn-success mt-2">Buy Now</button>
                                                                         </div>
-                                                                        
-                                                                    </form>
+                                                                    </form> -->
                                                                 </div>
                                                             </div>
                                                           </div>
@@ -394,163 +285,7 @@
         </div>
     </div>
     <!-- End Shop Page -->
-
-    <!-- Start Instagram Feed  -->
-    <div class="instagram-box">
-        <div class="main-instagram owl-carousel owl-theme">
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{/assets/img/instagram-img-01.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{/assets/img/instagram-img-02.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{/assets/img/instagram-img-03.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{/assets/img/instagram-img-04.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{assets/img/instagram-img-05.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{assets/img/instagram-img-06.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{assets/img/instagram-img-07.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{assets/img/instagram-img-08.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{assets/img/instagram-img-09.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{assets/img/instagram-img-05.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Instagram Feed  -->
-
-
-    <!-- Start Footer  -->
-    <footer>
-        <div class="footer-main">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        <div class="footer-widget">
-                            <h4>Tentang Jimbung Industrial</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            </p>
-                            <ul>
-                                <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        <div class="footer-link">
-                            <h4>Information</h4>
-                            <ul>
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Customer Service</a></li>
-                                <li><a href="#">Our Sitemap</a></li>
-                                <li><a href="#">Terms &amp; Conditions</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Delivery Information</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        <div class="footer-link-contact">
-                            <h4>Contact Us</h4>
-                            <ul>
-                                <li>
-                                    <p><i class="fas fa-map-marker-alt"></i>Address: Jalan ... <br>Sragen,<br>Jawa
-                                        Tengah</p>
-                                </li>
-                                <li>
-                                    <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+1-888705770">08 .....</a>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p><i class="fas fa-envelope"></i>Email: <a
-                                            href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- End Footer  -->
-
-    <!-- Start copyright  -->
-    <div class="footer-copyright">
-        <p class="footer-company">All Rights Reserved. &copy; 2023 <a href="#">Jimbung Industrial</a> Design By :
-            <a href="https://html.design/">Politeknik Statistika STIS</a>
-        </p>
-    </div>
-    <!-- End copyright  -->
+    <div th:replace="user/fragments/footer :: footer"></div>
 
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 

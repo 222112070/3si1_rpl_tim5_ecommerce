@@ -122,7 +122,7 @@
                         <div class="title-left">
                             <h3>Pengisian Form Pemesanan</h3>
                         </div>
-                        <form class="needs-validation" method="post" th:action="@{/user/cart/checkout}">
+                        <form class="needs-validation" method="post" th:action="@{/user/cart/checkout}" onsubmit="disableSubmitButton()">
                             <div class="mb-3">
                                 <label for="name">Nama Pemesan *</label>
                                 <div class="input-group">
@@ -150,7 +150,7 @@
                             </div>
                             <hr class="mb-4">
                             <hr class="mb-1"> 
-                            <button type="submit" style="display: block; margin: 0 auto; background-color: black; color: white; font-weight: bold;" class="ml-auto btn hvr-hover">Place Order</button>
+                            <button type="submit" id="submitButton" style="display: block; margin: 0 auto; background-color: black; color: white; font-weight: bold;" class="btn hvr-hover">Place Order</button>
                         </form>
                     </div>
                 </div>
@@ -224,162 +224,7 @@
     </div>
     <!-- End Cart -->
 
-    <!-- Start Instagram Feed  -->
-    <div class="instagram-box">
-        <div class="main-instagram owl-carousel owl-theme">
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{/assets/img/instagram-img-01.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{/assets/img/instagram-img-02.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{/assets/img/instagram-img-03.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{/assets/img/instagram-img-04.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{assets/img/instagram-img-05.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{assets/img/instagram-img-06.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{assets/img/instagram-img-07.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{assets/img/instagram-img-08.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{assets/img/instagram-img-09.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ins-inner-box">
-                    <img th:src="@{assets/img/instagram-img-05.jpg}" alt="" />
-                    <div class="hov-in">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Instagram Feed  -->
-
-
-    <!-- Start Footer  -->
-    <footer>
-        <div class="footer-main">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        <div class="footer-widget">
-                            <h4>Tentang Jimbung Industrial</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                                ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                                ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            </p>
-                            <ul>
-                                <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        <div class="footer-link">
-                            <h4>Information</h4>
-                            <ul>
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Customer Service</a></li>
-                                <li><a href="#">Our Sitemap</a></li>
-                                <li><a href="#">Terms &amp; Conditions</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Delivery Information</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-sm-12">
-                        <div class="footer-link-contact">
-                            <h4>Contact Us</h4>
-                            <ul>
-                                <li>
-                                    <p><i class="fas fa-map-marker-alt"></i>Address: Jalan ... <br>Sragen,<br>Jawa
-                                        Tengah</p>
-                                </li>
-                                <li>
-                                    <p><i class="fas fa-phone-square"></i>Phone: <a href="tel:+1-888705770">08 .....</a>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p><i class="fas fa-envelope"></i>Email: <a
-                                            href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a></p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- End Footer  -->
-
-    <!-- Start copyright  -->
-    <div class="footer-copyright">
-        <p class="footer-company">All Rights Reserved. &copy; 2023 <a href="#">Jimbung Industrial</a> Design By :
-            <a href="https://html.design/">Politeknik Statistika STIS</a>
-        </p>
-    </div>
-    <!-- End copyright  -->
+    <div th:replace="user/fragments/footer :: footer"></div>
 
     <a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
 
@@ -400,6 +245,13 @@
     <script th:src="@{/assets/js/contact-form-script.js}"></script>
     <script th:src="@{/assets/js/custom.js}"></script>
     <script th:src="@{/assets/js/loader.js}"></script>
+    <script>
+        function disableSubmitButton() {
+            var submitButton = document.getElementById('submitButton');
+            submitButton.disabled = true;
+            submitButton.innerText = 'Processing...';
+        }
+    </script>
 </body>
 
 </html>

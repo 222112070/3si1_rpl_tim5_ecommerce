@@ -24,10 +24,11 @@ public class Product {
     private Long id;
     private String name;
     private String description;
-    private float price;
+    private long price;
     private int stock;
     private float weight;
 
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "product_id")
     private List<Image> image = new ArrayList<>();

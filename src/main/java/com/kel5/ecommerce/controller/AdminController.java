@@ -51,6 +51,16 @@ public class AdminController {
         model.addAttribute("users", users);
         User user = userService.getUserLogged();
         model.addAttribute("user", user);
+        String totalIncome = orderService.calculateIncome();
+        model.addAttribute("totalIncome", totalIncome);
+        Integer totalOrderUndone = orderService.countOrderUndone();
+        model.addAttribute("totalOrderUndone", totalOrderUndone);
+        Integer totalOrderDone = orderService.countOrderDone();
+        model.addAttribute("totalOrderDone", totalOrderDone);
+        Integer totalRegularCust = userService.getAllReguler();
+        model.addAttribute("totalRegulerCust", totalRegularCust);
+        Integer totalVendorCust = userService.getAllVendor();
+        model.addAttribute("totalVendorCust", totalVendorCust);
         return "admin/index";
     }
 

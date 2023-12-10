@@ -75,8 +75,8 @@ public class UserServiceImpl implements UserService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setFrom("jimbungindustrial@gmail.com");
         mailMessage.setTo(user.getEmail());
-        mailMessage.setSubject("Complete Registration!");
-        mailMessage.setText("To confirm your account, please click here : "
+        mailMessage.setSubject("Welcome "+user.getName()+ "!");
+        mailMessage.setText("Hi "+user.getName()+"! Thank you for joining us! \nTo confirm your account, please click here : "
                 +"http://localhost:8080/confirm-account?token="+confirmationToken.getConfirmationToken());
         emailService.sendEmail(mailMessage);
 
@@ -191,6 +191,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllCustomer() {
       return userRepository.findByRoles_Name("ROLE_USER");
+    }
+    
+    @Override
+    public Integer getAllVendor() {
+      return userRepository.findByRoles_NameAndType("ROLE_USER","Vendor").size();
+    }
+    
+    @Override
+    public Integer getAllReguler() {
+      return userRepository.findByRoles_NameAndType("ROLE_USER","Reguler").size();
     }
     
     @Override
