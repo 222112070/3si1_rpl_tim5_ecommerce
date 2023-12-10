@@ -71,9 +71,9 @@ public class User {
             this.roles = new ArrayList<>();
         }
     } 
-    @OneToOne(mappedBy = "user")
-    private Cart carts;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Cart carts = new Cart();
     
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Order> orders;
+    private List<Order> orders = new ArrayList<>();
 }
