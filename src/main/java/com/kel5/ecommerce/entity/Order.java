@@ -31,7 +31,7 @@ public class Order {
     private float totalAmount;
     private transient String amountFormatted;
     private transient String totalIncome;
-    
+   
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
