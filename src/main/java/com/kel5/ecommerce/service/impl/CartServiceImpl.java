@@ -92,7 +92,7 @@ public class CartServiceImpl implements CartService {
 
         cartItemRepository.save(cartItem);
 
-        float totalPrice = 0;
+        long totalPrice = 0;
         for (CartItem item : cart.getCartItems()) {
             float itemTotal = item.getProduct().getPrice() * item.getQuantity();
             totalPrice += itemTotal;
@@ -127,7 +127,7 @@ public class CartServiceImpl implements CartService {
 
         cart.getCartItems().remove(itemToRemove);
 
-        float totalPrice = 0;
+        long totalPrice = 0;
         for (CartItem item : cart.getCartItems()) {
             totalPrice += item.getProduct().getPrice() * item.getQuantity();
         }
@@ -164,7 +164,7 @@ public class CartServiceImpl implements CartService {
     }
 
     private void recalculateCartTotal(Cart cart) {
-        float totalPrice = 0;
+        long totalPrice = 0;
         for (CartItem item : cart.getCartItems()) {
             totalPrice += item.getProduct().getPrice() * item.getQuantity();
         }

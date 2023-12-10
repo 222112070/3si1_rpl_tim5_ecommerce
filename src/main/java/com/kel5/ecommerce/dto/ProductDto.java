@@ -18,7 +18,7 @@ public class ProductDto {
     private Long id;
     private String name;
     private String description;
-    private float price;
+    private long price;
     private int stock;
     private float weight;
     private String status;

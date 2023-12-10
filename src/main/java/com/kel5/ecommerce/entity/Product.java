@@ -28,6 +28,7 @@ public class Product {
     private int stock;
     private float weight;
 
+    @Builder.Default
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "product_id")
     private List<Image> image = new ArrayList<>();
