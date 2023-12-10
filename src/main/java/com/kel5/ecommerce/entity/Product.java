@@ -24,7 +24,7 @@ public class Product {
     private Long id;
     private String name;
     private String description;
-    private long price;
+    private float price;
     private int stock;
     private float weight;
 
