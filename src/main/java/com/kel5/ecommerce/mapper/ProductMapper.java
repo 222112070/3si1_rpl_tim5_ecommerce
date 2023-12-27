@@ -37,6 +37,5 @@ public class ProductMapper {
         product.setStock(productDto.getStock());
         product.setWeight(productDto.getWeight());
         product.setStatus(productDto.getStatus());
-        // Tidak mengupdate field images di sini
     }
 }

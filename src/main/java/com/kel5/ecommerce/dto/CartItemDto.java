@@ -19,6 +19,6 @@ public class CartItemDto {
     private String productName;
     private String size;
     private int quantity;
-    private Long price; // Assuming price is given in its smallest unit (e.g., cents) to avoid float.
+    private Long price;
     private Long totalItemPrice;
 }

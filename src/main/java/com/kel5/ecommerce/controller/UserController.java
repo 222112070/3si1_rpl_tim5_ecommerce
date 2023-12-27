@@ -89,7 +89,7 @@ public class UserController {
         List<Category> categories = categoryService.getAllCategories();
         List<Subcategory> subcategories = categoryService.getAllSubcategories();
         List<Blog> blogs = blogService.getAllBlogs();
-        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        Cart cart = cartService.getCurrentCart();
         model.addAttribute("cart", CartMapper.toDto(cart));
         model.addAttribute("categories", categories);
         model.addAttribute("subcategories", subcategories);
@@ -103,7 +103,7 @@ public class UserController {
         List<Product> products = productService.findProductAvailable(0);
         List<Category> categories = categoryService.getAllCategories();
         List<Subcategory> subcategories = categoryService.getAllSubcategories();
-        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        Cart cart = cartService.getCurrentCart();
         model.addAttribute("cart", CartMapper.toDto(cart));
         model.addAttribute("categories", categories);
         model.addAttribute("subcategories", subcategories);

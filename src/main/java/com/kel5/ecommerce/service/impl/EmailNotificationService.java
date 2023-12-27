@@ -18,7 +18,6 @@ public class EmailNotificationService implements OrderObserver {
 
     @Override
     public void onOrderCreated(Order order) {
-        // Mengirim email ke pembeli
         StringBuilder message = new StringBuilder();
         message.append("*PESANAN BARU*\n")
                 .append("----‐-------------------------------------\n")
@@ -57,7 +56,6 @@ public class EmailNotificationService implements OrderObserver {
         
         sendEmail(order.getUser().getEmail(), "Order Confirmation",
                 message.toString());
-        // Mengirim email ke penjual
         sendEmail(SELLER_EMAIL, "New Order Received",
                message.toString());
     }

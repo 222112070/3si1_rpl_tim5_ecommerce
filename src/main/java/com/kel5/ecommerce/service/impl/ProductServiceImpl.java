@@ -62,7 +62,6 @@ public class ProductServiceImpl implements ProductService {
         boolean hasNewImages = productDto.getImages() != null && productDto.getImages().stream().anyMatch(file -> !file.isEmpty());
         if (hasNewImages) {
             String uploadDir = "productImages/" + existingProduct.getId();
-            // Hapus gambar yang ada
             existingProduct.getImage().clear();
             for (MultipartFile file : productDto.getImages()) {
                 if (!file.isEmpty()) {
@@ -76,15 +75,6 @@ public class ProductServiceImpl implements ProductService {
         }
         return productRepository.save(existingProduct);
     }
-//        @Override
-//    public Product updateProduct(Long id, Product updatedProduct) {
-//        // Check if the product with the given ID exists
-//        Product existingProduct = productRepository.findById(id)
-//                .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + id));
-//
-//        Product updated = productRepository.save(existingProduct);
-//        return updated;
-//    }
 
     @Override
     public void deleteProduct(Long id) {
@@ -97,14 +87,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product saveProduct(ProductDto productDto, Long categoryId, Long subcategoryId) throws Exception {
         Product product = ProductMapper.toEntity(productDto);
-        // Menyimpan produk sebelum menambahkan gambar
         Category category = categoryService.getCategoryById(categoryId);
         Subcategory subcategory = categoryService.getSubcategoryById(subcategoryId);
 
         product.setCategory(category);
         product.setSubcategory(subcategory);
         product = productRepository.save(product);
-        // Proses penyimpanan gambar
+
         if (!productDto.getImages().isEmpty()) {
             for (MultipartFile file : productDto.getImages()) {
                 String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
@@ -114,7 +103,7 @@ public class ProductServiceImpl implements ProductService {
                 image.setUrl("/productImages/" + product.getId() + "/" + fileName);
                 product.getImage().add(image);
             }
-            productRepository.save(product); // Simpan produk setelah menambahkan gambar
+            productRepository.save(product);
         }
         return product;
     }

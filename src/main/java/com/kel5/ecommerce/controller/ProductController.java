@@ -50,7 +50,6 @@ public class ProductController {
         return "admin/Product";
     }
 
-    // To display the form for adding a product
     @GetMapping("/add-product")
     public String showAddProductForm(Model model) {
         User user = userService.getUserLogged();

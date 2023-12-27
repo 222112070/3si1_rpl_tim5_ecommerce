@@ -9,7 +9,5 @@ public class ResourceNotFoundException extends RuntimeException {
     public ResourceNotFoundException(String message) {
         super(message);
     }
-
-    // You can also override other constructors as necessary.
 }
 

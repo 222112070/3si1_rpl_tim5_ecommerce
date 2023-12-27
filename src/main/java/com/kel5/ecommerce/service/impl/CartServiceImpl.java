@@ -41,8 +41,6 @@ public class CartServiceImpl implements CartService {
     public Cart updateCart(Long id, Cart cart) {
         Cart existingCart = cartRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Cart not found with id " + id));
-        // Update properties of existingCart with those from cart
-        // ...
         return cartRepository.save(existingCart);
     }
 

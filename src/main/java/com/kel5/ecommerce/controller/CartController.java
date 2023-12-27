@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.kel5.ecommerce.controller;
 
 import com.kel5.ecommerce.dto.CartUpdateInfo;
@@ -69,13 +65,13 @@ public class CartController {
 
     @GetMapping("/cart")
     public String viewCart(Model model) {
-        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        Cart cart = cartService.getCurrentCart();
         model.addAttribute("cart", CartMapper.toDto(cart));
         List<Category> categories = categoryService.getAllCategories();
         List<Subcategory> subcategories = categoryService.getAllSubcategories();
         model.addAttribute("categories", categories);
         model.addAttribute("subcategories", subcategories);
-        return "user/cart"; // Name of the template that displays the cart
+        return "user/cart";
     }
 
     @PostMapping("/cart/checkout")
@@ -84,7 +80,7 @@ public class CartController {
                                @RequestParam("address") String address,
                                @RequestParam("whatsapp") String whatsapp,
                                @RequestParam("notes") String notes) {
-        Cart cart = cartService.getCurrentCart(); // Assumes a method to get current cart
+        Cart cart = cartService.getCurrentCart();
         model.addAttribute("cart", CartMapper.toDto(cart));
         Order createdOrder = orderService.createOrderFromCart(name, address, whatsapp, notes);
         Long orderId = createdOrder.getId();

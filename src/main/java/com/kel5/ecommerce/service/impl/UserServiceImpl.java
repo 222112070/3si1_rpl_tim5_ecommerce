@@ -148,17 +148,12 @@ public class UserServiceImpl implements UserService {
             User user = userRepository.findByEmail(token.getUser().getEmail());
             if (user != null) {
                 user.setEnabled(true);
-                            // Buat instance baru dari Cart
             Cart newCart = new Cart();
             newCart.setUser(user);
-            // Simpan Cart ke database
-            // Pastikan Anda memiliki CartRepository untuk melakukan operasi ini
             cartRepository.save(newCart);
 
-            // Setelah Cart disimpan, tetapkan ke user
             user.setCarts(newCart);
 
-            // Simpan perubahan pada user
             userRepository.save(user);
                 userRepository.save(user);
             }

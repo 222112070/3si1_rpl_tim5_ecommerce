@@ -14,7 +14,6 @@ public class CartUpdateInfo {
         this.itemQuantity = itemQuantity;
     }
 
-    // getters
     public float getNewTotal() {
         return newTotal;
     }
